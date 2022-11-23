@@ -16,12 +16,12 @@ import NavSection from "../navbar/NavSection";
 const navConfig = [
   {
     title: "dashboard",
-    path: "/profile",
+    path: "/",
     icon: <></>,
   },
   {
-    title: "user",
-    path: "/dashboard/user",
+    title: "models",
+    path: "/models",
     icon: <></>,
   },
   {

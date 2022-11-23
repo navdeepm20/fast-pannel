@@ -10,6 +10,7 @@ import { DRAWER_WIDTH } from "../../utils/utility";
 import DrawerHeader from "./drawer_header";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
+import { Outlet } from "react-router-dom";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
@@ -53,7 +54,7 @@ export default function Layout() {
       />
       <Main open={open}>
         <DrawerHeader />
-        <h3>Child Components</h3>
+        <Outlet />
       </Main>
     </Box>
   );

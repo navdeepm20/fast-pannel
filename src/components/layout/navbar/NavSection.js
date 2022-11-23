@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { Link } from "preact-router/match";
+import { Link } from "react-router-dom";
 // @mui
 import { Box, List, ListItemText } from "@mui/material";
 //
@@ -33,7 +33,7 @@ function NavItem({ item }) {
   const { title, path, icon, info } = item;
 
   return (
-    <Link href={path} style={{ textDecoration: "none" }}>
+    <Link to={path} style={{ textDecoration: "none" }}>
       <StyledNavItem
         sx={{
           "&.active": {
