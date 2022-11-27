@@ -1,7 +1,9 @@
 //mui
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import LogoutIcon from "@mui/icons-material/Logout";
 function OptionsMenu({ open, anchorEl, handleClose, ...props }) {
   return (
     <Menu
@@ -33,7 +35,10 @@ function OptionsMenu({ open, anchorEl, handleClose, ...props }) {
       }}
     >
       <MenuItem sx={{ px: "2rem" }} onClick={handleClose}>
-        Logout
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText>Logout</ListItemText>
       </MenuItem>
     </Menu>
   );

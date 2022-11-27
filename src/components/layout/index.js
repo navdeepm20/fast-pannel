@@ -32,7 +32,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 export default function Layout() {
-  const theme = useTheme();
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {

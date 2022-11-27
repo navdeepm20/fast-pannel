@@ -11,6 +11,8 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 
 import { DRAWER_WIDTH } from "../../../utils/utility";
+//internal
+
 import OptionsMenu from "./OptionsMenu";
 
 //custom app bar
@@ -46,7 +48,8 @@ const Navbar = ({ open, handleDrawerOpen, ...props }) => {
       open={open}
       sx={{
         background: "#fff",
-        boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
+        boxShadow: 0,
+        // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>

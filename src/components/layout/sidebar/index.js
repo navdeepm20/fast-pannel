@@ -7,44 +7,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 //assets
 import Logo from "../../../assets/logo/fastpannel1.png";
 //internal
-import Typography from "@mui/material/Typography";
 import NavSection from "../navbar/NavSection";
-
-const navConfig = [
-  {
-    title: "dashboard",
-    path: "/",
-    icon: <></>,
-  },
-  {
-    title: "models",
-    path: "/models",
-    icon: <></>,
-  },
-  {
-    title: "product",
-    path: "/dashboard/products",
-    icon: <></>,
-  },
-  {
-    title: "blog",
-    path: "/dashboard/blog",
-    icon: <></>,
-  },
-  {
-    title: "login",
-    path: "/login",
-    icon: <></>,
-  },
-  {
-    title: "Not found",
-    path: "/404",
-    icon: <></>,
-  },
-];
+//sidebarconfig
+import { sidebarConfig } from "./sidebarConfig";
 
 const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
   const theme = useTheme();
@@ -57,7 +26,6 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
         },
-        // ".MuiPaper-root": { background: "#2a2d2e" },
       }}
       variant="persistent"
       anchor="left"
@@ -117,7 +85,7 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
           <Avatar sx={{ backgroundColor: "#673ab7", mr: "8px" }}>N</Avatar>
           <Typography>John Doe</Typography>
         </Box>
-        <NavSection data={navConfig} />
+        <NavSection data={sidebarConfig} />
       </Box>
     </Drawer>
   );
