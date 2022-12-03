@@ -1,8 +1,17 @@
 //preact
 import { useState, useEffect } from "preact/hooks";
-
+//mui
+import Paper from "@mui/material/Paper";
+//hooks
+import useAxios from "../../hooks/useAxios";
 //internal
 import Table from "../../components/table";
+//utils
+import urls from "../../utils/urls.json";
+import { getAuthToken } from "../../utils/utility";
+import { createCols, colsConfig, createRows } from "./utility";
+//libs
+import { useParams } from "react-router-dom";
 
 //dummy_data
 
@@ -47,21 +56,36 @@ const rows = [
 ];
 
 function Model({ ...props }) {
+  const { modelName, appName } = useParams();
   const [selectionModel, setSelectionModel] = useState([]);
-  useEffect(() => {
-    //fetch model data here
-  }, []);
+  const [modelData, setModelData] = useState([]);
+  const [response, error, loading, refetch] = useAxios({
+    url: `${urls?.model_get?.url}?app_name=${appName}&model_name=${modelName}`,
+    method: urls?.model_get?.method,
+  });
+  const [cols, setCols] = useState([]);
+  const [rows, setRows] = useState([]);
 
+  useEffect(() => {
+    if (response) {
+      setModelData(response.data?.items);
+      console.log(response?.data);
+      setCols(createCols(response.data?.items?.[0], colsConfig));
+      setRows(createRows(response?.data?.items), {});
+      console.log(response.data);
+    }
+  }, [response]);
   return (
-    <Table
-      onSelectionModelChange={(newSelectionModel) => {
-        setSelectionModel(newSelectionModel);
-      }}
-      selectionModel={selectionModel}
-      rows={rows}
-      columns={columns}
-    />
+    <Paper elevation={0} width="100%">
+      <Table
+        onSelectionModelChange={(newSelectionModel) => {
+          setSelectionModel(newSelectionModel);
+        }}
+        selectionModel={selectionModel}
+        rows={rows}
+        columns={cols}
+      />
+    </Paper>
   );
 }
-
 export default Model;

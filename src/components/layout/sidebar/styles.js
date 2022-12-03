@@ -11,8 +11,11 @@ export const StyledNavItem = styled((props) => (
   height: 48,
   position: "relative",
   textTransform: "capitalize",
-  color: theme.palette.text.secondary,
+  color: theme.palette.text.white,
   borderRadius: theme.shape.borderRadius,
+  ":hover": {
+    backgroundColor: theme.palette.navitem.hover,
+  },
 }));
 
 export const StyledNavItemIcon = styled(ListItemIcon)({

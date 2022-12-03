@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function DataGridDemo({ rows, columns, ...props }) {
+export default function DataGridDemo({ rows, columns, tableProps, ...props }) {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
@@ -12,7 +12,7 @@ export default function DataGridDemo({ rows, columns, ...props }) {
         checkboxSelection
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
-        {...props}
+        {...tableProps}
       />
     </Box>
   );

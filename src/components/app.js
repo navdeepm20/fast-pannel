@@ -8,11 +8,14 @@ import Layout from "./layout";
 import { ThemeProvider } from "@mui/material";
 import { lightTheme as CustomTheme } from "../theme/theme";
 import AppRoutes from "../routes";
-
+//context
+import AuthContextProvider from "../context/AuthContext";
 const App = (e) => (
   <div id="app">
     <ThemeProvider theme={CustomTheme}>
-      <AppRoutes />
+      <AuthContextProvider>
+        <AppRoutes />
+      </AuthContextProvider>
     </ThemeProvider>
   </div>
 );

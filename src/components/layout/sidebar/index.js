@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 //assets
 import Logo from "../../../assets/logo/fastpannel1.png";
 //internal
-import NavSection from "../navbar/NavSection";
+import NavSection from "./NavSection";
 //sidebarconfig
 import { sidebarConfig } from "./sidebarConfig";
 
@@ -25,6 +25,7 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
         "& .MuiDrawer-paper": {
           width: DRAWER_WIDTH,
           boxSizing: "border-box",
+          backgroundColor: "sidebar.dark",
         },
       }}
       variant="persistent"
@@ -57,9 +58,38 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
         <Box>
           <IconButton onClick={handleDrawerClose} sx={{ ml: "auto" }}>
             {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
+              <Box
+                sx={{
+                  width: "30px",
+                  height: "30px",
+                  color: "text.white",
+                  border: "1px solid white",
+                  borderRadius: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                title="Collapse Sidebar"
+              >
+                <ChevronLeftIcon sx={{ color: "text.white" }} />
+              </Box>
             ) : (
-              <ChevronRightIcon />
+              <Box
+                sx={{
+                  width: "20px",
+                  height: "20px",
+                  color: "text.white",
+                  border: "1px solid white",
+                  border: "1px solid white",
+                  borderRadius: "50%",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                title="Collapse Sidebar"
+              >
+                <ChevronRightIcon sx={{ color: "text.white" }} />
+              </Box>
             )}
           </IconButton>
         </Box>

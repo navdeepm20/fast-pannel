@@ -12,8 +12,10 @@ import Avatar from "@mui/material/Avatar";
 
 import { DRAWER_WIDTH } from "../../../utils/utility";
 //internal
-
 import OptionsMenu from "./OptionsMenu";
+//utils
+import { logout } from "../../../utils/utility";
+import useAuth from "../../../hooks/useAuth";
 
 //custom app bar
 const AppBar = styled(MuiAppBar, {
@@ -35,11 +37,14 @@ const AppBar = styled(MuiAppBar, {
 
 const Navbar = ({ open, handleDrawerOpen, ...props }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [, dispatch] = useAuth();
   const menuOpen = Boolean(anchorEl);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
+    logout(dispatch);
     setAnchorEl(null);
   };
   return (
@@ -49,7 +54,7 @@ const Navbar = ({ open, handleDrawerOpen, ...props }) => {
       sx={{
         background: "#fff",
         boxShadow: 0,
-        // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
+        boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -76,14 +81,14 @@ const Navbar = ({ open, handleDrawerOpen, ...props }) => {
             Fast pannel
           </Typography>
         </Box>
-        <Box sx={{ cursor: "pointer" }} onClick={handleClick}>
+        {/* <Box sx={{ cursor: "pointer" }} onClick={handleClick}>
           <Avatar sx={{ backgroundColor: "#673ab7", mr: "8px" }}>N</Avatar>
           <OptionsMenu
             open={menuOpen}
             anchorEl={anchorEl}
             handleClose={handleClose}
           />
-        </Box>
+        </Box> */}
       </Toolbar>
     </AppBar>
   );
