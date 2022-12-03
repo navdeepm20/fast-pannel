@@ -14,8 +14,11 @@ import Logo from "../../../assets/logo/fastpannel1.png";
 import NavSection from "./NavSection";
 //sidebarconfig
 import { sidebarConfig } from "./sidebarConfig";
+//hooks internal
+import useAuth from "../../../hooks/useAuth";
 
 const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
+  const [user] = useAuth();
   const theme = useTheme();
   return (
     <Drawer
@@ -113,7 +116,7 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
           }}
         >
           <Avatar sx={{ backgroundColor: "#673ab7", mr: "8px" }}>N</Avatar>
-          <Typography>John Doe</Typography>
+          <Typography>{user?.user?.first_name}</Typography>
         </Box>
         <NavSection data={sidebarConfig} />
       </Box>

@@ -42,7 +42,6 @@ const cols = [
     headerName: "Model Name",
     width: 250,
     renderCell: ({ ...props }) => {
-      console.log(props?.row?.name);
       return (
         <CustomModelLinkCell
           link={`models/${props?.row?.name}`}

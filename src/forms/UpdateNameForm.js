@@ -51,6 +51,7 @@ export default function UpdateNameForm(props) {
           username: values?.username,
         });
         setSubmitting(false);
+        handleClose();
       }}
     >
       {({ isSubmitting, isValid }) => {

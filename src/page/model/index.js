@@ -69,10 +69,9 @@ function Model({ ...props }) {
   useEffect(() => {
     if (response) {
       setModelData(response.data?.items);
-      console.log(response?.data);
+
       setCols(createCols(response.data?.items?.[0], colsConfig));
       setRows(createRows(response?.data?.items), {});
-      console.log(response.data);
     }
   }, [response]);
   return (

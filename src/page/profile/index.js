@@ -6,10 +6,12 @@ import urls from "../../utils/urls.json";
 //hooks internal
 import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
+import useAuth from "../../hooks/useAuth";
 // axios
 import axios from "../../axios";
 
 function Profile({ ...props }) {
+  const [, dispatch] = useAuth();
   const userInfo = JSON.parse(localStorage.getItem("user"));
   const [response, error, loading, refetch] = useAxios({
     url:
@@ -53,6 +55,12 @@ function Profile({ ...props }) {
   useEffect(() => {
     if (apiResponse && apiResponse.status === 200) {
       setProfileData(apiResponse?.data?.data);
+      dispatch({
+        type: "update_user",
+        payload: {
+          user: apiResponse?.data?.data,
+        },
+      });
     }
   }, [apiResponse]);
 

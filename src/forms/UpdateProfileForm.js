@@ -142,7 +142,7 @@ export default function UpdateProfileForm(props) {
                 <TextField
                   disabled
                   type="email"
-                  id="email"
+                  id="username"
                   value={(props.username && props.username) || ""}
                   inputProps={{
                     style: {
@@ -254,7 +254,7 @@ export default function UpdateProfileForm(props) {
                 email={(props.email && props.email) || ""}
                 username={(props.username && props.username) || ""}
               />
-              <UpdatePasswordForm updatePassword={props.updatePassword} />
+              {/* <UpdatePasswordForm updatePassword={props.updatePassword} /> */}
             </Stack>
           </Stack>
         </Paper>

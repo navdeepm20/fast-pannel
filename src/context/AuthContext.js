@@ -13,21 +13,20 @@ export const AuthContext = createContext({});
 
 const signIn = (payload) => {
   const handleAuth = new HandleAuthToken();
-
   handleAuth.addData(payload?.user, payload?.token);
 };
 const signOut = () => {
   const handleAuth = new HandleAuthToken();
   handleAuth.clearData();
 };
+const update = (payload) => {
+  new HandleAuthToken().addData(payload?.user, payload?.token);
+};
 const reducer = (state, action) => {
   switch (action?.type) {
     case "signin": {
       signIn(action?.payload);
-      return {
-        user: action?.payload,
-        isAuthenticated: true,
-      };
+      return action?.payload;
     }
 
     case "signout":
@@ -36,11 +35,13 @@ const reducer = (state, action) => {
         user: null,
         isAuthenticated: false,
       };
-    case "update_user":
+    case "update_user": {
+      update({ ...state, user: action?.payload?.user });
       return {
         ...state,
         user: action?.payload?.user,
       };
+    }
   }
 };
 export default function AuthContextProvider({ children, ...props }) {
