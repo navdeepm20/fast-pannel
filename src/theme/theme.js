@@ -12,6 +12,10 @@ export const lightTheme = createTheme({
     primary: {
       main: "#2f7ec7",
     },
+    danger: {
+      main: "#D92D20",
+      hover: "#c5261a",
+    },
     white: {
       main: "#fff",
     },
@@ -21,6 +25,7 @@ export const lightTheme = createTheme({
     text: {
       white: "#fff",
       grey: "#8a8a8a",
+      black: "#000000",
     },
     shadow: {
       main: "rgba(0, 0, 0, 0.04)",

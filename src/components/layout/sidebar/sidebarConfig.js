@@ -6,7 +6,7 @@ import { logout } from "../../../utils/utility";
 export const sidebarConfig = [
   {
     title: "apps",
-    path: "/apps",
+    path: "/",
     icon: <ApprovalIcon />,
     onClickHandler: () => {},
   },

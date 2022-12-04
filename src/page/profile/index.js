@@ -3,6 +3,8 @@ import { useState, useEffect } from "preact/hooks";
 import UpdateProfileForm from "../../forms/UpdateProfileForm";
 //utils
 import urls from "../../utils/urls.json";
+//internal
+import Loader from "../../components/loading";
 //hooks internal
 import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
@@ -52,6 +54,7 @@ function Profile({ ...props }) {
       },
     });
   };
+
   useEffect(() => {
     if (apiResponse && apiResponse.status === 200) {
       setProfileData(apiResponse?.data?.data);
@@ -65,16 +68,22 @@ function Profile({ ...props }) {
   }, [apiResponse]);
 
   return (
-    <UpdateProfileForm
-      firstName={profileData?.first_name}
-      lastName={profileData?.last_name}
-      username={profileData?.username}
-      email={profileData?.email}
-      loading={loading}
-      updateProfile={handleUpdateProfile}
-      created_on={profileData?.date_joined}
-      last_login={profileData?.last_login}
-    />
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <UpdateProfileForm
+          firstName={profileData?.first_name}
+          lastName={profileData?.last_name}
+          username={profileData?.username}
+          email={profileData?.email}
+          loading={loading}
+          updateProfile={handleUpdateProfile}
+          created_on={profileData?.date_joined}
+          last_login={profileData?.last_login}
+        />
+      )}
+    </>
   );
 }
 

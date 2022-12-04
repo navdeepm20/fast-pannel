@@ -9,6 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { DRAWER_WIDTH } from "../../../utils/utility";
 //internal
@@ -35,7 +36,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Navbar = ({ open, handleDrawerOpen, ...props }) => {
+const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [, dispatch] = useAuth();
   const menuOpen = Boolean(anchorEl);
@@ -53,11 +54,17 @@ const Navbar = ({ open, handleDrawerOpen, ...props }) => {
       open={open}
       sx={{
         background: "#fff",
-        boxShadow: 0,
-        boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
+
+        // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
       }}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          height: height,
+        }}
+      >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <IconButton
             color="inherit"
@@ -67,10 +74,23 @@ const Navbar = ({ open, handleDrawerOpen, ...props }) => {
             sx={{
               mr: 2,
               ...(open && { display: "none" }),
-              color: "text.primary",
             }}
           >
-            <MenuIcon />
+            <Box
+              sx={{
+                width: "30px",
+                height: "30px",
+                color: "text.black",
+                border: "1px solid black",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              title="Collapse Sidebar"
+            >
+              <ChevronRightIcon sx={{ color: "text.black" }} />
+            </Box>
           </IconButton>
           <Typography
             variant="h6"

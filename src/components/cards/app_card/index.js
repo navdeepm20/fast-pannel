@@ -17,14 +17,13 @@ import { useNavigate } from "react-router-dom";
 
 function AppCard({ appName, models, ...props }) {
   const navigate = useNavigate();
-  const handleAdd = (e) => {
-    console.log("add clicked");
+  const handleAdd = (e, appName, modelName) => {
     e.stopPropagation();
+    navigate(`/apps/${appName}/models/${modelName}/add`);
   };
-  const handleCreate = (e) => {
+  const handleEdit = (e, appName, modelName) => {
     e.stopPropagation();
-
-    console.log("create clicked");
+    navigate(`/apps/${appName}/models/${modelName}`);
   };
   const handleModelClick = (e, appName, modelName) => {
     navigate(`/apps/${appName}/models/${modelName}`);
@@ -63,10 +62,14 @@ function AppCard({ appName, models, ...props }) {
               >
                 <Typography variant="body2">{model?.name}</Typography>
                 <Box>
-                  <IconButton onClick={(e) => handleAdd(e)}>
+                  <IconButton
+                    onClick={(e) => handleAdd(e, appName, model?.name)}
+                  >
                     <LibraryAddIcon fontSize="small" />
                   </IconButton>
-                  <IconButton onClick={(e) => handleCreate(e)}>
+                  <IconButton
+                    onClick={(e) => handleEdit(e, appName, model?.name)}
+                  >
                     <DriveFileRenameOutlineIcon fontSize="small" />
                   </IconButton>
                 </Box>

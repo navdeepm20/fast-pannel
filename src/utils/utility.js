@@ -1,5 +1,5 @@
 export const DRAWER_WIDTH = 300;
-
+export const NAVBAR_HEIGHT = 64;
 export class HandleLocalStorage {
   getValue(key) {
     return localStorage.getItem(key);

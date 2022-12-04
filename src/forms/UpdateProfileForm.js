@@ -19,7 +19,6 @@ export default function UpdateProfileForm(props) {
         maxWidth={false}
         style={{
           padding: "0",
-          height: "100%",
           boxShadow: `0px 3px 20px 4px rgba(0, 0, 0, 0.04)`,
         }}
       >

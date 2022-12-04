@@ -4,5 +4,9 @@
   "apps_get": { "url": "/fetch-models", "method": "GET" },
   "model_get": { "url": "/models/objects/", "method": "GET" },
   "model_objects_get": { "url": "/models/objects/", "method": "GET" },
-  "models_objects_patch": { "url": "/models/objects/", "method": "PATCH" }
+  "models_objects_patch": { "url": "/models/objects/", "method": "PATCH" },
+  "model_objects_attribute": {
+    "url": "/models/objects/attributes",
+    "method": "GET"
+  }
 }
