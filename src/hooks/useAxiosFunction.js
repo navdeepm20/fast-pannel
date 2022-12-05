@@ -1,5 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 import axios from "../axios";
+//utility
+import { httpErrorHandler } from "../utils/utility";
+
 function useAxiosFunction() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
@@ -14,7 +17,7 @@ function useAxiosFunction() {
       const res = await axios({ ...configObj, signal: ctrl?.signal });
       setResponse(res);
     } catch (err) {
-      setError(err.message);
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -24,6 +27,12 @@ function useAxiosFunction() {
     // useEffect cleanup function
     return () => controller && controller?.abort();
   }, [controller]);
+
+  useEffect(() => {
+    if (error) {
+      httpErrorHandler(error);
+    }
+  }, [error]);
 
   return [response, error, loading, axiosFetch];
 }

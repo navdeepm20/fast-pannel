@@ -20,6 +20,7 @@ function CustomDateTimePicker({ datetimestring, ...props }) {
         value={value}
         onChange={handleChange}
         renderInput={(params) => <TextField {...params} />}
+        ampm={false}
         {...props}
       />
     </LocalizationProvider>

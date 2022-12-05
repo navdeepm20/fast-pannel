@@ -2,6 +2,9 @@ import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import DateTimePicker from "../../components/utility/DateTimePicker";
 import DatePicker from "../../components/utility/DatePicker";
+//libs
+import dayjs from "dayjs";
+import { notificationHandler } from "../../utils/utility";
 
 export const createCols = (row, fieldConfig) => {
   if (row) {
@@ -23,7 +26,6 @@ export const createCols = (row, fieldConfig) => {
   return [];
 };
 
-const propsInjector = (props) => props;
 export const fieldTypesComponentMapping = {
   str: {
     component: TextField,
@@ -43,20 +45,11 @@ export const fieldTypesComponentMapping = {
   },
   datetime: {
     component: DateTimePicker,
-    props: {
-      // renderInput: (params) => {
-      //   console.log(params);
-      //   <TextField {...params} />;
-      // },
-    },
+    props: {},
   },
   date: {
     component: DatePicker,
-    props: {
-      // renderInput: (params) => {
-      //   <TextField {...params} />;
-      // },
-    },
+    props: {},
   },
 };
 
@@ -79,4 +72,39 @@ export const getFieldComponentByType = (fieldName, fieldValue) => {
   };
 
   return CustomComponent;
+};
+
+export const validateFormData = (formRef, fields) => {
+  let data = {};
+
+  for (let i = 0; i < fields?.length; i++) {
+    const fieldName = Object.entries(fields[i])[0][0];
+    const fieldValue = Object.entries(fields[i])[0][1];
+
+    if (formRef.current.elements[fieldName]?.type === "checkbox") {
+      //for checkbox
+      if (formRef.current.elements[fieldName]?.checked !== "on") {
+        data[fieldName] = formRef.current.elements[fieldName].checked;
+      } else {
+        data[fieldName] = false;
+      }
+    } else if (formRef.current.elements[fieldName]?.type === "tel") {
+      const value = formRef.current.elements[fieldName].value;
+      if (value.trim() === "") {
+        return { data, error: `${fieldName} cant be empty` };
+      }
+      //for date or datetime
+      data[fieldName] = dayjs(
+        formRef.current.elements[fieldName].value
+      ).format();
+    } else {
+      const value = formRef.current.elements[fieldName].value;
+      if (value.trim() === "" && fieldValue?.required) {
+        return { data, error: `${fieldName} cant be empty` };
+      }
+      data[fieldName] = formRef.current.elements[fieldName].value;
+    }
+  }
+
+  return { data, error: null };
 };

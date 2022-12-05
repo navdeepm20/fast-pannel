@@ -19,6 +19,7 @@ function CustomDatePicker({ datetimestring, ...props }) {
         inputFormat="MM/DD/YYYY"
         value={value}
         onChange={handleChange}
+        ampm={false}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>

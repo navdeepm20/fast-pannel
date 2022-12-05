@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const DRAWER_WIDTH = 300;
 export const NAVBAR_HEIGHT = 64;
 export class HandleLocalStorage {
@@ -41,4 +43,30 @@ export const logout = (dispatch) => {
 };
 export const getAuthToken = () => {
   return `Bearer ${new HandleAuthToken().retrieveToken()}`;
+};
+
+export const httpErrorHandler = (error) => {
+  if (error.message !== "canceled") {
+    notificationHandler({ severity: "error", title: error?.message });
+  }
+};
+
+export const notificationHandler = ({ severity, title, msg }) => {
+  switch (severity) {
+    case "success":
+      toast.success(title);
+      break;
+    case "error": {
+      toast.error(title);
+      break;
+    }
+    case "info":
+      toast.info(title);
+      break;
+    case "warning":
+      toast.warning(title);
+      break;
+    default:
+      toast(title);
+  }
 };

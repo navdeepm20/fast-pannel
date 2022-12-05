@@ -1,5 +1,7 @@
 //preact
 import { useEffect, useState } from "preact/hooks";
+//utility
+import { httpErrorHandler } from "../utils/utility";
 
 import axios from "../axios";
 function useAxios(configObj) {
@@ -17,7 +19,7 @@ function useAxios(configObj) {
         const res = await axios({ ...configObj, signal: controller?.signal });
         setResponse(res);
       } catch (err) {
-        setError(err.message);
+        setError(err);
       } finally {
         setLoading(false);
       }
@@ -31,6 +33,11 @@ function useAxios(configObj) {
 
     // eslint-disable-next-line
   }, [reload]);
+  useEffect(() => {
+    if (error) {
+      httpErrorHandler(error);
+    }
+  }, [error]);
 
   return [response, error, loading, refetch];
 }
