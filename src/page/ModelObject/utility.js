@@ -1,10 +1,10 @@
+import { useState } from "preact/hooks";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import DateTimePicker from "../../components/utility/DateTimePicker";
 import DatePicker from "../../components/utility/DatePicker";
 //libs
 import dayjs from "dayjs";
-import { notificationHandler } from "../../utils/utility";
 
 export const createCols = (row, fieldConfig) => {
   if (row) {
@@ -18,7 +18,8 @@ export const createCols = (row, fieldConfig) => {
       } else {
         return {
           field: col,
-          type: getFieldType(col, row),
+          headerName: col,
+          // type: getFieldType(col, row),
         };
       }
     });
@@ -26,11 +27,36 @@ export const createCols = (row, fieldConfig) => {
   return [];
 };
 
+const CustomTextField = ({ ...props }) => {
+  const [value, setValue] = useState(props.value);
+  return (
+    <TextField
+      {...props}
+      value={value}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+    />
+  );
+};
+
 export const fieldTypesComponentMapping = {
   str: {
-    component: TextField,
+    component: CustomTextField,
     props: {
       type: "text",
+    },
+  },
+  int: {
+    component: CustomTextField,
+    props: {
+      type: "number",
+    },
+  },
+  float: {
+    component: CustomTextField,
+    props: {
+      type: "number",
     },
   },
   bool: {
@@ -38,7 +64,7 @@ export const fieldTypesComponentMapping = {
     props: {},
   },
   EmailStr: {
-    component: TextField,
+    component: CustomTextField,
     props: {
       type: "email",
     },
@@ -64,11 +90,26 @@ export const getFieldComponentByType = (fieldName, fieldValue) => {
       return (
         <Comp
           {...CustomComponentConfig?.props}
+          datestring={fieldValue?.value}
           renderInput={(params) => <TextField {...params} name={fieldName} />}
         />
       );
+    } else if (fieldValue?.type === "bool") {
+      return (
+        <Comp
+          {...CustomComponentConfig?.props}
+          checked={fieldValue?.value}
+          name={fieldName}
+        />
+      );
     }
-    return <Comp {...CustomComponentConfig?.props} name={fieldName} />;
+    return (
+      <Comp
+        {...CustomComponentConfig?.props}
+        name={fieldName}
+        value={fieldValue?.value}
+      />
+    );
   };
 
   return CustomComponent;
@@ -107,4 +148,22 @@ export const validateFormData = (formRef, fields) => {
   }
 
   return { data, error: null };
+};
+
+export const filterDataByChangedValue = (data, originalData) => {
+  let filterData = {};
+  Object.keys(originalData).forEach((field) => {
+    console.log(
+      originalData[field],
+      data[field],
+      originalData[field] === data[field]
+    );
+    if (
+      originalData[field] !== data[field] &&
+      originalData[field] !== undefined
+    ) {
+      filterData[field] = data[field];
+    }
+  });
+  console.log(filterData);
 };

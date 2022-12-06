@@ -7,8 +7,8 @@ import TextField from "@mui/material/TextField";
 //libs
 import dayjs from "dayjs";
 
-function CustomDatePicker({ datetimestring, ...props }) {
-  const [value, setValue] = useState(dayjs(datetimestring) || "");
+function CustomDatePicker({ datestring, ...props }) {
+  const [value, setValue] = useState(dayjs(datestring) || "");
   const handleChange = (newValue) => {
     setValue(newValue);
   };

@@ -6,7 +6,7 @@
   "model_objects_get": { "url": "/models/objects/", "method": "GET" },
   "models_objects_patch": { "url": "/models/objects/", "method": "PATCH" },
   "models_objects_post": { "url": "/models/objects/", "method": "POST" },
-  "model_objects_attribute": {
+  "model_objects_attribute_get": {
     "url": "/models/objects/attributes",
     "method": "GET"
   }

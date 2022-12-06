@@ -28,8 +28,8 @@ function ModelObjectCreate({ objectData, ...props }) {
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
   const [response, error, loading, refetch] = useAxios({
-    url: `${urls?.model_objects_attribute?.url}?app_name=${appName}&model_name=${modelName}`,
-    method: urls?.model_get?.method,
+    url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
+    method: urls?.model_objects_attribute_get?.method,
   });
   const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
   const formRef = useRef();

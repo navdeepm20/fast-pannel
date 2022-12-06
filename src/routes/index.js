@@ -9,6 +9,7 @@ import SignIn from "../page/signin";
 import Profile from "../page/profile";
 
 import ModelObjectCreate from "../page/ModelObject/Create";
+import ModelObjectEdit from "../page/ModelObject/Edit";
 
 //routes protector
 import RoutesProtector from "./RoutesProtector";
@@ -30,6 +31,11 @@ const AppRoutes = () => {
               exact
               element={<ModelObjectCreate />}
               path="/apps/:appName/models/:modelName/add"
+            />
+            <Route
+              exact
+              element={<ModelObjectEdit />}
+              path="/apps/:appName/models/:modelName/:objectId/edit"
             />
             <Route exact element={<Profile />} path="/profile" />
           </Route>
