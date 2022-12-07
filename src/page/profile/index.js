@@ -11,6 +11,7 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import useAuth from "../../hooks/useAuth";
 // axios
 import axios from "../../axios";
+import ErrorOccured from "../../components/error";
 
 function Profile({ ...props }) {
   const [, dispatch] = useAuth();
@@ -72,16 +73,22 @@ function Profile({ ...props }) {
       {loading ? (
         <Loader />
       ) : (
-        <UpdateProfileForm
-          firstName={profileData?.first_name}
-          lastName={profileData?.last_name}
-          username={profileData?.username}
-          email={profileData?.email}
-          loading={loading}
-          updateProfile={handleUpdateProfile}
-          created_on={profileData?.date_joined}
-          last_login={profileData?.last_login}
-        />
+        <>
+          {error ? (
+            <ErrorOccured />
+          ) : (
+            <UpdateProfileForm
+              firstName={profileData?.first_name}
+              lastName={profileData?.last_name}
+              username={profileData?.username}
+              email={profileData?.email}
+              loading={loading}
+              updateProfile={handleUpdateProfile}
+              created_on={profileData?.date_joined}
+              last_login={profileData?.last_login}
+            />
+          )}
+        </>
       )}
     </>
   );

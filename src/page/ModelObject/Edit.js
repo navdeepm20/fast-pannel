@@ -22,6 +22,7 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 //libs
 import { useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
+import ErrorOccured from "../../components/error";
 
 function ModelObjectEdit({ objectData, ...props }) {
   const theme = useTheme();
@@ -86,7 +87,9 @@ function ModelObjectEdit({ objectData, ...props }) {
     e.preventDefault();
 
     const data = validateFormData(formRef, fieldsWithValue);
-    const filtereData = filterDataByChangedValue(data?.data, modelObjData);
+
+    const filteredData = filterDataByChangedValue(data?.data, modelObjData);
+
     if (!data?.error) {
       axiosFetch({
         axiosInstance: axios,
@@ -94,7 +97,7 @@ function ModelObjectEdit({ objectData, ...props }) {
         url: urls?.models_objects_patch?.url,
         data: {
           object_id: objectId,
-          data: data?.data,
+          data: filteredData,
           app_name: appName,
           model_name: modelName,
         },
@@ -108,11 +111,22 @@ function ModelObjectEdit({ objectData, ...props }) {
     if (apiResponse && apiResponse.status === 200) {
       notificationHandler({
         severity: "success",
-        title: "Record Successfully Added",
+        title: "Record Successfully Updated",
       });
+      console.log(
+        setFieldsWithValue((prev) => {
+          return prev.map((field) => {
+            return {
+              [Object.keys(field)[0]]: {
+                ...field[Object.keys(field)[0]],
+                value: apiResponse.data.data[Object.keys(field)[0]],
+              },
+            };
+          });
+        })
+      );
     }
   }, [apiResponse]);
-  console.log("asdfadsfadsfadsfadsfadfadfadfadsfadsfadfadf");
   return (
     <>
       {loading ? (
@@ -120,34 +134,48 @@ function ModelObjectEdit({ objectData, ...props }) {
       ) : (
         <Paper elevation={0}>
           <PageHeading title={`Edit ${modelName}`} />
-          <form ref={formRef}>
-            <Box
-              sx={{
-                p: "1rem",
-                borderRadius: "8px",
-                mt: ".5rem",
-              }}
-            >
-              {fieldsWithValue.map((field, index) => {
-                const fieldName = Object.keys(field)[0];
-                return (
-                  <SingleObject
-                    key={index}
-                    fieldName={fieldName}
-                    fieldValue={field[fieldName]}
-                  />
-                );
-              })}
-            </Box>
-            <Stack direction="row" gap={2}>
-              <CustomButton disabled={apiLoading} onClick={handleSubmit}>
-                Save
-              </CustomButton>
-              <CustomButton disabled={apiLoading} onClick={handleSubmit}>
-                Delete
-              </CustomButton>
-            </Stack>
-          </form>
+          {!modelObjError ? (
+            <form ref={formRef}>
+              <Box
+                sx={{
+                  p: "1rem",
+                  borderRadius: "8px",
+                  mt: ".5rem",
+                }}
+              >
+                {fieldsWithValue.map((field, index) => {
+                  const fieldName = Object.keys(field)[0];
+                  return (
+                    <SingleObject
+                      key={index}
+                      fieldName={fieldName}
+                      fieldValue={field[fieldName]}
+                      mode="edit"
+                    />
+                  );
+                })}
+              </Box>
+              <Stack direction="row" gap={2}>
+                <CustomButton disabled={apiLoading} onClick={handleSubmit}>
+                  Save
+                </CustomButton>
+                <CustomButton
+                  disabled={apiLoading}
+                  onClick={handleSubmit}
+                  sx={{
+                    backgroundColor: "#D92D20",
+                    ":hover": {
+                      backgroundColor: "#b72418",
+                    },
+                  }}
+                >
+                  Delete
+                </CustomButton>
+              </Stack>
+            </form>
+          ) : (
+            <ErrorOccured />
+          )}
         </Paper>
       )}
     </>

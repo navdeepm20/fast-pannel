@@ -1,93 +1,63 @@
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 // internal
+import ErrorOccured from "../../components/error";
+
 import Table from "../../components/table";
 import { CustomCellWithButton, CustomCellWithLinkText } from "./CustomCells";
 //mui
 import Paper from "@mui/material/Paper";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 
-//passing props custom cell
-const CustomCellAdd = ({ ...props }) => {
-  return (
-    <CustomCellWithButton
-      icon={<LibraryAddIcon />}
-      title="Add"
-      clickHandler={(e) => {
-        console.log("handle add");
-      }}
-    />
-  );
-};
-const CustomCellEdit = ({ ...props }) => {
-  return (
-    <CustomCellWithButton
-      icon={<DriveFileRenameOutlineIcon />}
-      title="Add"
-      clickHandler={(e) => {
-        console.log("handle edit");
-      }}
-    />
-  );
-};
-
-const CustomModelLinkCell = ({ name, link, ...props }) => {
-  return <CustomCellWithLinkText linkTo={link}>{name}</CustomCellWithLinkText>;
-};
-// dummy data
-const cols = [
-  {
-    id: 0,
-    field: "name",
-    headerName: "Model Name",
-    width: 250,
-    renderCell: ({ ...props }) => {
-      return (
-        <CustomModelLinkCell
-          link={`models/${props?.row?.name}`}
-          name={props?.row?.name}
-        />
-      );
-    },
-  },
-  {
-    id: 0,
-    field: "add",
-    headerName: "Add Object",
-    sortable: false,
-    width: 150,
-    renderCell: CustomCellAdd,
-  },
-  {
-    id: 0,
-    field: "edit",
-    headerName: "Edit Object",
-    sortable: false,
-    width: 150,
-
-    renderCell: CustomCellEdit,
-  },
-];
-const rows = [
-  {
-    id: 0,
-    name: "Model 1",
-  },
-];
+//internal hooks
+import useAxios from "../../hooks/useAxios";
+//utils
+import { createCols, colsConfig, createRows } from "./utils";
+//utility
+import urls from "../../utils/urls.json";
+//libs
+import { useParams } from "react-router-dom";
+import Loader from "../../components/loading";
 
 function Models({ ...props }) {
+  const { appName } = useParams();
+  const [response, error, loading, refetch] = useAxios({
+    url: `${urls?.apps_get?.url}?app_name=${appName}`,
+    method: urls?.apps_get?.method,
+  });
+  const [cols, setCols] = useState([]);
+  const [rows, setRows] = useState([]);
+
   useEffect(() => {
     // fetch data here
-  }, []);
-
+    if (response) {
+      setCols(
+        createCols(
+          response.data?.items?.[0]?.models,
+          colsConfig,
+          colsConfig,
+          appName
+        )
+      );
+      setRows(createRows(response.data?.items?.[0]?.models));
+    }
+  }, [response]);
   return (
-    <Paper elevation={0}>
-      <Table
-        rows={rows}
-        columns={cols}
-        checkboxSelection={false}
-        sx={{ maxWidth: "1000px" }}
-      />
+    <Paper elevation={0} sx={{ width: "100%", height: "100%" }}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {error ? (
+            <ErrorOccured />
+          ) : (
+            <Table
+              rows={rows}
+              columns={cols}
+              checkboxSelection={false}
+              sx={{ maxWidth: "1000px" }}
+            />
+          )}
+        </>
+      )}
     </Paper>
   );
 }

@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 //utility
 import { getFieldComponentByType } from "../../page/ModelObject/utility";
 
-function GetFieldComponent({ fieldName, fieldValue, ...props }) {
-  const ComponentByType = getFieldComponentByType(fieldName, fieldValue);
+function GetFieldComponent({ fieldName, fieldValue, mode, ...props }) {
+  const ComponentByType = getFieldComponentByType(fieldName, fieldValue, mode);
   return (
     <Stack
       direction="row"

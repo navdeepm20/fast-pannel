@@ -79,7 +79,7 @@ export const fieldTypesComponentMapping = {
   },
 };
 
-export const getFieldComponentByType = (fieldName, fieldValue) => {
+export const getFieldComponentByType = (fieldName, fieldValue, mode) => {
   const CustomComponentConfig =
     fieldTypesComponentMapping[fieldValue?.type || "str"] ||
     fieldTypesComponentMapping["str"];
@@ -91,6 +91,7 @@ export const getFieldComponentByType = (fieldName, fieldValue) => {
         <Comp
           {...CustomComponentConfig?.props}
           datestring={fieldValue?.value}
+          disabled={mode !== "create" && !fieldValue?.editable}
           renderInput={(params) => <TextField {...params} name={fieldName} />}
         />
       );
@@ -100,6 +101,7 @@ export const getFieldComponentByType = (fieldName, fieldValue) => {
           {...CustomComponentConfig?.props}
           checked={fieldValue?.value}
           name={fieldName}
+          disabled={mode !== "create" && !fieldValue?.editable}
         />
       );
     }
@@ -108,6 +110,7 @@ export const getFieldComponentByType = (fieldName, fieldValue) => {
         {...CustomComponentConfig?.props}
         name={fieldName}
         value={fieldValue?.value}
+        disabled={!fieldValue?.editable}
       />
     );
   };
@@ -131,13 +134,12 @@ export const validateFormData = (formRef, fields) => {
       }
     } else if (formRef.current.elements[fieldName]?.type === "tel") {
       const value = formRef.current.elements[fieldName].value;
+
       if (value.trim() === "") {
         return { data, error: `${fieldName} cant be empty` };
       }
       //for date or datetime
-      data[fieldName] = dayjs(
-        formRef.current.elements[fieldName].value
-      ).format();
+      data[fieldName] = formRef.current.elements[fieldName].value;
     } else {
       const value = formRef.current.elements[fieldName].value;
       if (value.trim() === "" && fieldValue?.required) {
@@ -149,21 +151,35 @@ export const validateFormData = (formRef, fields) => {
 
   return { data, error: null };
 };
+function isValidDate(dateString) {
+  //accepted format - 2018-08-01T18:30:00.000Z
+  const _regExp = new RegExp(
+    "^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$"
+  );
+  return _regExp.test(dateString);
+}
 
 export const filterDataByChangedValue = (data, originalData) => {
-  let filterData = {};
+  let filteredData = {};
   Object.keys(originalData).forEach((field) => {
-    console.log(
-      originalData[field],
-      data[field],
-      originalData[field] === data[field]
-    );
-    if (
+    if (isValidDate(data[field])) {
+      if (
+        dayjs(data[field]).format("YYYY-MM-DDTHH:mm:ss") !==
+        dayjs(originalData[field]).format("YYYY-MM-DDTHH:mm:ss")
+      ) {
+        filteredData[field] = dayjs(data[field]).format("YYYY-MM-DDTHH:mm:ss");
+      }
+      return;
+    } else if (
+      field !== "_id" &&
+      field !== "id" &&
       originalData[field] !== data[field] &&
       originalData[field] !== undefined
     ) {
-      filterData[field] = data[field];
+      filteredData[field] = data[field];
+      return;
     }
   });
-  console.log(filterData);
+  console.log(filteredData);
+  return filteredData;
 };

@@ -1,14 +1,12 @@
 //preact
-import { useEffect, useState, useLayoutEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 //mui
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/system";
+import Container from "@mui/material/Container";
 //hooks
 import useAuth from "../../hooks/useAuth";
 import axios from "../../axios";
@@ -17,6 +15,11 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useNavigate, Navigate } from "react-router-dom";
 //utils
 import urls from "../../utils/urls.json";
+// internal
+import SvgWrapper from "../../components/svg";
+//assets
+import fastpanel_logo from "../../assets/logo/fastpannel1.png";
+
 export default function SignIn({ ...props }) {
   const [user, dispatch] = useAuth();
   const [response, error, loading, axiosFetch] = useAxiosFunction();
@@ -73,9 +76,12 @@ export default function SignIn({ ...props }) {
               transform: "translateY(-50%)",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
+            <img
+              src={fastpanel_logo}
+              alt="logo"
+              style={{ width: "50px", height: "50px", marginBottom: "1rem" }}
+            />
+
             <Typography component="h1" variant="h5" sx={{}}>
               Fast Pannel
             </Typography>
@@ -101,7 +107,7 @@ export default function SignIn({ ...props }) {
                 name="username"
                 autoComplete="username"
                 autoFocus
-                value={credentials?.usename}
+                value={credentials?.username}
                 onChange={(e) =>
                   setCredentials((prev) => {
                     return {

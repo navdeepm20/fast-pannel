@@ -22,6 +22,7 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 //libs
 import { useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
+import ErrorOccured from "../../components/error";
 
 function ModelObjectCreate({ objectData, ...props }) {
   const theme = useTheme();
@@ -73,41 +74,50 @@ function ModelObjectCreate({ objectData, ...props }) {
       });
     }
   }, [apiResponse]);
-
+  console.log(error);
   return (
-    <>
+    <Paper
+      elevation={0}
+      sx={{ width: "100%", height: "100%" }}
+      id="Create-Container"
+    >
       {loading ? (
         <Loader />
       ) : (
         <Paper elevation={0}>
           <PageHeading title={`Add ${modelName}`} />
-          <form ref={formRef}>
-            <Box
-              sx={{
-                p: "1rem",
-                borderRadius: "8px",
-                mt: ".5rem",
-              }}
-            >
-              {fields.map((field, index) => {
-                const fieldName = Object.keys(field)[0];
-                return (
-                  <SingleObject
-                    fieldName={fieldName}
-                    fieldValue={field[fieldName]}
-                  />
-                );
-              })}
-            </Box>
-            <Stack direction="row" gap={2}>
-              <CustomButton disabled={apiLoading} onClick={handleSubmit}>
-                Create
-              </CustomButton>
-            </Stack>
-          </form>
+          {error ? (
+            <ErrorOccured />
+          ) : (
+            <form ref={formRef}>
+              <Box
+                sx={{
+                  p: "1rem",
+                  borderRadius: "8px",
+                  mt: ".5rem",
+                }}
+              >
+                {fields.map((field, index) => {
+                  const fieldName = Object.keys(field)[0];
+                  return (
+                    <SingleObject
+                      fieldName={fieldName}
+                      fieldValue={field[fieldName]}
+                      mode="create"
+                    />
+                  );
+                })}
+              </Box>
+              <Stack direction="row" gap={2}>
+                <CustomButton disabled={apiLoading} onClick={handleSubmit}>
+                  Create
+                </CustomButton>
+              </Stack>
+            </form>
+          )}
         </Paper>
       )}
-    </>
+    </Paper>
   );
 }
 

@@ -46,36 +46,67 @@ function AppCard({ appName, models, ...props }) {
           {appName}
         </Typography>
         <Stack>
-          {models.map((model, index) => {
-            return (
-              <Stack
-                direction="row"
-                justifyContent="space-between"
-                alignItems="center"
-                sx={{
-                  cursor: "pointer",
-                  p: ".5rem .3rem",
-                  borderRadius: "8px",
-                  ":hover": { backgroundColor: "sky_blue.main" },
-                }}
-                onClick={(e) => handleModelClick(e, appName, model?.name)}
-              >
-                <Typography variant="body2">{model?.name}</Typography>
-                <Box>
-                  <IconButton
-                    onClick={(e) => handleAdd(e, appName, model?.name)}
+          {models.length > 3
+            ? models.slice(0, 3).map((model, index) => {
+                return (
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{
+                      cursor: "pointer",
+                      p: ".5rem .3rem",
+                      borderRadius: "8px",
+                      ":hover": { backgroundColor: "sky_blue.main" },
+                    }}
+                    onClick={(e) => handleModelClick(e, appName, model?.name)}
                   >
-                    <LibraryAddIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    onClick={(e) => handleEdit(e, appName, model?.name)}
+                    <Typography variant="body2">{model?.name}</Typography>
+                    <Box>
+                      <IconButton
+                        onClick={(e) => handleAdd(e, appName, model?.name)}
+                      >
+                        <LibraryAddIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        onClick={(e) => handleEdit(e, appName, model?.name)}
+                      >
+                        <DriveFileRenameOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                );
+              })
+            : models.map((model, index) => {
+                return (
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                    sx={{
+                      cursor: "pointer",
+                      p: ".5rem .3rem",
+                      borderRadius: "8px",
+                      ":hover": { backgroundColor: "sky_blue.main" },
+                    }}
+                    onClick={(e) => handleModelClick(e, appName, model?.name)}
                   >
-                    <DriveFileRenameOutlineIcon fontSize="small" />
-                  </IconButton>
-                </Box>
-              </Stack>
-            );
-          })}
+                    <Typography variant="body2">{model?.name}</Typography>
+                    <Box>
+                      <IconButton
+                        onClick={(e) => handleAdd(e, appName, model?.name)}
+                      >
+                        <LibraryAddIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        onClick={(e) => handleEdit(e, appName, model?.name)}
+                      >
+                        <DriveFileRenameOutlineIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  </Stack>
+                );
+              })}
         </Stack>
       </CardContent>
       {models?.length >= 3 ? (

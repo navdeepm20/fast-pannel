@@ -10,11 +10,12 @@ import dayjs from "dayjs";
 
 function CustomDateTimePicker({ datestring, ...props }) {
   const [value, setValue] = useState(
-    dayjs(datestring).format("YYYY-MM-DDThh:mm:ss") || ""
+    dayjs(datestring).format("YYYY-MM-DDTHH:mm:ss.SSS") || ""
   );
   const handleChange = (newValue) => {
-    setValue(dayjs(newValue).format("YYYY-MM-DDThh:mm"));
+    setValue(dayjs(newValue).format("YYYY-MM-DDTHH:mm:ss.SSS"));
   };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
@@ -23,6 +24,7 @@ function CustomDateTimePicker({ datestring, ...props }) {
         onChange={handleChange}
         renderInput={(params) => <TextField {...params} />}
         ampm={false}
+        inputFormat="YYYY-MM-DDTHH:mm:ss.SSS"
         {...props}
       />
     </LocalizationProvider>

@@ -21,7 +21,6 @@ export const sidebarConfig = [
     path: "#",
     icon: <LogoutIcon />,
     onClickHandler: (e, dispatch) => {
-      console.log("asdfasdfasdfadsf");
       logout(dispatch);
     },
   },

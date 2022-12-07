@@ -52,15 +52,15 @@ export const colsConfig = {
   date_joined: {
     headerName: "Date Joined",
     flex: 1,
-    width: 90,
+    // width: 90,
   },
   last_login: {
     headerName: "Last Login",
     flex: 1,
-    width: 90,
+    // width: 90,
   },
   is_active: {
     headerName: "Is Active",
-    width: 90,
+    // width: 90,
   },
 };

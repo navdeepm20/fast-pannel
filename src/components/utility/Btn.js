@@ -8,7 +8,7 @@ function Btn({ ...props }) {
   delete props.sx;
   const buttonConfig = {
     variant: "contained",
-    disableElevation: true,
+    // disableElevation: true,
     sx: {
       backgroundColor:
         props?.variant !== "text" && props?.variant !== "outlined"
