@@ -23,7 +23,7 @@ const DeleteConfirmationDialogContent = ({ handleClose, ...props }) => {
             mb: "8px",
           }}
         >
-          Delete Montage
+          Delete Operation
         </Typography>
         <Typography
           sx={{
@@ -35,7 +35,7 @@ const DeleteConfirmationDialogContent = ({ handleClose, ...props }) => {
             mb: "32px",
           }}
         >
-          Are you sure you want to delete this montage? This action cannot be
+          Are you sure you want to delete this record? This action cannot be
           undone.
         </Typography>
       </Box>
