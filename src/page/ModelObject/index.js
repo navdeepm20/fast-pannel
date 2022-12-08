@@ -12,7 +12,7 @@ import CustomButton from "../../components/utility/Btn";
 import SingleObject from "../../components/model_object/SingleObject";
 import Loader from "../../components/loading";
 //axios
-import axios from "../../axios";
+import { axiosInstance } from "../../axios";
 //utils
 import urls from "../../utils/urls.json";
 //internal hooks
@@ -53,7 +53,7 @@ function ModelObject({ objectData, ...props }) {
       }
     });
     axiosFetch({
-      axiosInstance: axios,
+      axiosInstance: axiosInstance,
       method: urls?.models_objects_patch?.method,
       url: urls?.models_objects_patch?.url,
       data: {

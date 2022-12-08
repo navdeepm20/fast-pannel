@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 //hooks
 import useAuth from "../../hooks/useAuth";
-import axios from "../../axios";
+import { axiosInstance } from "../../axios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 //libs
 import { useNavigate, Navigate } from "react-router-dom";
@@ -35,7 +35,7 @@ export default function SignIn({ ...props }) {
     data.append("username", credentials?.username);
     data.append("password", credentials?.password);
     axiosFetch({
-      axiosInstance: axios,
+      axiosInstance: axiosInstance,
       method: "POST",
       url: "/login",
       data: data,

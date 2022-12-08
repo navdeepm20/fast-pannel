@@ -3,7 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 //utility
 import { httpErrorHandler } from "../utils/utility";
 
-import axios from "../axios";
+import { axiosInstance } from "../axios";
 function useAxios(configObj) {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
@@ -16,7 +16,10 @@ function useAxios(configObj) {
 
     const fetchData = async () => {
       try {
-        const res = await axios({ ...configObj, signal: controller?.signal });
+        const res = await axiosInstance({
+          ...configObj,
+          signal: controller?.signal,
+        });
         setResponse(res);
       } catch (err) {
         setError(err);

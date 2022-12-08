@@ -12,7 +12,7 @@ import CustomButton from "../../components/utility/Btn";
 import SingleObject from "../../components/model_object/SingleObject";
 import Loader from "../../components/loading";
 //axios
-import axios from "../../axios";
+import { axiosInstance } from "../../axios";
 //utils
 import urls from "../../utils/urls.json";
 import { validateFormData } from "./utility";
@@ -51,7 +51,7 @@ function ModelObjectCreate({ objectData, ...props }) {
 
     if (!data?.error) {
       axiosFetch({
-        axiosInstance: axios,
+        axiosInstance: axiosInstance,
         method: urls?.models_objects_post?.method,
         url: urls?.models_objects_post?.url,
         data: {

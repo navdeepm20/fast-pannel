@@ -18,12 +18,13 @@ import { createCols, colsConfig, createRows } from "./utility";
 import { useNavigate, useParams } from "react-router-dom";
 import ErrorOccured from "../../components/error";
 //custom axios
-import axios from "../../axios";
+
+import { axiosInstance } from "../../axios";
 import { httpErrorHandler, notificationHandler } from "../../utils/utility";
 
 const deleteObject = async (objectId, appName, modelName) => {
   try {
-    const response = await axios({
+    const response = await axiosInstance({
       method: urls?.models_objects_delete?.method,
       url: urls?.models_objects_delete?.url,
       data: {

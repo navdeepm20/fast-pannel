@@ -12,7 +12,7 @@ import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 import useAuth from "../../hooks/useAuth";
 // axios
-import axios from "../../axios";
+import { axiosInstance } from "../../axios";
 import ErrorOccured from "../../components/error";
 import { notificationHandler } from "../../utils/utility";
 import { Paper } from "@mui/material";
@@ -43,7 +43,7 @@ function Profile({ ...props }) {
     email,
   }) => {
     axiosFetch({
-      axiosInstance: axios,
+      axiosInstance: axiosInstance,
       method: urls?.models_objects_patch?.method,
       url: urls?.models_objects_patch?.url,
       data: {
