@@ -87,16 +87,14 @@ const CustomConnectedWith = ({
     "popup=yes,width=1000,height=700,status=yes, toolbar=no, menubar=yes, location=no,addressbar=no";
 
   return (
-    <a href={`#`} target="_parent">
-      <IconButton
-        onClick={() => {
-          const res = window.open(linkTo, "_blank", windowfeatures);
-        }}
-        {...props?.IconButtonProps}
-      >
-        <CreateIcon />
-      </IconButton>
-    </a>
+    <IconButton
+      onClick={() => {
+        const res = window.open(linkTo, "_blank", windowfeatures);
+      }}
+      {...props?.IconButtonProps}
+    >
+      <CreateIcon />
+    </IconButton>
   );
 };
 
@@ -185,7 +183,7 @@ export const getFieldComponentByType = (fieldName, fieldValue, mode) => {
               compRef={customRef}
             />
             <CustomConnectedWith
-              linkTo={`/apps/${appName}/models/${modelName}/`}
+              linkTo={`#/apps/${appName}/models/${modelName}/`}
               IconButtonProps={{
                 sx: {
                   ml: "1rem",
