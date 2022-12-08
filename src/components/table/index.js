@@ -8,11 +8,17 @@ export default function DataGridDemo({
   columns,
   tableProps,
   handleRowClick,
+  tableContainerProps,
   ...props
 }) {
   const navigate = useNavigate();
+  const tableContainerSx = tableContainerProps?.sx;
+  delete tableContainerProps?.sx;
   return (
-    <Box sx={{ height: 400, width: "100%" }}>
+    <Box
+      sx={{ height: 400, width: "100%", ...tableContainerSx }}
+      {...tableContainerProps}
+    >
       <DataGrid
         onRowClick={({ ...props }) =>
           handleRowClick({ tableProps: props, navigate: navigate })
@@ -21,10 +27,10 @@ export default function DataGridDemo({
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
-        checkboxSelection
+        checkboxSelection={true}
         disableSelectionOnClick
         experimentalFeatures={{ newEditingApi: true }}
-        {...tableProps}
+        {...props}
       />
     </Box>
   );

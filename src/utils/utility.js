@@ -42,7 +42,6 @@ export const logout = (dispatch) => {
   });
 };
 export const getAuthToken = () => {
-  console.log(`Bearer ${new HandleAuthToken().retrieveToken()}`);
   return `Bearer ${new HandleAuthToken().retrieveToken()}`;
 };
 

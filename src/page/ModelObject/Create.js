@@ -47,7 +47,6 @@ function ModelObjectCreate({ objectData, ...props }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = validateFormData(formRef, fields);
 
     if (!data?.error) {
@@ -74,7 +73,7 @@ function ModelObjectCreate({ objectData, ...props }) {
       });
     }
   }, [apiResponse]);
-  console.log(error);
+
   return (
     <Paper
       elevation={0}
@@ -82,7 +81,7 @@ function ModelObjectCreate({ objectData, ...props }) {
       id="Create-Container"
     >
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
           <PageHeading title={`Add ${modelName}`} />

@@ -65,14 +65,14 @@ function ModelObject({ objectData, ...props }) {
   };
   useEffect(() => {
     if (apiResponse) {
-      console.log(apiResponse);
+      // console.log(apiResponse);
     }
   }, [apiResponse]);
 
   return (
     <>
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
           <PageHeading title={`Add ${modelName}`} />

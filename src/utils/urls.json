@@ -9,5 +9,9 @@
   "model_objects_attribute_get": {
     "url": "/models/objects/attributes",
     "method": "GET"
+  },
+  "models_objects_delete": {
+    "url": "/models/objects/",
+    "method": "DELETE"
   }
 }

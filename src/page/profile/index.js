@@ -6,12 +6,16 @@ import urls from "../../utils/urls.json";
 //internal
 import Loader from "../../components/loading";
 //hooks internal
+
+import PageHeading from "../../components/page_heading";
 import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 import useAuth from "../../hooks/useAuth";
 // axios
 import axios from "../../axios";
 import ErrorOccured from "../../components/error";
+import { notificationHandler } from "../../utils/utility";
+import { Paper } from "@mui/material";
 
 function Profile({ ...props }) {
   const [, dispatch] = useAuth();
@@ -55,7 +59,7 @@ function Profile({ ...props }) {
       },
     });
   };
-
+  //will be triggered when apiresponse comes
   useEffect(() => {
     if (apiResponse && apiResponse.status === 200) {
       setProfileData(apiResponse?.data?.data);
@@ -65,13 +69,18 @@ function Profile({ ...props }) {
           user: apiResponse?.data?.data,
         },
       });
+      notificationHandler({
+        severity: "success",
+        title: "Profile Updated Successfully",
+      });
     }
   }, [apiResponse]);
 
   return (
-    <>
+    <Paper elevation={0}>
+      <PageHeading title="User Profile" />
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <>
           {error ? (
@@ -90,7 +99,7 @@ function Profile({ ...props }) {
           )}
         </>
       )}
-    </>
+    </Paper>
   );
 }
 

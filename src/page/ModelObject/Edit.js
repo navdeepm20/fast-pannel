@@ -20,12 +20,15 @@ import { validateFormData, filterDataByChangedValue } from "./utility";
 import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 //libs
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
 import ErrorOccured from "../../components/error";
+import DeleteConfirmationDialog from "../../components/dialogs/DeleteConfirmationDialog";
 
 function ModelObjectEdit({ objectData, ...props }) {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const { modelName, appName, objectId } = useParams();
   const [fields, setFields] = useState([]);
   //for fetching model field types
@@ -35,6 +38,11 @@ function ModelObjectEdit({ objectData, ...props }) {
   });
   const [modelObjData, setModelObjData] = useState({});
   const [fieldsWithValue, setFieldsWithValue] = useState([]);
+  //for delete dialog
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const handleDeleteDialogClose = (e) => {
+    setIsDeleteDialogOpen(false);
+  };
   //axios for fetching the model obj data
   const [modelObjResponse, modelObjError, modelObjLoading, modelObjRefetch] =
     useAxios({
@@ -48,6 +56,7 @@ function ModelObjectEdit({ objectData, ...props }) {
   //for catching the fields types response
   useEffect(() => {
     if (response) {
+      //removing the id fields
       setFields(
         response.data?.filter((modelField, index) => {
           const field = Object.keys(modelField)[0];
@@ -64,6 +73,7 @@ function ModelObjectEdit({ objectData, ...props }) {
     }
   }, [modelObjResponse]);
 
+  //for creating fields with value
   useEffect(() => {
     if (Object.keys(modelObjData).length && fields?.length) {
       setFieldsWithValue((prev) => {
@@ -83,11 +93,11 @@ function ModelObjectEdit({ objectData, ...props }) {
       });
     }
   }, [fields, modelObjData]);
+
+  //for submitting form
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = validateFormData(formRef, fieldsWithValue);
-
     const filteredData = filterDataByChangedValue(data?.data, modelObjData);
 
     if (!data?.error) {
@@ -107,30 +117,40 @@ function ModelObjectEdit({ objectData, ...props }) {
     }
   };
 
+  //for deleting object
+  const handleDelete = (e) => {
+    e.preventDefault();
+    axiosFetch({
+      axiosInstance: axios,
+      method: urls?.models_objects_delete?.method,
+      url: urls?.models_objects_delete?.url,
+      data: {
+        object_id: objectId,
+        app_name: appName,
+        model_name: modelName,
+      },
+    });
+  };
+
   useEffect(() => {
     if (apiResponse && apiResponse.status === 200) {
       notificationHandler({
         severity: "success",
         title: "Record Successfully Updated",
       });
-      console.log(
-        setFieldsWithValue((prev) => {
-          return prev.map((field) => {
-            return {
-              [Object.keys(field)[0]]: {
-                ...field[Object.keys(field)[0]],
-                value: apiResponse.data.data[Object.keys(field)[0]],
-              },
-            };
-          });
-        })
-      );
+    }
+    if (apiResponse && apiResponse.status === 204) {
+      notificationHandler({
+        severity: "success",
+        title: "Record Successfully Deleted",
+      });
+      navigate(`/apps/${appName}/models/${modelName}`);
     }
   }, [apiResponse]);
   return (
     <>
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
           <PageHeading title={`Edit ${modelName}`} />
@@ -161,7 +181,7 @@ function ModelObjectEdit({ objectData, ...props }) {
                 </CustomButton>
                 <CustomButton
                   disabled={apiLoading}
-                  onClick={handleSubmit}
+                  onClick={() => setIsDeleteDialogOpen(true)}
                   sx={{
                     backgroundColor: "#D92D20",
                     ":hover": {
@@ -176,6 +196,12 @@ function ModelObjectEdit({ objectData, ...props }) {
           ) : (
             <ErrorOccured />
           )}
+          <DeleteConfirmationDialog
+            handleClose={handleDeleteDialogClose}
+            handleDelete={handleDelete}
+            open={isDeleteDialogOpen}
+            isLoading={apiLoading}
+          />
         </Paper>
       )}
     </>

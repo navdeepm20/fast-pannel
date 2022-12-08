@@ -5,6 +5,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
+import { useTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
@@ -16,6 +17,7 @@ import CustomButton from "../../utility/Btn";
 import { useNavigate } from "react-router-dom";
 
 function AppCard({ appName, models, ...props }) {
+  const theme = useTheme();
   const navigate = useNavigate();
   const handleAdd = (e, appName, modelName) => {
     e.stopPropagation();
@@ -32,7 +34,16 @@ function AppCard({ appName, models, ...props }) {
     navigate(`/apps/${appName}`);
   };
   return (
-    <Card sx={{ minWidth: "300px", maxWidth: "350px" }}>
+    <Card
+      sx={{
+        minWidth: "300px",
+        maxWidth: "350px",
+        ":hover": {
+          boxShadow:
+            "rgb(159 162 191 / 18%) 0px 5px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;",
+        },
+      }}
+    >
       <CardContent sx={{}}>
         <Typography
           variant="h5"
@@ -41,6 +52,7 @@ function AppCard({ appName, models, ...props }) {
             p: "1rem",
             borderRadius: "8px",
             mb: "1rem",
+            textTransform: "capitalize",
           }}
         >
           {appName}
@@ -57,7 +69,12 @@ function AppCard({ appName, models, ...props }) {
                       cursor: "pointer",
                       p: ".5rem .3rem",
                       borderRadius: "8px",
-                      ":hover": { backgroundColor: "sky_blue.main" },
+
+                      border: "1px solid transparent",
+                      ":hover": {
+                        boxShadow:
+                          "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
+                      },
                     }}
                     onClick={(e) => handleModelClick(e, appName, model?.name)}
                   >

@@ -3,6 +3,7 @@ import { useEffect, useState } from "preact/hooks";
 //internal
 import AppCard from "../../components/cards/app_card";
 import Loader from "../../components/loading";
+import PageHeading from "../../components/page_heading";
 //mui
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -36,8 +37,9 @@ function Apps({ ...props }) {
         height: "100%",
       }}
     >
+      <PageHeading title="Apps" />
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Stack direction="row" gap="24px" flexWrap="wrap">
           {appsData.map((app, index) => {

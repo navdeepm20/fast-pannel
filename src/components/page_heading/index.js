@@ -1,26 +1,35 @@
 //mui
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 function PageHeading({ title, ...props }) {
   const theme = useTheme();
   delete props?.sx;
   return (
-    <Typography
-      component="h2"
+    <Box
       sx={{
-        fontSize: "20px",
-        color: "text.black",
         py: "1rem",
         mb: "2rem",
         px: "1rem",
+        backgroundColor: "#f5f6fa",
         borderLeft: `8px solid ${theme.palette.primary.main}`,
         borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-        ...props.sx,
+        borderRadius: "4px",
       }}
     >
-      {title}
-    </Typography>
+      <Typography
+        component="h2"
+        sx={{
+          fontSize: "20px",
+          color: "text.black",
+          textTransform: "capitalize",
+          ...props.sx,
+        }}
+      >
+        {title}
+      </Typography>
+    </Box>
   );
 }
 

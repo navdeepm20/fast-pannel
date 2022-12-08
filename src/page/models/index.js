@@ -1,7 +1,7 @@
 import { useEffect, useState } from "preact/hooks";
 // internal
 import ErrorOccured from "../../components/error";
-
+import PageHeading from "../../components/page_heading";
 import Table from "../../components/table";
 import { CustomCellWithButton, CustomCellWithLinkText } from "./CustomCells";
 //mui
@@ -42,8 +42,9 @@ function Models({ ...props }) {
   }, [response]);
   return (
     <Paper elevation={0} sx={{ width: "100%", height: "100%" }}>
+      <PageHeading title={`${appName} Models`} />
       {loading ? (
-        <Loader />
+        <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <>
           {error ? (
