@@ -1,8 +1,29 @@
-# fast-pannel
+# FastPanel
+
+> A modern admin panel that power up the FastApi with the help of it's wrapper https://github.com/ankit-brijwasi/fastPanel
+
+# Requirements
+
+> Major Dependencies
+
+- Preact
+- React Router Dom
+- Material Ui
+- For more refer to package.json.
+
+# Project Information
+
+<p align="left">  
+<img src="https://img.shields.io/badge/Language-Javascript-brightgreen">
+<img src="https://img.shields.io/badge/Platform-Web-blue">
+<img src="https://img.shields.io/badge/Framework-Preact-blueviolet">
+<img src="https://img.shields.io/badge/Version-0.0.1-ff69b4">
+
+</p>
 
 ## CLI Commands
 
-``` bash
+```bash
 # install dependencies
 npm install
 
