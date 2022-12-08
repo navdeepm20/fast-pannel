@@ -80,7 +80,11 @@ function Model({ ...props }) {
             <ErrorOccured />
           ) : (
             <>
-              <TableAction selected={selected} handleDelete={handleDelete} />
+              <TableAction
+                selected={selected}
+                handleDelete={handleDelete}
+                addObjectPageLink="add"
+              />
               <Table
                 onSelectionModelChange={(newSelectionModel) => {
                   setSelected(newSelectionModel);

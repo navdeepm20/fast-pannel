@@ -6,16 +6,22 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Typography from "@mui/material/Typography";
+import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 //internal
 import CustomButton from "../../components/utility/Btn";
+//libs
+import { useNavigate } from "react-router-dom";
 
-function TableAction({ selected, handleDelete, ...props }) {
+function TableAction({ selected, handleDelete, addObjectPageLink, ...props }) {
+  const navigate = useNavigate();
   //action
   const [action, setAction] = useState("");
 
   const handleActionChange = (event) => {
     setAction(event.target.value);
+  };
+  const handleAdd = (e) => {
+    navigate(addObjectPageLink);
   };
 
   return (
@@ -59,6 +65,14 @@ function TableAction({ selected, handleDelete, ...props }) {
           Go
         </CustomButton>
       </Box>
+
+      <CustomButton
+        sx={{ ml: "1rem" }}
+        onClick={handleAdd}
+        startIcon={<AddToPhotosIcon />}
+      >
+        Add
+      </CustomButton>
     </Paper>
   );
 }
