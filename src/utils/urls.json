@@ -1,6 +1,6 @@
 {
   "signin": "/signin",
-  "baseUrl": "http://localhost:8001/fastpanel/",
+  "baseUrl": "http://localhost:8000/fastpanel/",
   "apps_get": { "url": "/fetch-models", "method": "GET" },
   "model_get": { "url": "/models/objects/", "method": "GET" },
   "model_objects_get": { "url": "/models/objects/", "method": "GET" },
