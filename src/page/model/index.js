@@ -2,29 +2,66 @@
 import { useState, useEffect } from "preact/hooks";
 //mui
 import Paper from "@mui/material/Paper";
+
 //hooks
 import useAxios from "../../hooks/useAxios";
 //internal
 import Table from "../../components/table";
 import Loader from "../../components/loading";
 import PageHeading from "../../components/page_heading";
+import TableAction from "../../components/table_action";
+import BlockingLoader from "../../components/BlockingLoader";
 //utils
 import urls from "../../utils/urls.json";
 import { createCols, colsConfig, createRows } from "./utility";
 //libs
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ErrorOccured from "../../components/error";
-import { Typography } from "@mui/material";
+//custom axios
+import axios from "../../axios";
+import { httpErrorHandler, notificationHandler } from "../../utils/utility";
 
+const deleteObject = async (objectId, appName, modelName) => {
+  try {
+    const response = await axios({
+      method: urls?.models_objects_delete?.method,
+      url: urls?.models_objects_delete?.url,
+      data: {
+        object_id: objectId,
+        app_name: appName,
+        model_name: modelName,
+      },
+    });
+  } catch (error) {
+    httpErrorHandler(error);
+  }
+};
 function Model({ ...props }) {
   const { modelName, appName } = useParams();
-  const [selectionModel, setSelectionModel] = useState([]);
+  const [selected, setSelected] = useState([]);
   const [response, error, loading, refetch] = useAxios({
     url: `${urls?.model_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_get?.method,
   });
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
+  const navigate = useNavigate();
+
+  //for actions
+  const [isPerformingAction, setIsPerformingAction] = useState(false);
+  const handleDelete = async (e) => {
+    setIsPerformingAction(true);
+    for (let object = 0; object < selected.length; object++) {
+      await deleteObject(selected[object], appName, modelName);
+    }
+    setIsPerformingAction(false);
+    notificationHandler({
+      severity: "success",
+      title: "Operation Successfully Executed",
+    });
+    navigate(`/apps/${appName}`);
+  };
+  //reaction on after response
   useEffect(() => {
     if (response) {
       setCols(createCols(response.data?.items?.[0], colsConfig));
@@ -42,24 +79,31 @@ function Model({ ...props }) {
           {error ? (
             <ErrorOccured />
           ) : (
-            <Table
-              onSelectionModelChange={(newSelectionModel) => {
-                setSelectionModel(newSelectionModel);
-              }}
-              selectionModel={selectionModel}
-              rows={rows}
-              columns={cols}
-              handleRowClick={({ tableProps, navigate }) => {
-                if (window.opener) {
-                  window.opener.postMessage(tableProps?.row?.id, "*");
-                  window.close();
-                }
-                navigate(`${tableProps?.id}/edit`);
-              }}
-            />
+            <>
+              <TableAction selected={selected} handleDelete={handleDelete} />
+              <Table
+                onSelectionModelChange={(newSelectionModel) => {
+                  setSelected(newSelectionModel);
+                }}
+                selectionModel={selected}
+                rows={rows}
+                columns={cols}
+                handleRowClick={({ tableProps, navigate }) => {
+                  if (window.opener) {
+                    window.opener.postMessage(tableProps?.row?.id, "*");
+                    window.close();
+                  }
+                  navigate(`${tableProps?.id}/edit`);
+                }}
+              />
+            </>
           )}
         </>
       )}
+      <BlockingLoader
+        show={isPerformingAction}
+        message="Performing Action..."
+      />
     </Paper>
   );
 }

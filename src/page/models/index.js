@@ -3,7 +3,6 @@ import { useEffect, useState } from "preact/hooks";
 import ErrorOccured from "../../components/error";
 import PageHeading from "../../components/page_heading";
 import Table from "../../components/table";
-import { CustomCellWithButton, CustomCellWithLinkText } from "./CustomCells";
 //mui
 import Paper from "@mui/material/Paper";
 
@@ -23,6 +22,7 @@ function Models({ ...props }) {
     url: `${urls?.apps_get?.url}?app_name=${appName}`,
     method: urls?.apps_get?.method,
   });
+
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
 
@@ -50,12 +50,14 @@ function Models({ ...props }) {
           {error ? (
             <ErrorOccured />
           ) : (
-            <Table
-              rows={rows}
-              columns={cols}
-              checkboxSelection={false}
-              sx={{ maxWidth: "1000px" }}
-            />
+            <>
+              <Table
+                rows={rows}
+                columns={cols}
+                checkboxSelection={false}
+                sx={{ maxWidth: "1000px" }}
+              />
+            </>
           )}
         </>
       )}

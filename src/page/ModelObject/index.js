@@ -63,11 +63,10 @@ function ModelObject({ objectData, ...props }) {
       },
     });
   };
-  useEffect(() => {
-    if (apiResponse) {
-      // console.log(apiResponse);
-    }
-  }, [apiResponse]);
+  // useEffect(() => {
+  //   if (apiResponse) {
+  //   }
+  // }, [apiResponse]);
 
   return (
     <>

@@ -49,7 +49,7 @@ function ModelObjectEdit({ objectData, ...props }) {
       url: `${urls?.model_objects_get?.url}${objectId}?app_name=${appName}&model_name=${modelName}`,
       method: urls?.model_objects_get?.method,
     });
-  //for submit data
+  //for submit & delete data
   const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
 
   const formRef = useRef();
