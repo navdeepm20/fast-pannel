@@ -1,6 +1,6 @@
 # FastPanel
 
-> A modern admin panel that power up the FastApi with the help of it's wrapper https://github.com/ankit-brijwasi/fastPanel
+> A modern admin panel that power up the FastApi Projects to scale without thinking about an admin pannel. This project is combination of two modules the frontend and the backend and support project with MongoDb as the primary database. The backend project can be found here https://github.com/ankit-brijwasi/fastPanel
 
 # Requirements
 
@@ -8,7 +8,7 @@
 
 - Preact
 - React Router Dom
-- Material Ui
+- Material UI 
 - For more refer to package.json.
 
 # Project Information
