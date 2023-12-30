@@ -37,7 +37,7 @@ export default function SignIn({ ...props }) {
     axiosFetch({
       axiosInstance: axiosInstance,
       method: "POST",
-      url: "/login",
+      url: urls.signin,
       data: data,
     });
   };

@@ -116,7 +116,7 @@ const Sidebar = ({ DRAWER_WIDTH, open, handleDrawerClose, ...props }) => {
           }}
         >
           <Avatar sx={{ backgroundColor: "#673ab7", mr: "8px" }}>
-            {user?.user?.first_name.charAt(0)}
+            {user?.user?.first_name?.charAt(0)}
           </Avatar>
           <Typography>{user?.user?.first_name}</Typography>
         </Box>

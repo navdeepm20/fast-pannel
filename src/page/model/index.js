@@ -44,6 +44,7 @@ function Model({ ...props }) {
     url: `${urls?.model_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_get?.method,
   });
+  console.log(response);
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
@@ -62,11 +63,12 @@ function Model({ ...props }) {
     });
     navigate(`/apps/${appName}`);
   };
+
   //reaction on after response
   useEffect(() => {
     if (response) {
-      setCols(createCols(response.data?.items?.[0], colsConfig));
-      setRows(createRows(response?.data?.items), {});
+      setCols(createCols(response.data[0], colsConfig));
+      setRows(createRows(response?.data), {});
     }
   }, [response]);
 

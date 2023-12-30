@@ -21,11 +21,12 @@ function Apps({ ...props }) {
       Authorization: getAuthToken(),
     },
   });
+  console.log(response?.data);
   const [appsData, setAppsData] = useState([]);
 
   useEffect(() => {
     if (response) {
-      setAppsData(response.data?.items);
+      setAppsData(response.data);
     }
   }, [response]);
 
@@ -42,8 +43,13 @@ function Apps({ ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Stack direction="row" gap="24px" flexWrap="wrap">
-          {appsData.map((app, index) => {
-            return <AppCard appName={app?.name} models={app?.models}></AppCard>;
+          {appsData?.map((app, index) => {
+            return (
+              <AppCard
+                appName={app?.app_name?.split(".")?.pop()}
+                models={app?.models}
+              ></AppCard>
+            );
           })}
         </Stack>
       )}
