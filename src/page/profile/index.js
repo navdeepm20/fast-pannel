@@ -24,7 +24,7 @@ function Profile({ ...props }) {
     url:
       urls.model_objects_get?.url +
       userInfo?._id +
-      `?app_name=core&model_name=fastpaneluser`,
+      `?app_name=fastpanel.core.accounts&model_name=fastpaneluser`,
     method: urls?.model_objects_get?.method,
   });
   const [profileData, setProfileData] = useState({});
@@ -54,7 +54,7 @@ function Profile({ ...props }) {
           last_name,
           email,
         },
-        app_name: "core",
+        app_name: "fastpanel.core.accounts",
         model_name: "fastpaneluser",
       },
     });

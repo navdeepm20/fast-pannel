@@ -4,8 +4,8 @@ import Typography from "@mui/material/Typography";
 //utility
 import { getFieldComponentByType } from "../../page/ModelObject/utility";
 
-function GetFieldComponent({ fieldName, fieldValue, mode, ...props }) {
-  const ComponentByType = getFieldComponentByType(fieldName, fieldValue, mode);
+function GetFieldComponent({ fieldInfo, mode, ...props }) {
+  const ComponentByType = getFieldComponentByType(fieldInfo, mode);
   return (
     <Stack
       direction="row"
@@ -19,9 +19,10 @@ function GetFieldComponent({ fieldName, fieldValue, mode, ...props }) {
         color="text.grey"
         sx={{ width: "160px", wordWrap: "break-word", mr: ".8rem" }}
       >
-        {fieldName}
+        {fieldInfo?.fieldName?.charAt(0)?.toUpperCase() +
+          fieldInfo?.fieldName?.substr(1)}
       </Typography>
-      <ComponentByType name={fieldName} />
+      <ComponentByType name={fieldInfo?.fieldName} />
     </Stack>
   );
 }

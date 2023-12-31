@@ -34,16 +34,29 @@ function ModelObjectCreate({ objectData, ...props }) {
   });
   const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
   const formRef = useRef();
+
   useEffect(() => {
-    if (response) {
+    if (response && Object.keys(response?.data?.properties).length > 0) {
       setFields(
-        response.data?.filter((modelField, index) => {
-          const field = Object.keys(modelField)[0];
-          return field !== "id" && field !== "_id";
-        })
+        Object.entries(response.data?.properties)
+          .map(([key, value]) => {
+            return { fieldName: key, ...value };
+          })
+          .filter(
+            (value) => value?.fieldName !== "id" && value?.fieldName !== "_id"
+          )
       );
     }
   }, [response]);
+
+  useEffect(() => {
+    if (apiResponse && apiResponse.status === 200) {
+      notificationHandler({
+        severity: "success",
+        title: "Record Successfully Added",
+      });
+    }
+  }, [apiResponse]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,23 +69,14 @@ function ModelObjectCreate({ objectData, ...props }) {
         url: urls?.models_objects_post?.url,
         data: {
           data: data?.data,
-          app_name: appName,
-          model_name: modelName,
+          app: appName,
+          model: modelName,
         },
       });
     } else {
       notificationHandler({ severity: "error", title: data?.error });
     }
   };
-
-  useEffect(() => {
-    if (apiResponse && apiResponse.status === 200) {
-      notificationHandler({
-        severity: "success",
-        title: "Record Successfully Added",
-      });
-    }
-  }, [apiResponse]);
 
   return (
     <Paper
@@ -97,14 +101,7 @@ function ModelObjectCreate({ objectData, ...props }) {
                 }}
               >
                 {fields.map((field, index) => {
-                  const fieldName = Object.keys(field)[0];
-                  return (
-                    <SingleObject
-                      fieldName={fieldName}
-                      fieldValue={field[fieldName]}
-                      mode="create"
-                    />
-                  );
+                  return <SingleObject fieldInfo={field} mode="create" />;
                 })}
               </Box>
               <Stack direction="row" gap={2}>

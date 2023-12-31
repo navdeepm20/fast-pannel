@@ -22,7 +22,6 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useParams } from "react-router-dom";
 
 function ModelObject({ objectData, ...props }) {
-  const theme = useTheme();
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
   const [response, error, loading, refetch] = useAxios({
@@ -58,15 +57,11 @@ function ModelObject({ objectData, ...props }) {
       url: urls?.models_objects_patch?.url,
       data: {
         data: data,
-        app_name: appName,
-        model_name: modelName,
+        app: appName,
+        model: modelName,
       },
     });
   };
-  // useEffect(() => {
-  //   if (apiResponse) {
-  //   }
-  // }, [apiResponse]);
 
   return (
     <>

@@ -26,12 +26,7 @@ const deleteObject = async (objectId, appName, modelName) => {
   try {
     const response = await axiosInstance({
       method: urls?.models_objects_delete?.method,
-      url: urls?.models_objects_delete?.url,
-      data: {
-        object_id: objectId,
-        app_name: appName,
-        model_name: modelName,
-      },
+      url: `${urls?.models_objects_delete?.url}${objectId}?app_name=${appName}&model_name=${modelName}`,
     });
   } catch (error) {
     httpErrorHandler(error);
@@ -44,7 +39,7 @@ function Model({ ...props }) {
     url: `${urls?.model_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_get?.method,
   });
-  console.log(response);
+
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
@@ -61,7 +56,7 @@ function Model({ ...props }) {
       severity: "success",
       title: "Operation Successfully Executed",
     });
-    navigate(`/apps/${appName}`);
+    refetch();
   };
 
   //reaction on after response

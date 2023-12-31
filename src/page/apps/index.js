@@ -21,7 +21,7 @@ function Apps({ ...props }) {
       Authorization: getAuthToken(),
     },
   });
-  console.log(response?.data);
+
   const [appsData, setAppsData] = useState([]);
 
   useEffect(() => {
@@ -46,7 +46,8 @@ function Apps({ ...props }) {
           {appsData?.map((app, index) => {
             return (
               <AppCard
-                appName={app?.app_name?.split(".")?.pop()}
+                appName={app?.app_name}
+                displayName={app?.app_name?.split(".")?.pop()}
                 models={app?.models}
               ></AppCard>
             );

@@ -55,13 +55,15 @@ function ModelObjectEdit({ objectData, ...props }) {
   const formRef = useRef();
   //for catching the fields types response
   useEffect(() => {
-    if (response) {
-      //removing the id fields
+    if (response && Object.keys(response?.data?.properties).length > 0) {
       setFields(
-        response.data?.filter((modelField, index) => {
-          const field = Object.keys(modelField)[0];
-          return field !== "id" && field !== "_id";
-        })
+        Object.entries(response.data?.properties)
+          .map(([key, value]) => {
+            return { fieldName: key, ...value };
+          })
+          .filter(
+            (value) => value?.fieldName !== "id" && value?.fieldName !== "_id"
+          )
       );
     }
   }, [response]);
@@ -77,19 +79,17 @@ function ModelObjectEdit({ objectData, ...props }) {
   useEffect(() => {
     if (Object.keys(modelObjData).length && fields?.length) {
       setFieldsWithValue((prev) => {
-        const fieldsWithValue = response?.data?.map((field) => {
-          const fieldName = Object.keys(field)[0];
-          return {
-            [fieldName]: {
-              value: modelObjData[fieldName],
-              ...field[fieldName],
-            },
-          };
-        });
-        return fieldsWithValue.filter((modelField, index) => {
-          const field = Object.keys(modelField)[0];
-          return field !== "id" && field !== "_id" && field !== "password";
-        });
+        return fields
+          .map((fieldInfo) => {
+            return {
+              value: modelObjData[fieldInfo?.fieldName],
+              ...fieldInfo,
+            };
+          })
+          .filter((modelField, index) => {
+            const field = Object.keys(modelField)[0];
+            return field !== "id" && field !== "_id" && field !== "password";
+          });
       });
     }
   }, [fields, modelObjData]);
@@ -104,12 +104,11 @@ function ModelObjectEdit({ objectData, ...props }) {
       axiosFetch({
         axiosInstance: axiosInstance,
         method: urls?.models_objects_patch?.method,
-        url: urls?.models_objects_patch?.url,
+        url: `${urls?.models_objects_patch?.url}${objectId}`,
         data: {
-          object_id: objectId,
           data: filteredData,
-          app_name: appName,
-          model_name: modelName,
+          app: appName,
+          model: modelName,
         },
       });
     } else {
@@ -123,12 +122,7 @@ function ModelObjectEdit({ objectData, ...props }) {
     axiosFetch({
       axiosInstance: axiosInstance,
       method: urls?.models_objects_delete?.method,
-      url: urls?.models_objects_delete?.url,
-      data: {
-        object_id: objectId,
-        app_name: appName,
-        model_name: modelName,
-      },
+      url: `${urls?.models_objects_delete?.url}${objectId}?app_name=${appName}&model_name=${modelName}`,
     });
   };
 
@@ -164,13 +158,11 @@ function ModelObjectEdit({ objectData, ...props }) {
                   mt: ".5rem",
                 }}
               >
-                {fieldsWithValue.map((field, index) => {
-                  const fieldName = Object.keys(field)[0];
+                {fieldsWithValue.map((fieldInfo, index) => {
                   return (
                     <SingleObject
                       key={index}
-                      fieldName={fieldName}
-                      fieldValue={field[fieldName]}
+                      fieldInfo={fieldInfo}
                       mode="edit"
                     />
                   );

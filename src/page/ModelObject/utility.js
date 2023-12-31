@@ -49,10 +49,16 @@ const CustomTextField = forwardRef((props) => {
       {...props}
       inputProps={{
         ref: props?.compRef,
+        // style: { maxHeight: "1rem" },
       }}
-      // placeholder={props?.name}
+      placeholder={props?.name}
       InputLabelProps={{ shrink: true }}
-      label={props?.name}
+      InputProps={{
+        sx: {
+          p: 1,
+        },
+      }}
+      // label={props?.name}
       multiline
       required={props?.required}
       value={value}
@@ -99,7 +105,7 @@ const CustomConnectedWith = ({
 };
 
 export const fieldTypesComponentMapping = {
-  str: {
+  string: {
     component: CustomTextField,
     props: {
       type: "text",
@@ -137,49 +143,51 @@ export const fieldTypesComponentMapping = {
   },
 };
 
-export const getFieldComponentByType = (fieldName, fieldValue, mode) => {
+export const getFieldComponentByType = (fieldInfo, mode) => {
   const CustomComponentConfig =
-    fieldTypesComponentMapping[fieldValue?.type || "str"] ||
-    fieldTypesComponentMapping["str"];
+    fieldTypesComponentMapping[fieldInfo?.type || "string"] ||
+    fieldTypesComponentMapping["string"];
 
   const CustomComponent = () => {
     const customRef = useRef();
     //getting component
     const Comp = CustomComponentConfig?.component;
 
-    if (fieldValue?.type === "datetime" || fieldValue?.type === "date") {
+    if (fieldInfo?.type === "datetime" || fieldInfo?.type === "date") {
       return (
         //for date && datetiem
         <Comp
           {...CustomComponentConfig?.props}
-          datestring={fieldValue?.value}
-          disabled={mode !== "create" && !fieldValue?.editable}
-          renderInput={(params) => <TextField {...params} name={fieldName} />}
+          datestring={fieldInfo?.value}
+          disabled={mode !== "create"}
+          renderInput={(params) => (
+            <TextField {...params} name={fieldInfo?.fieldName} />
+          )}
           ref={customRef}
         />
       );
-    } else if (fieldValue?.type === "bool") {
+    } else if (fieldInfo?.type === "bool") {
       //for checkbox
       return (
         <Comp
           {...CustomComponentConfig?.props}
-          checked={fieldValue?.value}
-          name={fieldName}
-          disabled={mode !== "create" && !fieldValue?.editable}
+          checked={fieldInfo?.value}
+          name={fieldInfo?.fieldName}
+          disabled={mode !== "create"}
           ref={customRef}
         />
       );
     } else {
-      if (fieldValue?.connected_with) {
-        const [appName, modelName] = fieldValue?.connected_with?.split(".");
+      if (fieldInfo?.connected_with) {
+        const [appName, modelName] = fieldInfo?.connected_with?.split(".");
         return (
           <Stack direction="row" alignItems="center">
             <Comp
               {...CustomComponentConfig?.props}
-              name={fieldName}
-              value={fieldValue?.value || fieldValue?.default}
-              disabled={!fieldValue?.editable}
-              required={fieldValue?.required}
+              name={fieldInfo?.fieldName}
+              value={fieldInfo?.value || fieldInfo?.default}
+              // disabled={!fieldInfo?.editable}
+              required={fieldInfo?.required}
               compRef={customRef}
             />
             <CustomConnectedWith
@@ -199,11 +207,11 @@ export const getFieldComponentByType = (fieldName, fieldValue, mode) => {
         //for normal (textfield)
         <Comp
           {...CustomComponentConfig?.props}
-          name={fieldName}
-          value={fieldValue?.value}
-          disabled={!fieldValue?.editable}
+          name={fieldInfo?.fieldName}
+          value={fieldInfo?.value}
+          // disabled={!fieldInfo?.editable}
           ref={customRef}
-          required={fieldValue?.required}
+          required={fieldInfo?.required}
         />
       );
     }
@@ -216,40 +224,39 @@ export const validateFormData = (formRef, fields) => {
   let data = {};
 
   for (let i = 0; i < fields?.length; i++) {
-    const fieldName = Object.entries(fields[i])[0][0];
-    const fieldValue = Object.entries(fields[i])[0][1];
+    const formFieldName = fields[i].fieldName;
 
-    if (formRef.current.elements[fieldName]?.type === "checkbox") {
+    if (formRef.current.elements[formFieldName]?.type === "checkbox") {
       //for checkbox
-      if (formRef.current.elements[fieldName]?.checked !== "on") {
-        data[fieldName] = formRef.current.elements[fieldName].checked;
+      if (formRef.current.elements[formFieldName]?.checked !== "on") {
+        data[formFieldName] = formRef.current.elements[formFieldName].checked;
       } else {
-        data[fieldName] = false;
+        data[formFieldName] = false;
       }
     }
     //for date or datetime field
-    else if (formRef.current.elements[fieldName]?.type === "tel") {
-      const value = formRef.current.elements[fieldName].value;
+    else if (formRef.current.elements[formFieldName]?.type === "tel") {
+      const value = formRef.current.elements[formFieldName].value;
       if (value.trim() === "") {
-        return { data, error: `${fieldName} cant be empty` };
+        return { data, error: `${formFieldName} cant be empty` };
       }
       //for date or datetime
-      data[fieldName] = formRef.current.elements[fieldName].value;
+      data[formFieldName] = formRef.current.elements[formFieldName].value;
     }
     //for textfield
     else {
-      const value = formRef.current.elements[fieldName].value;
+      const value = formRef.current.elements[formFieldName].value;
 
       if (value.trim() === "" && fieldValue?.required) {
-        return { data, error: `${fieldName} cant be empty` };
+        return { data, error: `${formFieldName} cant be empty` };
       } else if (
         value.trim() === "" &&
         !fieldValue?.required &&
         fieldValue.connected_with
       ) {
-        data[fieldName] = null;
+        data[formFieldName] = null;
       } else {
-        data[fieldName] = formRef.current.elements[fieldName].value;
+        data[formFieldName] = formRef.current.elements[formFieldName].value;
       }
     }
   }

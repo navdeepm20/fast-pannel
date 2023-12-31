@@ -16,7 +16,7 @@ import CustomButton from "../../utility/Btn";
 //libs
 import { useNavigate } from "react-router-dom";
 
-function AppCard({ appName, models, ...props }) {
+function AppCard({ appName, models, displayName, ...props }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const handleAdd = (e, appName, modelName) => {
@@ -55,7 +55,7 @@ function AppCard({ appName, models, ...props }) {
             textTransform: "capitalize",
           }}
         >
-          {appName}
+          {displayName}
         </Typography>
         <Stack>
           {models.length > 3

@@ -30,12 +30,7 @@ function Models({ ...props }) {
     // fetch data here
     if (response) {
       setCols(
-        createCols(
-          response.data?.items?.[0]?.models,
-          colsConfig,
-          colsConfig,
-          appName
-        )
+        createCols(response.data[0]?.models, colsConfig, colsConfig, appName)
       );
       setRows(createRows(response.data?.items?.[0]?.models));
     }
