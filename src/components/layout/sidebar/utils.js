@@ -3,9 +3,39 @@ import { styled } from "@mui/material/styles";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemButton from "@mui/material/ListItemButton";
 import MuiDrawer from "@mui/material/Drawer";
-
 import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
-// ----------------------------------------------------------------------
+import AppsIcon from "@mui/icons-material/Apps";
+import PersonIcon from "@mui/icons-material/Person";
+import LogoutIcon from "@mui/icons-material/Logout";
+
+export const getSidebarConfig = ({
+  handleLogoutClick,
+  handleProfileClick,
+  handleAppsClick,
+  ...props
+}) => [
+  {
+    title: "apps",
+    path: "/",
+    icon: <AppsIcon />,
+    onClickHandler: handleAppsClick ? handleAppsClick : () => {},
+    tooltipText: "Apps",
+  },
+  {
+    title: "profile",
+    path: "/profile",
+    icon: <PersonIcon />,
+    onClickHandler: handleProfileClick ? handleProfileClick : () => {},
+    tooltipText: "Profile",
+  },
+  {
+    title: "logout",
+    path: "",
+    icon: <LogoutIcon />,
+    onClickHandler: handleLogoutClick ? handleLogoutClick : () => {},
+    tooltipText: "Logout",
+  },
+];
 
 export const StyledNavItem = styled((props) => (
   <ListItemButton disableGutters {...props} />

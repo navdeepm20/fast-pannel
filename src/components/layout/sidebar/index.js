@@ -13,9 +13,10 @@ import Logo from "../../../assets/logo/fast-panel-logo-2.png";
 import NavSection from "./NavSection";
 import { Drawer } from "./utils";
 //sidebarconfig
-import { sidebarConfig } from "./sidebarConfig";
+import { getSidebarConfig } from "./utils";
 //hooks internal
 import useAuth from "../../../hooks/useAuth";
+import useGlobalContext from "../../../hooks/useGlobalContext";
 
 const Sidebar = ({
   DRAWER_WIDTH,
@@ -26,6 +27,13 @@ const Sidebar = ({
 }) => {
   const [user] = useAuth();
   const theme = useTheme();
+  const { setIsLogoutDialogOpen } = useGlobalContext();
+  const sidebarConfig = getSidebarConfig({
+    handleLogoutClick: () => {
+      setIsLogoutDialogOpen(true);
+    },
+  });
+
   return (
     <Box position="relative">
       <Drawer
@@ -44,7 +52,7 @@ const Sidebar = ({
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            mt: 4,
+            mt: 2,
           }}
         >
           <Avatar
@@ -74,7 +82,7 @@ const Sidebar = ({
         <Box
           sx={{
             px: open ? 2.5 : 1,
-            mt: "2rem",
+            mt: 2,
           }}
         >
           <Box
@@ -90,7 +98,7 @@ const Sidebar = ({
               }),
               justifyContent: "flex-start",
 
-              mb: "3rem",
+              mb: 3,
             }}
           >
             <Avatar

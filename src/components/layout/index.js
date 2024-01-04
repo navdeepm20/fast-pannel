@@ -1,40 +1,26 @@
 //preact
 import { useState } from "preact/hooks";
-
-import { styled, useTheme } from "@mui/material/styles";
-
+//mui
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-
-import { DRAWER_WIDTH, NAVBAR_HEIGHT, CLOSED_DRAWER_WIDTH } from "./utils";
-import DrawerHeader from "./drawer_header";
+//utils
+import { DRAWER_WIDTH, NAVBAR_HEIGHT } from "./utils";
+import { Main } from "./utils";
+//internal
+import LogoutConfirmationDialog from "../dialogs/LogoutConfirmationDialog";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
+//libs
 import { Outlet } from "react-router-dom";
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginTop: `${NAVBAR_HEIGHT}px`,
-    height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
-
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  })
-);
-
+//hooks
+import useAuth from "../../hooks/useAuth";
+import useGlobalContext from "../../hooks/useGlobalContext";
+import { logout } from "../../utils/utility";
+//utils
 export default function Layout() {
   const [open, setOpen] = useState(true);
-
+  const { isLogoutDialogOpen, setIsLogoutDialogOpen } = useGlobalContext();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -42,6 +28,8 @@ export default function Layout() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const [_, dispatch] = useAuth();
 
   return (
     <Box sx={{ display: "flex", position: "relative" }}>
@@ -60,6 +48,15 @@ export default function Layout() {
       <Main open={open}>
         <Outlet />
       </Main>
+      {/* dialogs */}
+      <LogoutConfirmationDialog
+        open={isLogoutDialogOpen}
+        handleClose={(e) => setIsLogoutDialogOpen(false)}
+        handleLogout={(e) => {
+          setIsLogoutDialogOpen(false);
+          logout(dispatch);
+        }}
+      />
     </Box>
   );
 }

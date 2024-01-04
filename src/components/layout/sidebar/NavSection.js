@@ -5,14 +5,12 @@ import { Box, List, ListItemText } from "@mui/material";
 import { StyledNavItem, StyledNavItemIcon } from "./utils";
 //hooks
 import useAuth from "../../../hooks/useAuth";
-// ----------------------------------------------------------------------
 
 export default function NavSection({ data = [], open, ...other }) {
   return (
     <Box {...other}>
       <List disablePadding sx={{ p: open ? 1 : 0 }}>
         {data.map((item) => {
-          console.log(item);
           return <NavItem key={item.title} item={item} open={open} />;
         })}
       </List>
@@ -39,9 +37,7 @@ function NavItem({ item, open }) {
         >
           <StyledNavItem
             className="styled__navitem"
-            onClick={(e) => {
-              onClickHandler(e, dispatch);
-            }}
+            onClick={onClickHandler}
             sx={{ justifyContent: open ? "flex-start" : "center" }}
           >
             <StyledNavItemIcon title={tooltipText && tooltipText}>

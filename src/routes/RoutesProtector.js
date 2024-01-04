@@ -11,5 +11,4 @@ function RoutesProtector({ children, ...props }) {
     <>{user.isAuthenticated ? <Outlet /> : <Navigate to={appRoutes.login} />}</>
   );
 }
-
 export default RoutesProtector;
