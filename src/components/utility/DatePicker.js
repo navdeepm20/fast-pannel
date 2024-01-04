@@ -15,7 +15,7 @@ function CustomDatePicker({ datestring, ...props }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DesktopDatePicker
-        label="Date desktop"
+        // label="Date desktop"
         inputFormat="MM/DD/YYYY"
         value={value}
         onChange={handleChange}

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { DRAWER_WIDTH } from "../../../utils/utility";
+import { DRAWER_WIDTH } from "../utils";
 //internal
 import OptionsMenu from "./OptionsMenu";
 //utils

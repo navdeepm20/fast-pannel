@@ -19,7 +19,6 @@ function CustomDateTimePicker({ datestring, ...props }) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
-        label="Date&Time picker"
         value={value}
         onChange={handleChange}
         renderInput={(params) => <TextField {...params} />}

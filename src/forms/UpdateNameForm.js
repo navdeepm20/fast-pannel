@@ -24,10 +24,10 @@ export default function UpdateNameForm(props) {
   const [open, setOpen] = useState(false);
 
   const FORM_INITIAL_VALUES = {
-    first_name: props.firstName ? props.firstName : "",
-    last_name: props.lastName ? props.lastName : "",
-    email: props.email ? props?.email : "",
-    username: props.username ? props?.username : "",
+    first_name: props.firstName || "",
+    last_name: props.lastName || "",
+    email: props.email || "",
+    username: props.username || "",
   };
 
   const handleClickOpen = () => {
@@ -40,15 +40,16 @@ export default function UpdateNameForm(props) {
 
   return (
     <Formik
+      enableReinitialize
       initialValues={FORM_INITIAL_VALUES}
       validationSchema={LOCAL_FORM_VALIDATION}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true);
         await props.updateProfileHandler({
-          first_name: values?.first_name,
-          last_name: values?.last_name,
-          email: values?.email,
-          username: values?.username,
+          first_name: values?.first_name || null,
+          last_name: values?.last_name || null,
+          email: values?.email || null,
+          username: values?.username || null,
         });
         setSubmitting(false);
         handleClose();

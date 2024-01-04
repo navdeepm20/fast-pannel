@@ -10,9 +10,17 @@ import TextField from "@mui/material/TextField";
 import { format } from "date-fns";
 //intenal
 import UpdateNameForm from "./UpdateNameForm";
-import UpdatePasswordForm from "./UpdatePasswordForm";
 
-export default function UpdateProfileForm(props) {
+export default function UpdateProfileForm({
+  firstName,
+  lastName,
+  username,
+  email,
+  loading,
+  lastLogin,
+  createdOn,
+  updateProfile,
+}) {
   return (
     <>
       <Container
@@ -60,7 +68,7 @@ export default function UpdateProfileForm(props) {
                   <TextField
                     type="text"
                     disabled
-                    value={(props.firstName && props.firstName) || ""}
+                    value={firstName || "-"}
                     id="first-name"
                     inputProps={{
                       style: {
@@ -80,7 +88,7 @@ export default function UpdateProfileForm(props) {
                   <TextField
                     type="text"
                     disabled
-                    value={(props.lastName && props.lastName) || ""}
+                    value={lastName || "-"}
                     id="last-name"
                     inputProps={{
                       style: {
@@ -112,7 +120,7 @@ export default function UpdateProfileForm(props) {
                   disabled
                   type="email"
                   id="email"
-                  value={(props.email && props.email) || ""}
+                  value={email || "-"}
                   inputProps={{
                     style: {
                       padding: "10px",
@@ -142,7 +150,7 @@ export default function UpdateProfileForm(props) {
                   disabled
                   type="email"
                   id="username"
-                  value={(props.username && props.username) || ""}
+                  value={username || "-"}
                   inputProps={{
                     style: {
                       padding: "10px",
@@ -211,9 +219,7 @@ export default function UpdateProfileForm(props) {
                     color: "#0f0f0f",
                   }}
                 >
-                  {props?.created_on
-                    ? format(new Date(props.created_on), "dd MMM yyyy")
-                    : ""}
+                  {createdOn ? format(new Date(createdOn), "dd MMM yyyy") : ""}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center">
@@ -235,9 +241,7 @@ export default function UpdateProfileForm(props) {
                     color: "#0f0f0f",
                   }}
                 >
-                  {props?.last_login
-                    ? format(new Date(props.last_login), "dd MMM yyyy")
-                    : ""}
+                  {lastLogin ? format(new Date(lastLogin), "dd MMM yyyy") : ""}
                 </Typography>
               </Stack>
             </Stack>
@@ -247,11 +251,11 @@ export default function UpdateProfileForm(props) {
               sx={{ my: "38px", height: "160px", pl: "8px" }}
             >
               <UpdateNameForm
-                updateProfileHandler={props.updateProfile}
-                firstName={(props.firstName && props.firstName) || ""}
-                lastName={(props.lastName && props.lastName) || ""}
-                email={(props.email && props.email) || ""}
-                username={(props.username && props.username) || ""}
+                updateProfileHandler={updateProfile}
+                firstName={firstName}
+                lastName={lastName}
+                email={email}
+                username={username}
               />
               {/* <UpdatePasswordForm updatePassword={props.updatePassword} /> */}
             </Stack>

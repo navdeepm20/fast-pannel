@@ -1,26 +1,28 @@
-//forms
+//react
 import { useState, useEffect } from "preact/hooks";
+//forms
 import UpdateProfileForm from "../../forms/UpdateProfileForm";
 //utils
 import urls from "../../utils/urls.json";
 //internal
 import Loader from "../../components/loading";
+import ErrorOccured from "../../components/error";
 //hooks internal
-
-import PageHeading from "../../components/page_heading";
 import useAxios from "../../hooks/useAxios";
 import useAxiosFunction from "../../hooks/useAxiosFunction";
 import useAuth from "../../hooks/useAuth";
 // axios
 import { axiosInstance } from "../../axios";
-import ErrorOccured from "../../components/error";
+//utility
 import { notificationHandler } from "../../utils/utility";
-import { Paper } from "@mui/material";
+import Breadcrumbs from "../../components/breadcrumbs";
+//mui
+import Paper from "@mui/material/Paper";
 
 function Profile({ ...props }) {
   const [, dispatch] = useAuth();
   const userInfo = JSON.parse(localStorage.getItem("user"));
-  const [response, error, loading, refetch] = useAxios({
+  const [response, error, loading] = useAxios({
     url:
       urls.model_objects_get?.url +
       userInfo?._id +
@@ -45,9 +47,8 @@ function Profile({ ...props }) {
     axiosFetch({
       axiosInstance: axiosInstance,
       method: urls?.models_objects_patch?.method,
-      url: urls?.models_objects_patch?.url,
+      url: `${urls?.models_objects_patch?.url}${userInfo?._id}`,
       data: {
-        object_id: userInfo?._id,
         data: {
           username,
           first_name,
@@ -62,11 +63,11 @@ function Profile({ ...props }) {
   //will be triggered when apiresponse comes
   useEffect(() => {
     if (apiResponse && apiResponse.status === 200) {
-      setProfileData(apiResponse?.data?.data);
+      setProfileData(apiResponse?.data);
       dispatch({
         type: "update_user",
         payload: {
-          user: apiResponse?.data?.data,
+          user: apiResponse?.data,
         },
       });
       notificationHandler({
@@ -78,7 +79,6 @@ function Profile({ ...props }) {
 
   return (
     <Paper elevation={0}>
-      <PageHeading title="User Profile" />
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
@@ -86,16 +86,19 @@ function Profile({ ...props }) {
           {error ? (
             <ErrorOccured />
           ) : (
-            <UpdateProfileForm
-              firstName={profileData?.first_name}
-              lastName={profileData?.last_name}
-              username={profileData?.username}
-              email={profileData?.email}
-              loading={loading}
-              updateProfile={handleUpdateProfile}
-              created_on={profileData?.date_joined}
-              last_login={profileData?.last_login}
-            />
+            <>
+              <Breadcrumbs />
+              <UpdateProfileForm
+                firstName={profileData?.first_name}
+                lastName={profileData?.last_name}
+                username={profileData?.username}
+                email={profileData?.email}
+                loading={loading}
+                updateProfile={handleUpdateProfile}
+                createdOn={profileData?.date_joined}
+                lastLogin={profileData?.last_login}
+              />
+            </>
           )}
         </>
       )}

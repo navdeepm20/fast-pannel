@@ -18,7 +18,7 @@ import urls from "../../utils/urls.json";
 // internal
 import SvgWrapper from "../../components/svg";
 //assets
-import fastpanel_logo from "../../assets/logo/fastpannel1.png";
+import fastpanel_logo from "../../assets/logo/fast-panel-logo-2.png";
 
 export default function SignIn({ ...props }) {
   const [user, dispatch] = useAuth();

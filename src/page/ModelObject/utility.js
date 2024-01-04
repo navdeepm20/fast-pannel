@@ -11,9 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 //libs
 import dayjs from "dayjs";
-import { Link } from "react-router-dom";
 import { Stack } from "@mui/material";
-import { notificationHandler } from "../../utils/utility";
+import { logout, notificationHandler } from "../../utils/utility";
 
 export const createCols = (row, fieldConfig) => {
   if (row) {
@@ -49,17 +48,15 @@ const CustomTextField = forwardRef((props) => {
       {...props}
       inputProps={{
         ref: props?.compRef,
-        // style: { maxHeight: "1rem" },
+        style: { padding: "8px" },
       }}
       placeholder={props?.name}
       InputLabelProps={{ shrink: true }}
       InputProps={{
-        sx: {
-          p: 1,
-        },
+        sx: { p: 0 },
       }}
       // label={props?.name}
-      multiline
+      // multiline
       required={props?.required}
       value={value}
       onChange={(e) => {
@@ -110,111 +107,184 @@ export const fieldTypesComponentMapping = {
     props: {
       type: "text",
     },
+    type: "string",
   },
-  int: {
+  integer: {
     component: CustomTextField,
     props: {
       type: "number",
     },
+    type: "integer",
   },
   float: {
     component: CustomTextField,
     props: {
       type: "number",
     },
+    type: "float",
   },
-  bool: {
+  boolean: {
     component: Checkbox,
     props: {},
+    type: "boolean",
   },
   EmailStr: {
     component: CustomTextField,
     props: {
       type: "email",
     },
+    type: "email",
   },
-  datetime: {
+  ["date-time"]: {
     component: DateTimePicker,
     props: {},
+    type: "datetime",
   },
   date: {
     component: DatePicker,
     props: {},
+    type: "date",
   },
+  // time: {
+  //   component: DatePicker,
+  //   props: {},
+  // },
+};
+const getFieldConfigByType = (fieldInfo) => {
+  if (fieldInfo?.anyOf) {
+    const filtered = fieldInfo?.anyOf?.filter((fieldType) => fieldType?.format);
+    const config =
+      fieldTypesComponentMapping[filtered[0]?.format] ||
+      fieldTypesComponentMapping["string"];
+
+    return {
+      ...config,
+      props: { ...config?.props, name: fieldInfo?.fieldName },
+    };
+  } else {
+    return (
+      fieldTypesComponentMapping[fieldInfo?.type] ||
+      fieldTypesComponentMapping["string"]
+    );
+  }
 };
 
 export const getFieldComponentByType = (fieldInfo, mode) => {
-  const CustomComponentConfig =
-    fieldTypesComponentMapping[fieldInfo?.type || "string"] ||
-    fieldTypesComponentMapping["string"];
-
-  const CustomComponent = () => {
+  const CustomComponentConfig = getFieldConfigByType(fieldInfo);
+  // console.log(CustomComponentConfig);
+  const CustomComponent = ({ ...props }) => {
     const customRef = useRef();
     //getting component
     const Comp = CustomComponentConfig?.component;
 
-    if (fieldInfo?.type === "datetime" || fieldInfo?.type === "date") {
-      return (
-        //for date && datetiem
-        <Comp
-          {...CustomComponentConfig?.props}
-          datestring={fieldInfo?.value}
-          disabled={mode !== "create"}
-          renderInput={(params) => (
-            <TextField {...params} name={fieldInfo?.fieldName} />
-          )}
-          ref={customRef}
-        />
-      );
-    } else if (fieldInfo?.type === "bool") {
-      //for checkbox
-      return (
-        <Comp
-          {...CustomComponentConfig?.props}
-          checked={fieldInfo?.value}
-          name={fieldInfo?.fieldName}
-          disabled={mode !== "create"}
-          ref={customRef}
-        />
-      );
-    } else {
-      if (fieldInfo?.connected_with) {
-        const [appName, modelName] = fieldInfo?.connected_with?.split(".");
+    // console.log(fieldInfo, "datetime", "asdlfjaksjdfkjasdjfljaksdfj");
+    //
+    switch (CustomComponentConfig?.type) {
+      case "datetime":
         return (
-          <Stack direction="row" alignItems="center">
-            <Comp
-              {...CustomComponentConfig?.props}
-              name={fieldInfo?.fieldName}
-              value={fieldInfo?.value || fieldInfo?.default}
-              // disabled={!fieldInfo?.editable}
-              required={fieldInfo?.required}
-              compRef={customRef}
-            />
-            <CustomConnectedWith
-              linkTo={`#/apps/${appName}/models/${modelName}/`}
-              IconButtonProps={{
-                sx: {
-                  ml: "1rem",
-                },
-              }}
-              fieldValue={fieldValue}
-              compRef={customRef}
-            />
-          </Stack>
+          <Comp
+            {...CustomComponentConfig?.props}
+            datestring={fieldInfo?.value}
+            // disabled={mode !== "create"}
+            InputProps={{
+              name: fieldInfo?.fieldName,
+            }}
+            ref={customRef}
+          />
         );
-      }
-      return (
-        //for normal (textfield)
-        <Comp
-          {...CustomComponentConfig?.props}
-          name={fieldInfo?.fieldName}
-          value={fieldInfo?.value}
-          // disabled={!fieldInfo?.editable}
-          ref={customRef}
-          required={fieldInfo?.required}
-        />
-      );
+      case "date":
+        return (
+          <Comp
+            {...CustomComponentConfig?.props}
+            datestring={fieldInfo?.value}
+            // disabled={mode !== "create"}
+            InputProps={{
+              name: fieldInfo?.fieldName,
+            }}
+            ref={customRef}
+          />
+        );
+      case "boolean":
+        return (
+          <Comp
+            {...CustomComponentConfig?.props}
+            defaultChecked={fieldInfo?.value}
+            name={fieldInfo?.fieldName}
+            // disabled={mode !== "create"}
+            ref={customRef}
+          />
+        );
+      case "string":
+        return (
+          <Comp
+            {...CustomComponentConfig?.props}
+            name={fieldInfo?.fieldName}
+            value={fieldInfo?.value}
+            // disabled={!fieldInfo?.editable}
+            ref={customRef}
+            required={fieldInfo?.required}
+          />
+        );
+      case "boolean":
+        return (
+          <Comp
+            {...CustomComponentConfig?.props}
+            name={fieldInfo?.fieldName}
+            value={fieldInfo?.value}
+            // disabled={!fieldInfo?.editable}
+            ref={customRef}
+            required={fieldInfo?.required}
+          />
+        );
+      default:
+        return (
+          <Comp
+            {...CustomComponentConfig?.props}
+            name={fieldInfo?.fieldName}
+            value={fieldInfo?.value}
+            // disabled={!fieldInfo?.editable}
+            ref={customRef}
+            required={fieldInfo?.required}
+          />
+        );
     }
+
+    // if (fieldInfo?.connected_with) {
+    //   const [appName, modelName] = fieldInfo?.connected_with?.split(".");
+    //   return (
+    //     <Stack direction="row" alignItems="center">
+    //       <Comp
+    //         {...CustomComponentConfig?.props}
+    //         name={fieldInfo?.fieldName}
+    //         value={fieldInfo?.value || fieldInfo?.default}
+    //         // disabled={!fieldInfo?.editable}
+    //         required={fieldInfo?.required}
+    //         compRef={customRef}
+    //       />
+    //       <CustomConnectedWith
+    //         linkTo={`#/apps/${appName}/models/${modelName}/`}
+    //         IconButtonProps={{
+    //           sx: {
+    //             ml: "1rem",
+    //           },
+    //         }}
+    //         fieldValue={fieldValue}
+    //         compRef={customRef}
+    //       />
+    //     </Stack>
+    //   );
+    // }
+    // return (
+    //   //for normal (textfield)
+    //   <Comp
+    //     {...CustomComponentConfig?.props}
+    //     name={fieldInfo?.fieldName}
+    //     value={fieldInfo?.value}
+    //     // disabled={!fieldInfo?.editable}
+    //     ref={customRef}
+    //     required={fieldInfo?.required}
+    //   />
+    // );
   };
 
   return CustomComponent;
@@ -225,7 +295,6 @@ export const validateFormData = (formRef, fields) => {
 
   for (let i = 0; i < fields?.length; i++) {
     const formFieldName = fields[i].fieldName;
-
     if (formRef.current.elements[formFieldName]?.type === "checkbox") {
       //for checkbox
       if (formRef.current.elements[formFieldName]?.checked !== "on") {
@@ -242,17 +311,28 @@ export const validateFormData = (formRef, fields) => {
       }
       //for date or datetime
       data[formFieldName] = formRef.current.elements[formFieldName].value;
+    } else if (formRef.current.elements[formFieldName]?.type === "number") {
+      const value = formRef.current.elements[formFieldName].value;
+      if (value.trim() === "") {
+        return { data, error: `${formFieldName} cant be empty` };
+      }
+      //check for number
+      if (!isNaN(formRef.current.elements[formFieldName].value)) {
+        data[formFieldName] = Number(
+          formRef.current.elements[formFieldName].value
+        );
+      }
     }
     //for textfield
     else {
-      const value = formRef.current.elements[formFieldName].value;
+      const value = formRef.current.elements[formFieldName]?.value;
 
-      if (value.trim() === "" && fieldValue?.required) {
+      if (value.trim() === "" && fields[i]?.required) {
         return { data, error: `${formFieldName} cant be empty` };
       } else if (
         value.trim() === "" &&
-        !fieldValue?.required &&
-        fieldValue.connected_with
+        !fields[i]?.required &&
+        fields[i].connected_with
       ) {
         data[formFieldName] = null;
       } else {

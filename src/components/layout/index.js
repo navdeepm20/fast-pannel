@@ -6,7 +6,7 @@ import { styled, useTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 
-import { DRAWER_WIDTH, NAVBAR_HEIGHT } from "../../utils/utility";
+import { DRAWER_WIDTH, NAVBAR_HEIGHT, CLOSED_DRAWER_WIDTH } from "./utils";
 import DrawerHeader from "./drawer_header";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
@@ -22,13 +22,12 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     }),
     marginTop: `${NAVBAR_HEIGHT}px`,
     height: `calc(100vh - ${NAVBAR_HEIGHT}px)`,
-    marginLeft: `-${DRAWER_WIDTH}px`,
+
     ...(open && {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen,
       }),
-      marginLeft: 0,
     }),
   })
 );
@@ -56,6 +55,7 @@ export default function Layout() {
         open={open}
         DRAWER_WIDTH={DRAWER_WIDTH}
         handleDrawerClose={handleDrawerClose}
+        handleDrawerOpen={handleDrawerOpen}
       />
       <Main open={open}>
         <Outlet />

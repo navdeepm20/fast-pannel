@@ -132,6 +132,7 @@ function ModelObjectEdit({ objectData, ...props }) {
         severity: "success",
         title: "Record Successfully Updated",
       });
+      setModelObjData(apiResponse.data);
       // navigate(-1);
     }
     if (apiResponse && apiResponse.status === 204) {

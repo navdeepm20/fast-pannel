@@ -11,6 +11,7 @@ import Loader from "../../components/loading";
 import PageHeading from "../../components/page_heading";
 import TableAction from "../../components/table_action";
 import BlockingLoader from "../../components/BlockingLoader";
+import Breadcrumbs from "../../components/breadcrumbs";
 //utils
 import urls from "../../utils/urls.json";
 import { createCols, colsConfig, createRows } from "./utility";
@@ -69,7 +70,7 @@ function Model({ ...props }) {
 
   return (
     <Paper elevation={0} sx={{ height: "100%" }} id="model-container">
-      <PageHeading title="Select the Object to Change" />
+      {/* <PageHeading title="Select the Object to Change" /> */}
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
@@ -78,6 +79,7 @@ function Model({ ...props }) {
             <ErrorOccured />
           ) : (
             <>
+              <Breadcrumbs />
               <TableAction
                 selected={selected}
                 handleDelete={handleDelete}
