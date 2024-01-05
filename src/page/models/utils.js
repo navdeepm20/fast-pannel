@@ -88,7 +88,7 @@ export const colsConfig = {
     renderCell: ({ ...props }) => {
       return (
         <CustomModelLinkCell
-          link={`models/${props?.row?.name}`}
+          link={`${props?.row?.name}`}
           name={props?.row?.name}
         />
       );
@@ -99,15 +99,15 @@ export const colsConfig = {
     sortable: false,
     flex: 1,
     renderCell: ({ ...props }) => {
-      return <CustomCellAdd linkTo={`models/${props?.row?.name}/add`} />;
+      return <CustomCellAdd linkTo={`${props?.row?.name}/add`} />;
     },
   },
   edit: {
-    headerName: "Add Object",
+    headerName: "Edit Object",
     sortable: false,
     flex: 1,
     renderCell: ({ ...props }) => {
-      return <CustomCellEdit linkTo={`models/${props?.row?.name}`} />;
+      return <CustomCellEdit linkTo={`${props?.row?.name}`} />;
     },
   },
 };

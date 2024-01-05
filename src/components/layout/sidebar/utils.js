@@ -7,6 +7,7 @@ import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
 import AppsIcon from "@mui/icons-material/Apps";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { appRoutes } from "../../../utils/appRoutes";
 
 export const getSidebarConfig = ({
   handleLogoutClick,
@@ -16,14 +17,14 @@ export const getSidebarConfig = ({
 }) => [
   {
     title: "apps",
-    path: "/",
+    path: appRoutes.apps,
     icon: <AppsIcon />,
     onClickHandler: handleAppsClick ? handleAppsClick : () => {},
     tooltipText: "Apps",
   },
   {
     title: "profile",
-    path: "/profile",
+    path: appRoutes.profile,
     icon: <PersonIcon />,
     onClickHandler: handleProfileClick ? handleProfileClick : () => {},
     tooltipText: "Profile",

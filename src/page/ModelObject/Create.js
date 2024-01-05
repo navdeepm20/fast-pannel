@@ -7,7 +7,7 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material";
 
 //internal
-import PageHeading from "../../components/page_heading";
+
 import CustomButton from "../../components/utility/Btn";
 import SingleObject from "../../components/model_object/SingleObject";
 import Loader from "../../components/loading";
@@ -23,6 +23,7 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
 import ErrorOccured from "../../components/error";
+import Breadcrumbs from "../../components/breadcrumbs";
 
 function ModelObjectCreate({ objectData, ...props }) {
   const theme = useTheme();
@@ -88,7 +89,7 @@ function ModelObjectCreate({ objectData, ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
-          <PageHeading title={`Add ${modelName}`} />
+          <Breadcrumbs />
           {error ? (
             <ErrorOccured />
           ) : (

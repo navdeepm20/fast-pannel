@@ -110,7 +110,7 @@ const Sidebar = ({
               title={
                 user?.user?.first_name &&
                 user?.user?.first_name?.charAt(0)?.toUpperCase() +
-                  user?.user?.first_name.slice(1)
+                  user?.user?.first_name?.slice(1)
               }
             >
               {user?.user?.first_name?.charAt(0)?.toUpperCase()}
@@ -118,7 +118,7 @@ const Sidebar = ({
             {open && (
               <Typography>
                 {user?.user?.first_name?.charAt(0)?.toUpperCase() +
-                  user?.user?.first_name.slice(1)}
+                  user?.user?.first_name?.slice(1) || "-"}
               </Typography>
             )}
           </Box>

@@ -1,7 +1,7 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 import Layout from "../components/layout";
-import Dashboard from "../page/dashboard";
+// import Dashboard from "../page/dashboard";
 import Model from "../page/model";
 import Apps from "../page/Apps";
 import Models from "../page/models";
@@ -13,6 +13,8 @@ import ModelObjectEdit from "../page/ModelObject/Edit";
 
 //routes protector
 import RoutesProtector from "./RoutesProtector";
+//utils
+import { appRoutes } from "../utils/appRoutes";
 
 const AppRoutes = () => {
   return (
@@ -20,27 +22,23 @@ const AppRoutes = () => {
       <Routes>
         <Route element={<RoutesProtector />}>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Apps />} />
-            <Route exact element={<Models />} path="/apps/:appName" />
-            <Route
-              exact
-              element={<Model />}
-              path="/apps/:appName/models/:modelName"
-            />
+            <Route index element={<Apps />} path={appRoutes.apps} />
+            <Route exact element={<Models />} path={appRoutes.models} />
+            <Route exact element={<Model />} path={appRoutes?.model} />
             <Route
               exact
               element={<ModelObjectCreate />}
-              path="/apps/:appName/models/:modelName/add"
+              path={appRoutes?.modelObjectCreate}
             />
             <Route
               exact
               element={<ModelObjectEdit />}
-              path="/apps/:appName/models/:modelName/:objectId/edit"
+              path={appRoutes?.modelObjectEdit}
             />
-            <Route exact element={<Profile />} path="/profile" />
+            <Route exact element={<Profile />} path={appRoutes?.profile} />
           </Route>
         </Route>
-        <Route exact element={<SignIn />} path="/signin" />
+        <Route exact element={<SignIn />} path={appRoutes.login} />
       </Routes>
     </Router>
   );

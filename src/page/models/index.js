@@ -1,8 +1,8 @@
 import { useEffect, useState } from "preact/hooks";
 // internal
 import ErrorOccured from "../../components/error";
-import PageHeading from "../../components/page_heading";
 import Table from "../../components/table";
+import Breadcrumbs from "../../components/breadcrumbs";
 //mui
 import Paper from "@mui/material/Paper";
 
@@ -32,12 +32,12 @@ function Models({ ...props }) {
       setCols(
         createCols(response.data[0]?.models, colsConfig, colsConfig, appName)
       );
-      setRows(createRows(response.data?.items?.[0]?.models));
+      setRows(createRows(response.data[0]?.models));
     }
   }, [response]);
   return (
     <Paper elevation={0} sx={{ width: "100%", height: "100%" }}>
-      <PageHeading title={`${appName} Models`} />
+      <Breadcrumbs />
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (

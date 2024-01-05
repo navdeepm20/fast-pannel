@@ -1,9 +1,10 @@
 export const appRoutes = {
   root: "/",
+  apps: "/",
   login: "/signin",
-  models: "/apps/:appName",
-  model: "/apps/:appName/models/:modelName",
-  modelObjectCreate: "/apps/:appName/models/:modelName/add",
-  modelObjectEdit: "/apps/:appName/models/:modelName/:objectId/edit",
+  models: "/:appName",
+  model: "/:appName/:modelName",
+  modelObjectCreate: "/:appName/:modelName/add",
+  modelObjectEdit: "/:appName/:modelName/:objectId",
   profile: "/profile",
 };

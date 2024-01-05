@@ -21,7 +21,7 @@ const LogoutConfirmationDialogContent = ({ handleClose, ...props }) => {
             mb: "8px",
           }}
         >
-          Logout Operation
+          Logout
         </Typography>
         <Typography
           sx={{

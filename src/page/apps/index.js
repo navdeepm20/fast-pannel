@@ -37,7 +37,6 @@ function Apps({ ...props }) {
         height: "100%",
       }}
     >
-      {/* <PageHeading title="Apps" /> */}
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (

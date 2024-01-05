@@ -24,6 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
 import ErrorOccured from "../../components/error";
 import DeleteConfirmationDialog from "../../components/dialogs/DeleteConfirmationDialog";
+import Breadcrumbs from "../../components/breadcrumbs";
 
 function ModelObjectEdit({ objectData, ...props }) {
   const theme = useTheme();
@@ -140,7 +141,7 @@ function ModelObjectEdit({ objectData, ...props }) {
         severity: "success",
         title: "Record Successfully Deleted",
       });
-      navigate(`/apps/${appName}/models/${modelName}`);
+      navigate(`/${appName}/models/${modelName}`);
     }
   }, [apiResponse]);
   return (
@@ -149,7 +150,8 @@ function ModelObjectEdit({ objectData, ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
-          <PageHeading title={`Edit ${modelName}`} />
+          {/* <PageHeading title={`Edit ${modelName}`} /> */}
+          <Breadcrumbs />
           {!modelObjError ? (
             <form ref={formRef}>
               <Box

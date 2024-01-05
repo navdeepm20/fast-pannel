@@ -21,17 +21,17 @@ function AppCard({ appName, models, displayName, ...props }) {
   const navigate = useNavigate();
   const handleAdd = (e, appName, modelName) => {
     e.stopPropagation();
-    navigate(`/apps/${appName}/models/${modelName}/add`);
+    navigate(`/${appName}/${modelName}/add`);
   };
   const handleEdit = (e, appName, modelName) => {
     e.stopPropagation();
-    navigate(`/apps/${appName}/models/${modelName}`);
+    navigate(`/${appName}/${modelName}`);
   };
   const handleModelClick = (e, appName, modelName) => {
-    navigate(`/apps/${appName}/models/${modelName}`);
+    navigate(`/${appName}/${modelName}`);
   };
   const handleShowMore = (e, appName) => {
-    navigate(`/apps/${appName}`);
+    navigate(`/${appName}`);
   };
   return (
     <Card
@@ -42,9 +42,11 @@ function AppCard({ appName, models, displayName, ...props }) {
           boxShadow:
             "rgb(159 162 191 / 18%) 0px 5px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;",
         },
+        display: "flex",
+        flexFlow: "column wrap",
       }}
     >
-      <CardContent sx={{}}>
+      <CardContent>
         <Typography
           variant="h5"
           sx={{
@@ -53,6 +55,10 @@ function AppCard({ appName, models, displayName, ...props }) {
             borderRadius: "8px",
             mb: "1rem",
             textTransform: "capitalize",
+            cursor: "pointer",
+          }}
+          onClick={(e) => {
+            handleShowMore(e, appName);
           }}
         >
           {displayName}
@@ -126,8 +132,8 @@ function AppCard({ appName, models, displayName, ...props }) {
               })}
         </Stack>
       </CardContent>
-      {models?.length >= 3 ? (
-        <CardActions>
+      {models?.length > 2 ? (
+        <CardActions sx={{ mt: "auto" }}>
           <CustomButton
             variant="text"
             sx={{ m: "auto" }}

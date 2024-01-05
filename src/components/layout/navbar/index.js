@@ -11,12 +11,11 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import { DRAWER_WIDTH } from "../utils";
+import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
 //internal
 import OptionsMenu from "./OptionsMenu";
 //utils
-import { logout } from "../../../utils/utility";
-import useAuth from "../../../hooks/useAuth";
+import { useLocation } from "react-router-dom";
 
 //custom app bar
 const AppBar = styled(MuiAppBar, {
@@ -26,28 +25,38 @@ const AppBar = styled(MuiAppBar, {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+
   ...(open && {
     width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    marginLeft: `${DRAWER_WIDTH}px`,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+  ...(!open && {
+    width: `calc(100% - ${CLOSED_DRAWER_WIDTH}px)`,
+  }),
 }));
 
 const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [, dispatch] = useAuth();
-  const menuOpen = Boolean(anchorEl);
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const [, dispatch] = useAuth();
+  // const menuOpen = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   logout(dispatch);
+  //   setAnchorEl(null);
+  // };
+
+  const location = useLocation();
+
+  const getPageTitle = (location) => {
+    return location === "/profile" ? "Profile" : "Apps";
   };
-  const handleClose = () => {
-    logout(dispatch);
-    setAnchorEl(null);
-  };
+
   return (
     <AppBar
       position="fixed"
@@ -66,39 +75,13 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              mr: 2,
-              ...(open && { display: "none" }),
-            }}
-          >
-            <Box
-              sx={{
-                width: "30px",
-                height: "30px",
-                color: "text.black",
-                border: "1px solid black",
-                borderRadius: "50%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              title="Collapse Sidebar"
-            >
-              <ChevronRightIcon sx={{ color: "text.black" }} />
-            </Box>
-          </IconButton>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{ color: "#000" }}
           >
-            Fast pannel
+            {getPageTitle(location.pathname)}
           </Typography>
         </Box>
         {/* <Box sx={{ cursor: "pointer" }} onClick={handleClick}>

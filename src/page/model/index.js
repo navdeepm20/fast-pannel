@@ -8,7 +8,6 @@ import useAxios from "../../hooks/useAxios";
 //internal
 import Table from "../../components/table";
 import Loader from "../../components/loading";
-import PageHeading from "../../components/page_heading";
 import TableAction from "../../components/table_action";
 import BlockingLoader from "../../components/BlockingLoader";
 import Breadcrumbs from "../../components/breadcrumbs";
@@ -70,7 +69,6 @@ function Model({ ...props }) {
 
   return (
     <Paper elevation={0} sx={{ height: "100%" }} id="model-container">
-      {/* <PageHeading title="Select the Object to Change" /> */}
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
@@ -97,7 +95,7 @@ function Model({ ...props }) {
                     window.opener.postMessage(tableProps?.row?.id, "*");
                     window.close();
                   }
-                  navigate(`${tableProps?.id}/edit`);
+                  navigate(`${tableProps?.id}`);
                 }}
               />
             </>

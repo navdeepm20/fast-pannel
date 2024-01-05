@@ -75,7 +75,6 @@ export default function UpdateProfileForm({
                         padding: "10px",
                         fontSize: "16px",
                         color: "#0F0F0F",
-                        fontFamily: "DM Sans",
                       },
                     }}
                     sx={{
@@ -95,7 +94,6 @@ export default function UpdateProfileForm({
                         padding: "10px",
                         fontSize: "16px",
                         color: "#0F0F0F",
-                        fontFamily: "DM Sans",
                       },
                     }}
                     sx={{
@@ -126,7 +124,6 @@ export default function UpdateProfileForm({
                       padding: "10px",
                       fontSize: "16px",
                       color: "#0F0F0F",
-                      fontFamily: "DM Sans",
                     },
                   }}
                   sx={{
@@ -156,7 +153,6 @@ export default function UpdateProfileForm({
                       padding: "10px",
                       fontSize: "16px",
                       color: "#0F0F0F",
-                      fontFamily: "DM Sans",
                     },
                   }}
                   sx={{
@@ -186,7 +182,6 @@ export default function UpdateProfileForm({
                       padding: "10px",
                       fontSize: "16px",
                       color: "#0F0F0F",
-                      fontFamily: "DM Sans",
                     },
                   }}
                   type="password"

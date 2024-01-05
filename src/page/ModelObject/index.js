@@ -7,10 +7,10 @@ import Stack from "@mui/material/Stack";
 import { useTheme } from "@mui/material";
 
 //internal
-import PageHeading from "../../components/page_heading";
 import CustomButton from "../../components/utility/Btn";
 import SingleObject from "../../components/model_object/SingleObject";
 import Loader from "../../components/loading";
+import Breadcrumbs from "../../components/breadcrumbs";
 //axios
 import { axiosInstance } from "../../axios";
 //utils
@@ -69,7 +69,7 @@ function ModelObject({ objectData, ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
-          <PageHeading title={`Add ${modelName}`} />
+          <Breadcrumbs />
           <form ref={formRef} onSubmit={(e) => handleSubmit(e)}>
             <Box
               sx={{
