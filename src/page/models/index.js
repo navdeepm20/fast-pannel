@@ -2,7 +2,6 @@ import { useEffect, useState } from "preact/hooks";
 // internal
 import ErrorOccured from "../../components/error";
 import Table from "../../components/table";
-import Breadcrumbs from "../../components/breadcrumbs";
 //mui
 import Paper from "@mui/material/Paper";
 
@@ -37,7 +36,6 @@ function Models({ ...props }) {
   }, [response]);
   return (
     <Paper elevation={0} sx={{ width: "100%", height: "100%" }}>
-      <Breadcrumbs />
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (

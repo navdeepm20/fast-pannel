@@ -23,7 +23,6 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
 import ErrorOccured from "../../components/error";
-import Breadcrumbs from "../../components/breadcrumbs";
 
 function ModelObjectCreate({ objectData, ...props }) {
   const theme = useTheme();
@@ -89,7 +88,6 @@ function ModelObjectCreate({ objectData, ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
-          <Breadcrumbs />
           {error ? (
             <ErrorOccured />
           ) : (

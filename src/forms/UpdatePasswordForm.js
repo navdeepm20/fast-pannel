@@ -108,7 +108,6 @@ export default function UpdatePasswordForm(props) {
                               padding: "10px",
                               fontSize: "16px",
                               color: "#0F0F0F",
-                              fontFamily: "DM Sans",
                             },
                           }}
                           id="old-password"
@@ -146,7 +145,6 @@ export default function UpdatePasswordForm(props) {
                               padding: "10px",
                               fontSize: "16px",
                               color: "#0F0F0F",
-                              fontFamily: "DM Sans",
                             },
                           }}
                           id="password1"
@@ -185,7 +183,7 @@ export default function UpdatePasswordForm(props) {
                               padding: "10px",
                               fontSize: "16px",
                               color: "#0F0F0F",
-                              fontFamily: "DM Sans",
+                            
                             },
                           }}
                           id="password2"

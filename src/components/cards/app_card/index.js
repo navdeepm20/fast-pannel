@@ -36,8 +36,8 @@ function AppCard({ appName, models, displayName, ...props }) {
   return (
     <Card
       sx={{
+        width: "clamp(300px,25%,350px)",
         minWidth: "300px",
-        maxWidth: "350px",
         ":hover": {
           boxShadow:
             "rgb(159 162 191 / 18%) 0px 5px 16px, rgb(159 162 191 / 32%) 0px 2px 2px;",

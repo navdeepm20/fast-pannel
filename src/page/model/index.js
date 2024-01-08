@@ -10,7 +10,6 @@ import Table from "../../components/table";
 import Loader from "../../components/loading";
 import TableAction from "../../components/table_action";
 import BlockingLoader from "../../components/BlockingLoader";
-import Breadcrumbs from "../../components/breadcrumbs";
 //utils
 import urls from "../../utils/urls.json";
 import { createCols, colsConfig, createRows } from "./utility";
@@ -77,7 +76,6 @@ function Model({ ...props }) {
             <ErrorOccured />
           ) : (
             <>
-              <Breadcrumbs />
               <TableAction
                 selected={selected}
                 handleDelete={handleDelete}

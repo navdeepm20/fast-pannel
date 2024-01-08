@@ -4,12 +4,9 @@ import { useState } from "preact/hooks";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import MenuIcon from "@mui/icons-material/Menu";
-import IconButton from "@mui/material/IconButton";
+
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
 //internal
@@ -61,9 +58,10 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
     <AppBar
       position="fixed"
       open={open}
+      elevation={0}
       sx={{
+        mt: 2.5,
         background: "#fff",
-
         // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
       }}
     >
@@ -71,15 +69,15 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          height: height,
+          height,
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Typography
-            variant="h6"
+            component="h1"
+            fontWeight={600}
             noWrap
-            component="div"
-            sx={{ color: "#000" }}
+            sx={{ color: "#000", fontSize: 28 }}
           >
             {getPageTitle(location.pathname)}
           </Typography>

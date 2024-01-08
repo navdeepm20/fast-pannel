@@ -2,6 +2,8 @@
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+//assets
+import ErrorSvg from "../../assets/server-down.svg";
 
 function ErrorOccured({ ...props }) {
   return (
@@ -12,9 +14,19 @@ function ErrorOccured({ ...props }) {
       }}
       justifyContent="center"
       alignItems="center"
+      className="error-component__container"
     >
       <Stack justifyContent="center" alignItems="center">
-        <Typography component="h5" variant="h5">
+        <Box display="grid" sx={{ placeItems: "center" }}>
+          <Box
+            component="img"
+            src={ErrorSvg}
+            alt="something_went_wrong"
+            sx={{ maxWidth: 400 }}
+          ></Box>
+        </Box>
+
+        <Typography component="h3" variant="h4" mt={4}>
           An Error Occured
         </Typography>
         <Typography component="p" variant="body">

@@ -108,17 +108,20 @@ const Sidebar = ({
                 cursor: "pointer",
               }}
               title={
-                user?.user?.first_name &&
-                user?.user?.first_name?.charAt(0)?.toUpperCase() +
-                  user?.user?.first_name?.slice(1)
+                (user?.user?.first_name &&
+                  user?.user?.first_name?.charAt(0)?.toUpperCase() +
+                    user?.user?.first_name?.slice(1)) ||
+                "Admin"
               }
             >
-              {user?.user?.first_name?.charAt(0)?.toUpperCase()}
+              {user?.user?.first_name?.charAt(0)?.toUpperCase() || "A"}
             </Avatar>
             {open && (
               <Typography>
+                Hi{" "}
                 {user?.user?.first_name?.charAt(0)?.toUpperCase() +
-                  user?.user?.first_name?.slice(1) || "-"}
+                  user?.user?.first_name?.slice(1) || "Admin"}{" "}
+                👋
               </Typography>
             )}
           </Box>

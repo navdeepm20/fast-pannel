@@ -15,7 +15,7 @@ import useAuth from "../../hooks/useAuth";
 import { axiosInstance } from "../../axios";
 //utility
 import { notificationHandler } from "../../utils/utility";
-import Breadcrumbs from "../../components/breadcrumbs";
+
 //mui
 import Paper from "@mui/material/Paper";
 
@@ -78,7 +78,7 @@ function Profile({ ...props }) {
   }, [apiResponse]);
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} sx={{ height: "100%" }}>
       {loading ? (
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
@@ -87,7 +87,6 @@ function Profile({ ...props }) {
             <ErrorOccured />
           ) : (
             <>
-              <Breadcrumbs />
               <UpdateProfileForm
                 firstName={profileData?.first_name}
                 lastName={profileData?.last_name}

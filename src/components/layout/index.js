@@ -10,14 +10,15 @@ import { Main } from "./utils";
 import LogoutConfirmationDialog from "../dialogs/LogoutConfirmationDialog";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
+import Breadcrumbs from "../breadcrumbs";
 //libs
 import { Outlet } from "react-router-dom";
-
 //hooks
 import useAuth from "../../hooks/useAuth";
 import useGlobalContext from "../../hooks/useGlobalContext";
-import { logout } from "../../utils/utility";
 //utils
+import { logout } from "../../utils/utility";
+
 export default function Layout() {
   const [open, setOpen] = useState(true);
   const { isLogoutDialogOpen, setIsLogoutDialogOpen } = useGlobalContext();
@@ -46,6 +47,8 @@ export default function Layout() {
         handleDrawerOpen={handleDrawerOpen}
       />
       <Main open={open}>
+        {/* <PageHeading title="Home" /> */}
+        <Breadcrumbs />
         <Outlet />
       </Main>
       {/* dialogs */}

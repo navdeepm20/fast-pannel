@@ -9,12 +9,11 @@ function PageHeading({ title, ...props }) {
   return (
     <Box
       sx={{
-        py: "1rem",
-        mb: "2rem",
-        px: "1rem",
-        backgroundColor: "#f5f6fa",
-        borderLeft: `8px solid ${theme.palette.primary.main}`,
-        borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+        py: 2,
+        mb: 4,
+
+        // backgroundColor: "#f5f6fa",
+        // borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
         borderRadius: "4px",
       }}
     >

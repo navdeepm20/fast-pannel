@@ -2,7 +2,6 @@ import { useEffect, useState } from "preact/hooks";
 //internal
 import AppCard from "../../components/cards/app_card";
 import Loader from "../../components/loading";
-import Breadcrumbs from "../../components/breadcrumbs";
 //mui
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
@@ -41,7 +40,6 @@ function Apps({ ...props }) {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <>
-          <Breadcrumbs />
           <Stack direction="row" gap="24px" flexWrap="wrap">
             {appsData
               ?.filter((app) => app?.models?.length > 0)

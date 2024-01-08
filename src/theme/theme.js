@@ -37,7 +37,7 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: ["verdana,sans-serif"],
+    fontFamily: ["Inter,sans-serif"],
   },
 });
 export const darkTheme = createTheme({
@@ -45,6 +45,6 @@ export const darkTheme = createTheme({
     mode: "dark",
   },
   typography: {
-    fontFamily: ["verdana,sans-serif"],
+    fontFamily: ["Inter,sans-serif"],
   },
 });
