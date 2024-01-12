@@ -33,7 +33,6 @@ function Apps({ ...props }) {
       elevation={0}
       sx={{
         width: "100%",
-        height: "100%",
       }}
     >
       {loading ? (

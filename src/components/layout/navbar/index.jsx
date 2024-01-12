@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
 //internal
 import OptionsMenu from "./OptionsMenu";
+import Breadcrumbs from "../../breadcrumbs";
 //utils
 import { useLocation } from "react-router-dom";
 
@@ -55,34 +56,37 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
   };
 
   return (
-    <AppBar
-      position="fixed"
-      open={open}
-      elevation={0}
-      sx={{
-        mt: 2.5,
-        background: "#fff",
-        // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
-      }}
-    >
-      <Toolbar
+    <>
+      <AppBar
+        position="fixed"
+        open={open}
+        elevation={0}
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          height,
+          mt: 2.5,
+          background: "#fff",
+          // boxShadow: "0 8px 16px 0 rgb(145 158 171 / 16%)",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Typography
-            component="h1"
-            fontWeight={600}
-            noWrap
-            sx={{ color: "#000", fontSize: 28 }}
-          >
-            {getPageTitle(location.pathname)}
-          </Typography>
-        </Box>
-        {/* <Box sx={{ cursor: "pointer" }} onClick={handleClick}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            alignItems: "flex-start",
+            flexDirection: "column",
+            height,
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              component="h1"
+              fontWeight={600}
+              noWrap
+              sx={{ color: "#000", fontSize: 28 }}
+            >
+              {getPageTitle(location.pathname)}
+            </Typography>
+          </Box>
+          <Breadcrumbs />
+          {/* <Box sx={{ cursor: "pointer" }} onClick={handleClick}>
           <Avatar sx={{ backgroundColor: "#673ab7", mr: "8px" }}>N</Avatar>
           <OptionsMenu
             open={menuOpen}
@@ -90,8 +94,9 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
             handleClose={handleClose}
           />
         </Box> */}
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

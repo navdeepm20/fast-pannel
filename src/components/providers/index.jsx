@@ -6,11 +6,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //theme
 import { ThemeProvider } from "@mui/material";
-import { lightTheme as CustomTheme } from "../../theme/theme";
+import { lightTheme, darkTheme } from "../../theme/theme";
 
 function Provider({ children }) {
   return (
-    <ThemeProvider theme={CustomTheme}>
+    <ThemeProvider theme={lightTheme}>
       <GlobalContextProvider>
         <AuthContextProvider>
           {children}

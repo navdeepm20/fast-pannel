@@ -25,7 +25,7 @@ function LinkRouter(props) {
           borderRadius: 2,
           "&:hover": {
             color: "primary.main",
-            fontWeight: "500",
+            // fontWeight: "500",
           },
         }}
         {...props}

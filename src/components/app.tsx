@@ -4,11 +4,9 @@ import AppRoutes from "../routes";
 import Provider from "./providers";
 function App({ ...props }) {
   return (
-    <div id="app">
-      <Provider>
-        <AppRoutes />
-      </Provider>
-    </div>
+    <Provider>
+      <AppRoutes />
+    </Provider>
   );
 }
 

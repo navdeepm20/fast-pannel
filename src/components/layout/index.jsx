@@ -10,7 +10,6 @@ import { Main } from "./utils";
 import LogoutConfirmationDialog from "../dialogs/LogoutConfirmationDialog";
 import Navbar from "./navbar";
 import Sidebar from "./sidebar";
-import Breadcrumbs from "../breadcrumbs";
 //libs
 import { Outlet } from "react-router-dom";
 //hooks
@@ -48,7 +47,7 @@ export default function Layout() {
       />
       <Main open={open}>
         {/* <PageHeading title="Home" /> */}
-        <Breadcrumbs />
+
         <Outlet />
       </Main>
       {/* dialogs */}

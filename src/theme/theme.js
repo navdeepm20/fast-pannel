@@ -44,6 +44,7 @@ export const darkTheme = createTheme({
   palette: {
     mode: "dark",
   },
+
   typography: {
     fontFamily: ["Inter,sans-serif"],
   },
