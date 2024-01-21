@@ -1,11 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
 //mui
 import Button from "@mui/material/Button";
-function Btn({ ...props }) {
-  const sx = props.sx;
+import { SxProps } from "@mui/material";
 
-  delete props.sx;
+function Btn({
+  sx,
+  disabled,
+  onClick,
+  children,
+  ...props
+}: {
+  sx?: SxProps;
+  disabled: boolean;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  children: React.ReactNode;
+}) {
   const buttonConfig = {
     variant: "contained",
     // disableElevation: true,
@@ -26,7 +34,7 @@ function Btn({ ...props }) {
     ...props,
   };
 
-  return <Button {...buttonConfig}>{props.children}</Button>;
+  return <Button {...buttonConfig}>{children}</Button>;
 }
 
 export default Btn;

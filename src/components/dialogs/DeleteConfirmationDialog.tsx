@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const LogoutConfirmationDialogContent = ({ handleClose, ...props }) => {
+const DeleteConfirmationDialogContent = ({ handleClose, ...props }) => {
   return (
     <Stack justifyContent="center" alignItems="center" width="100%">
       <Box>
@@ -21,7 +21,7 @@ const LogoutConfirmationDialogContent = ({ handleClose, ...props }) => {
             mb: "8px",
           }}
         >
-          Logout
+          Delete Operation
         </Typography>
         <Typography
           sx={{
@@ -33,15 +33,16 @@ const LogoutConfirmationDialogContent = ({ handleClose, ...props }) => {
             mb: "32px",
           }}
         >
-          Are you sure you want to Logout?
+          Are you sure you want to delete this record? This action cannot be
+          undone.
         </Typography>
       </Box>
     </Stack>
   );
 };
-const LogoutConfirmationDialogActions = ({
+const DeleteConfirmationDialogActions = ({
   handleClose,
-  handleLogout,
+  handleDelete,
   isLoading,
   ...props
 }) => {
@@ -69,27 +70,25 @@ const LogoutConfirmationDialogActions = ({
           lineHeight: "24px",
           py: "10px",
           borderRadius: "8px",
-          width: "300px",
-          maxWidth: "352px",
+          width: "18.75rem",
           backgroundColor: "#d32f2f",
           ":hover": {
             backgroundColor: "#b72418",
           },
-          width: "300px",
           maxWidth: "352px",
         }}
-        onClick={handleLogout}
+        onClick={handleDelete}
         disabled={isLoading}
       >
-        Logout
+        Delete
       </CustomButton>
     </Stack>
   );
 };
-function LogoutConfirmationDialog({
+function DeleteConfirmationDialog({
   open,
   handleClose,
-  handleLogout,
+  handleDelete,
   isLoading,
 
   ...props
@@ -103,11 +102,11 @@ function LogoutConfirmationDialog({
         maxWidth: "xs",
       }}
       dialogContentChild={
-        <LogoutConfirmationDialogContent handleClose={handleClose} />
+        <DeleteConfirmationDialogContent handleClose={handleClose} />
       }
       dialogActionChild={
-        <LogoutConfirmationDialogActions
-          handleLogout={handleLogout}
+        <DeleteConfirmationDialogActions
+          handleDelete={handleDelete}
           isLoading={isLoading}
           handleClose={handleClose}
         />
@@ -117,4 +116,4 @@ function LogoutConfirmationDialog({
   );
 }
 
-export default LogoutConfirmationDialog;
+export default DeleteConfirmationDialog;

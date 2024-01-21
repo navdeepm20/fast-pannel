@@ -71,7 +71,6 @@ const Sidebar = ({
                 lineHeight: "1.6",
                 textAlign: "center",
                 py: "1.1rem",
-                textAlign: "center",
                 color: "#fff",
               }}
             >

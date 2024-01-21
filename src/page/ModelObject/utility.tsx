@@ -11,8 +11,9 @@ import IconButton from "@mui/material/IconButton";
 import CreateIcon from "@mui/icons-material/Create";
 //libs
 import dayjs from "dayjs";
-import { Stack } from "@mui/material";
-import { logout, notificationHandler } from "../../utils/utility";
+import { notificationHandler } from "../../utils/utility";
+//internal
+import ReferenceFieldForm from "../../components/model_object/ReferenceFieldForm";
 
 export const createCols = (row, fieldConfig) => {
   if (row) {
@@ -150,6 +151,7 @@ export const fieldTypesComponentMapping = {
   //   props: {},
   // },
 };
+
 const getFieldConfigByType = (fieldInfo) => {
   if (fieldInfo?.anyOf) {
     const filtered = fieldInfo?.anyOf?.filter((fieldType) => fieldType?.format);
@@ -172,13 +174,22 @@ const getFieldConfigByType = (fieldInfo) => {
 export const getFieldComponentByType = (fieldInfo, mode) => {
   const CustomComponentConfig = getFieldConfigByType(fieldInfo);
   // console.log(CustomComponentConfig);
+
   const CustomComponent = ({ ...props }) => {
     const customRef = useRef();
     //getting component
     const Comp = CustomComponentConfig?.component;
 
-    // console.log(fieldInfo, "datetime", "asdlfjaksjdfkjasdjfljaksdfj");
-    //
+    //nested field with object type
+    if (!fieldInfo?.type && fieldInfo?.bsonType === "object") {
+      //reder the nested form for the field.
+      return (
+        <ReferenceFieldForm
+          mainField={<Comp {...CustomComponentConfig?.props} />}
+          fieldsInfo={fieldInfo}
+        />
+      );
+    }
     switch (CustomComponentConfig?.type) {
       case "datetime":
         return (
@@ -212,20 +223,10 @@ export const getFieldComponentByType = (fieldInfo, mode) => {
             name={fieldInfo?.fieldName}
             // disabled={mode !== "create"}
             ref={customRef}
-          />
-        );
-      case "string":
-        return (
-          <Comp
-            {...CustomComponentConfig?.props}
-            name={fieldInfo?.fieldName}
-            value={fieldInfo?.value}
-            // disabled={!fieldInfo?.editable}
-            ref={customRef}
             required={fieldInfo?.required}
           />
         );
-      case "boolean":
+      case "string":
         return (
           <Comp
             {...CustomComponentConfig?.props}
@@ -289,7 +290,7 @@ export const getFieldComponentByType = (fieldInfo, mode) => {
 
   return CustomComponent;
 };
-
+//validate form data before submitting
 export const validateFormData = (formRef, fields) => {
   let data = {};
 

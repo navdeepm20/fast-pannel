@@ -7,12 +7,7 @@ import { getFieldComponentByType } from "../../page/ModelObject/utility";
 function GetFieldComponent({ fieldInfo, mode, ...props }) {
   const ComponentByType = getFieldComponentByType(fieldInfo, mode);
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      id="GetFieldComponent-container"
-      mb="1rem"
-    >
+    <Stack direction="row" id="GetFieldComponent-container" mb="1rem">
       <Typography
         fontSize="16px"
         fontWeight="400"

@@ -9,7 +9,8 @@ import useAxios from "../../hooks/useAxios";
 import Table from "../../components/table";
 import Loader from "../../components/loading";
 import TableAction from "../../components/table_action";
-import BlockingLoader from "../../components/BlockingLoader";
+import BlockingLoader from "../../components/blocking_loader";
+import CreateObjectDialog from "../../components/dialogs/CreateObjectDialog";
 //utils
 import urls from "../../utils/urls.json";
 import { createCols, colsConfig, createRows } from "./utility";
@@ -38,10 +39,10 @@ function Model({ ...props }) {
     url: `${urls?.model_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_get?.method,
   });
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(true);
 
   const [cols, setCols] = useState([]);
   const [rows, setRows] = useState([]);
-  const navigate = useNavigate();
 
   //for actions
   const [isPerformingAction, setIsPerformingAction] = useState(false);
@@ -79,7 +80,7 @@ function Model({ ...props }) {
               <TableAction
                 selected={selected}
                 handleDelete={handleDelete}
-                addObjectPageLink="add"
+                handleAddClick={() => setIsAddDialogOpen(true)}
               />
               <Table
                 onSelectionModelChange={(newSelectionModel) => {
@@ -103,6 +104,10 @@ function Model({ ...props }) {
       <BlockingLoader
         show={isPerformingAction}
         message="Performing Action..."
+      />
+      <CreateObjectDialog
+        handleClose={() => setIsAddDialogOpen(false)}
+        open={isAddDialogOpen}
       />
     </Paper>
   );

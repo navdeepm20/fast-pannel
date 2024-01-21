@@ -12,16 +12,13 @@ import CustomButton from "../../components/utility/Btn";
 //libs
 import { useNavigate } from "react-router-dom";
 
-function TableAction({ selected, handleDelete, addObjectPageLink, ...props }) {
+function TableAction({ selected, handleDelete, handleAddClick, ...props }) {
   const navigate = useNavigate();
   //action
   const [action, setAction] = useState("");
 
   const handleActionChange = (event) => {
     setAction(event.target.value);
-  };
-  const handleAdd = (e) => {
-    navigate(addObjectPageLink);
   };
 
   return (
@@ -68,7 +65,7 @@ function TableAction({ selected, handleDelete, addObjectPageLink, ...props }) {
 
       <CustomButton
         sx={{ ml: "1rem" }}
-        onClick={handleAdd}
+        onClick={handleAddClick}
         startIcon={<AddToPhotosIcon />}
       >
         Add

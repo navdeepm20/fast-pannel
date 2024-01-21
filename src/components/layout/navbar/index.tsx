@@ -72,7 +72,7 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
             display: "flex",
             alignItems: "flex-start",
             flexDirection: "column",
-            height,
+            maxHeight: height,
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>

@@ -4,28 +4,26 @@ import { useEffect, useState, useRef } from "preact/hooks";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import { useTheme } from "@mui/material";
 
 //internal
 
-import CustomButton from "../../components/utility/Btn";
-import SingleObject from "../../components/model_object/SingleObject";
-import Loader from "../../components/loading";
+import CustomButton from "../components/utility/Btn";
+import SingleObject from "../components/model_object/SingleObject";
+import Loader from "../components/loading";
 //axios
-import { axiosInstance } from "../../axios";
+import { axiosInstance } from "../axios";
 //utils
-import urls from "../../utils/urls.json";
-import { validateFormData } from "./utility";
+import urls from "../utils/urls.json";
+import { validateFormData } from "../page/ModelObject/utility.js";
 //internal hooks
-import useAxios from "../../hooks/useAxios";
-import useAxiosFunction from "../../hooks/useAxiosFunction";
+import useAxios from "../hooks/useAxios";
+import useAxiosFunction from "../hooks/useAxiosFunction";
 //libs
 import { useParams } from "react-router-dom";
-import { notificationHandler } from "../../utils/utility";
-import ErrorOccured from "../../components/error";
+import { notificationHandler } from "../utils/utility";
+import ErrorOccured from "../components/error";
 
-function ModelObjectCreate({ objectData, ...props }) {
-  const theme = useTheme();
+function CreateObjectForm() {
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
   const [response, error, loading, refetch] = useAxios({
@@ -33,7 +31,7 @@ function ModelObjectCreate({ objectData, ...props }) {
     method: urls?.model_objects_attribute_get?.method,
   });
   const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (response && Object.keys(response?.data?.properties).length > 0) {
@@ -58,7 +56,7 @@ function ModelObjectCreate({ objectData, ...props }) {
     }
   }, [apiResponse]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLElement>): void => {
     e.preventDefault();
     const data = validateFormData(formRef, fields);
 
@@ -94,7 +92,6 @@ function ModelObjectCreate({ objectData, ...props }) {
             <form ref={formRef}>
               <Box
                 sx={{
-                  p: "1rem",
                   borderRadius: "8px",
                   mt: ".5rem",
                 }}
@@ -116,4 +113,4 @@ function ModelObjectCreate({ objectData, ...props }) {
   );
 }
 
-export default ModelObjectCreate;
+export default CreateObjectForm;
