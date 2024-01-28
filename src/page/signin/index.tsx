@@ -15,14 +15,13 @@ import useAxiosFunction from "../../hooks/useAxiosFunction";
 import { useNavigate, Navigate } from "react-router-dom";
 //utils
 import urls from "../../utils/urls.json";
-// internal
-import SvgWrapper from "../../components/svg";
+
 //assets
 import fastpanel_logo from "../../assets/logo/fast-panel-logo-2.png";
 
 export default function SignIn({ ...props }) {
-  const [user, dispatch] = useAuth();
-  const [response, error, loading, axiosFetch] = useAxiosFunction();
+  const { user, dispatch } = useAuth();
+  const { response, error, loading, axiosFetch } = useAxiosFunction();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",

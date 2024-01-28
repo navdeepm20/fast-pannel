@@ -4,12 +4,23 @@ import { Link } from "react-router-dom";
 //internal
 import CustomButton from "../../components/utility/Btn";
 
-function CustomCellWithButton({ title, icon, clickHandler, ...props }) {
+interface CustomCellWithButtonTypes {
+  title: string;
+  icon: React.ReactNode;
+  clickHandler: (event: MouseEvent) => void;
+  [props: string]: any;
+}
+function CustomCellWithButton({
+  title,
+  icon,
+  clickHandler,
+  ...props
+}: CustomCellWithButtonTypes) {
   return (
     <CustomButton
       startIcon={icon}
-      onClick={(e) => {
-        clickHandler(e);
+      onClick={(event: MouseEvent) => {
+        clickHandler(event);
       }}
       {...props}
     >
@@ -17,7 +28,14 @@ function CustomCellWithButton({ title, icon, clickHandler, ...props }) {
     </CustomButton>
   );
 }
-function CustomCellWithLinkText({ children, ...props }) {
+interface CustomCellWithLinkTextTypes {
+  children: React.ReactNode;
+  [props: string]: any;
+}
+function CustomCellWithLinkText({
+  children,
+  ...props
+}: CustomCellWithLinkTextTypes) {
   return (
     <Link to={props?.linkTo} style={{ textDecoration: "none" }}>
       <Typography {...props}>{children}</Typography>

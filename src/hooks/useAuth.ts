@@ -4,7 +4,8 @@ import { useContext } from "preact/hooks";
 import { AuthContext } from "../context/AuthContext";
 
 function useAuth() {
-  return useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
+  return { user, dispatch };
 }
 
 export default useAuth;

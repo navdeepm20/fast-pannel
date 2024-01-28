@@ -3,7 +3,7 @@ import { DataGrid, GridRow } from "@mui/x-data-grid";
 //libs
 import { useNavigate } from "react-router-dom";
 
-export default function DataGridDemo({
+export default function CustomDataGrid({
   rows,
   columns,
   tableProps,
@@ -35,6 +35,6 @@ export default function DataGridDemo({
     </Box>
   );
 }
-DataGridDemo.defaultProps = {
+CustomDataGrid.defaultProps = {
   handleRowClick: () => {},
 };

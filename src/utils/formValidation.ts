@@ -10,20 +10,20 @@ export const FORM_VALIDATION = {
     .string()
     .required("This is Required")
     .matches(
-      "^(?=.{2,40}$)[a-zA-Z]+(?:[-'s][a-zA-Z]+)*$",
+      /^(?=.{2,40}$)[a-zA-Z]+(?:[-'s][a-zA-Z]+)*$/,
       "Must contain only alphabets and length > 2 and < 40"
     ),
   last_name: yup
     .string()
     .required("This is Required")
     .matches(
-      "^(?=.{2,40}$)[a-zA-Z]+(?:[-'s][a-zA-Z]+)*$",
+      /^(?=.{2,40}$)[a-zA-Z]+(?:[-'s][a-zA-Z]+)*$/,
       "Must contain only alphabets and length > 2 and < 40"
     ),
   username: yup
     .string()
     .matches(
-      "^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$",
+      /^(?=[a-zA-Z0-9._]{5,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/,
       "Username must be 5-20 characters long and not includes  __ or _. or ._ or .."
     ),
 
@@ -44,7 +44,7 @@ export const FORM_VALIDATION = {
     .max(16, "Can't be greater than 16 characters"),
   purpose: yup.string().required("This Field is Required").min(2).max(100),
   numberOfCredits: yup
-    .number("Must be a number")
+    .number()
     .required("This Field is Required")
     .min(1, "Should be greater than or equal to 1")
     .max(50000),

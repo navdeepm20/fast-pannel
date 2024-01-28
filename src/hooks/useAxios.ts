@@ -2,11 +2,13 @@
 import { useEffect, useState } from "preact/hooks";
 //utility
 import { httpErrorHandler } from "../utils/utility";
-
 import { axiosInstance } from "../axios";
-function useAxios(configObj) {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState("");
+//types
+import { AxiosResponse, AxiosError, AxiosRequestConfig } from "axios";
+
+function useAxios(configObj: AxiosRequestConfig) {
+  const [response, setResponse] = useState<null | AxiosResponse>(null);
+  const [error, setError] = useState<null | AxiosError>(null);
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(0);
 
@@ -21,8 +23,8 @@ function useAxios(configObj) {
           signal: controller?.signal,
         });
         setResponse(res);
-      } catch (err) {
-        setError(err);
+      } catch (error) {
+        setError(error as AxiosError);
       } finally {
         setLoading(false);
       }
@@ -42,7 +44,7 @@ function useAxios(configObj) {
     }
   }, [error]);
 
-  return [response, error, loading, refetch];
+  return { response, error, loading, refetch };
 }
 
 export default useAxios;

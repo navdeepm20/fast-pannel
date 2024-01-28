@@ -5,7 +5,8 @@ import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 //libs
 import { useNavigate } from "react-router-dom";
-const CustomCellAdd = ({ linkTo, ...props }) => {
+
+const CustomCellAdd = ({ linkTo }: { linkTo: string }) => {
   const navigate = useNavigate();
   return (
     <CustomCellWithButton
@@ -18,7 +19,7 @@ const CustomCellAdd = ({ linkTo, ...props }) => {
   );
 };
 
-const CustomCellEdit = ({ linkTo, ...props }) => {
+const CustomCellEdit = ({ linkTo }: { linkTo: string }) => {
   const navigate = useNavigate();
   return (
     <CustomCellWithButton
@@ -31,11 +32,20 @@ const CustomCellEdit = ({ linkTo, ...props }) => {
   );
 };
 
-const CustomModelLinkCell = ({ name, link, ...props }) => {
+const CustomModelLinkCell = ({
+  name,
+  link,
+}: {
+  name: string;
+  link: string;
+}) => {
   return <CustomCellWithLinkText linkTo={link}>{name}</CustomCellWithLinkText>;
 };
 
-export const createCols = (cols, fieldConfig) => {
+export const createCols = (
+  cols: { [index: string]: any },
+  fieldConfig: { [index: string]: any }
+): {}[] => {
   let customCols = [
     {
       name: "add",
@@ -54,7 +64,7 @@ export const createCols = (cols, fieldConfig) => {
   });
 
   if (cols) {
-    return customCols.map((col, ind) => {
+    return customCols.map((col) => {
       if (fieldConfig[col?.name]) {
         return {
           field: col.name,
@@ -69,17 +79,18 @@ export const createCols = (cols, fieldConfig) => {
   }
   return [];
 };
-export const createRows = (rows, rowsConfig, appName) => {
+export const createRows = (rows: { [index: string]: any }) => {
   if (rows) {
-    return rows?.map((row, ind) => {
+    return rows?.map((row: {}, index: number) => {
       return {
-        id: ind,
+        id: index,
         ...row,
       };
     });
   }
   return [];
 };
+
 export const colsConfig = {
   name: {
     field: "Model Name",

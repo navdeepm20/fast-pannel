@@ -5,7 +5,6 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
-import { useTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
@@ -16,21 +15,31 @@ import CustomButton from "../../utility/Btn";
 //libs
 import { useNavigate } from "react-router-dom";
 
-function AppCard({ appName, models, displayName, ...props }) {
-  const theme = useTheme();
+//types
+interface AppCardTypes {
+  appName: string;
+  models: string;
+  displayName: string;
+  [props: string]: any;
+}
+function AppCard({ appName, models, displayName }: AppCardTypes) {
   const navigate = useNavigate();
-  const handleAdd = (e, appName, modelName) => {
+  const handleAdd = (e: MouseEvent, appName: string, modelName: string) => {
     e.stopPropagation();
     navigate(`/${appName}/${modelName}/add`);
   };
-  const handleEdit = (e, appName, modelName) => {
+  const handleEdit = (e: MouseEvent, appName: string, modelName: string) => {
     e.stopPropagation();
     navigate(`/${appName}/${modelName}`);
   };
-  const handleModelClick = (e, appName, modelName) => {
+  const handleModelClick = (
+    e: MouseEvent,
+    appName: string,
+    modelName: string
+  ) => {
     navigate(`/${appName}/${modelName}`);
   };
-  const handleShowMore = (e, appName) => {
+  const handleShowMore = (e: MouseEvent, appName: string) => {
     navigate(`/${appName}`);
   };
   return (
@@ -65,7 +74,7 @@ function AppCard({ appName, models, displayName, ...props }) {
         </Typography>
         <Stack>
           {models.length > 3
-            ? models.slice(0, 3).map((model, index) => {
+            ? models.slice(0, 3).map((model) => {
                 return (
                   <Stack
                     direction="row"
@@ -100,7 +109,7 @@ function AppCard({ appName, models, displayName, ...props }) {
                   </Stack>
                 );
               })
-            : models.map((model, index) => {
+            : models.map((model) => {
                 return (
                   <Stack
                     direction="row"

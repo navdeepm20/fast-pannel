@@ -4,14 +4,14 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 //router
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, LinkProps } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { IconButton } from "@mui/material";
 
-function LinkRouter(props) {
+// types
+interface LinkRouterPropsTypes extends LinkProps {}
+function LinkRouter({ ...props }: LinkRouterPropsTypes) {
   return (
     <>
       <Link

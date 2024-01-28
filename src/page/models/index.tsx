@@ -17,20 +17,18 @@ import Loader from "../../components/loading";
 
 function Models({ ...props }) {
   const { appName } = useParams();
-  const [response, error, loading, refetch] = useAxios({
+  const { response, error, loading } = useAxios({
     url: `${urls?.apps_get?.url}?app_name=${appName}`,
     method: urls?.apps_get?.method,
   });
 
-  const [cols, setCols] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [cols, setCols] = useState<{}[]>([]);
+  const [rows, setRows] = useState<{}[]>([]);
 
   useEffect(() => {
     // fetch data here
     if (response) {
-      setCols(
-        createCols(response.data[0]?.models, colsConfig, colsConfig, appName)
-      );
+      setCols(createCols(response.data[0]?.models, colsConfig));
       setRows(createRows(response.data[0]?.models));
     }
   }, [response]);

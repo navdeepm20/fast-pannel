@@ -107,6 +107,9 @@ export const fieldTypesComponentMapping = {
     component: CustomTextField,
     props: {
       type: "text",
+      sx: {
+        fullWidth: true,
+      },
     },
     type: "string",
   },
@@ -114,6 +117,9 @@ export const fieldTypesComponentMapping = {
     component: CustomTextField,
     props: {
       type: "number",
+      sx: {
+        fullWidth: true,
+      },
     },
     type: "integer",
   },
@@ -121,6 +127,9 @@ export const fieldTypesComponentMapping = {
     component: CustomTextField,
     props: {
       type: "number",
+      sx: {
+        fullWidth: true,
+      },
     },
     type: "float",
   },
@@ -133,6 +142,9 @@ export const fieldTypesComponentMapping = {
     component: CustomTextField,
     props: {
       type: "email",
+      sx: {
+        fullWidth: true,
+      },
     },
     type: "email",
   },
@@ -291,7 +303,7 @@ export const getFieldComponentByType = (fieldInfo, mode) => {
   return CustomComponent;
 };
 //validate form data before submitting
-export const validateFormData = (formRef, fields) => {
+export const validateFormData = (formRef: React.ReactNode, fields: {}) => {
   let data = {};
 
   for (let i = 0; i < fields?.length; i++) {

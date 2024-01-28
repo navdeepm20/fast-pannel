@@ -22,15 +22,16 @@ import useAxiosFunction from "../hooks/useAxiosFunction";
 import { useParams } from "react-router-dom";
 import { notificationHandler } from "../utils/utility";
 import ErrorOccured from "../components/error";
+import { Typography } from "@mui/material";
 
 function CreateObjectForm() {
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
-  const [response, error, loading, refetch] = useAxios({
+  const { response, error, loading } = useAxios({
     url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_objects_attribute_get?.method,
   });
-  const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
+  const { mutationResponse, mutationLoading, axiosFetch } = useAxiosFunction();
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -48,15 +49,15 @@ function CreateObjectForm() {
   }, [response]);
 
   useEffect(() => {
-    if (apiResponse && apiResponse.status === 200) {
+    if (mutationResponse && mutationResponse.status === 200) {
       notificationHandler({
         severity: "success",
         title: "Record Successfully Added",
       });
     }
-  }, [apiResponse]);
+  }, [mutationResponse]);
 
-  const handleSubmit = (e: React.MouseEvent<HTMLElement>): void => {
+  const handleSubmit = (e: MouseEvent): void => {
     e.preventDefault();
     const data = validateFormData(formRef, fields);
 
@@ -86,6 +87,9 @@ function CreateObjectForm() {
         <Loader sx={{ height: "calc(100% - 85px)" }} />
       ) : (
         <Paper elevation={0}>
+          <Typography fontSize={20} fontWeight={600} textAlign="center" mb={4}>
+            Add Record
+          </Typography>
           {error ? (
             <ErrorOccured />
           ) : (
@@ -96,13 +100,19 @@ function CreateObjectForm() {
                   mt: ".5rem",
                 }}
               >
-                {fields.map((field, index) => {
+                {fields.map((field) => {
                   return <SingleObject fieldInfo={field} mode="create" />;
                 })}
               </Box>
-              <Stack direction="row" gap={2}>
-                <CustomButton disabled={apiLoading} onClick={handleSubmit}>
-                  Create
+              <Stack direction="row" gap={2} mt={4}>
+                <CustomButton
+                  disabled={mutationLoading}
+                  onClick={(e) => {
+                    handleSubmit(e);
+                  }}
+                  fullWidth
+                >
+                  Creates
                 </CustomButton>
               </Stack>
             </form>

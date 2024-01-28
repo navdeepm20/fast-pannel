@@ -1,6 +1,9 @@
-export const createCols = (col, fieldConfig) => {
+export const createCols = (
+  col: { [index: string]: any },
+  fieldConfig: { [index: string]: any }
+): {}[] => {
   if (col) {
-    return Object.keys(col).map((col, ind) => {
+    return Object.keys(col).map((col) => {
       if (fieldConfig[col]) {
         return {
           field: col,
@@ -17,9 +20,9 @@ export const createCols = (col, fieldConfig) => {
   }
   return [];
 };
-export const createRows = (rows, rowsConfig) => {
+export const createRows = (rows: []) => {
   if (rows) {
-    return rows?.map((row, ind) => {
+    return rows?.map((row: { _id: string }) => {
       return {
         id: row?._id,
         ...row,

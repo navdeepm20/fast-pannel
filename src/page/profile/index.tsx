@@ -19,17 +19,32 @@ import { notificationHandler } from "../../utils/utility";
 //mui
 import Paper from "@mui/material/Paper";
 
-function Profile({ ...props }) {
-  const [, dispatch] = useAuth();
-  const userInfo = JSON.parse(localStorage.getItem("user"));
-  const [response, error, loading] = useAxios({
+export interface UserProfileDataType {
+  first_name: string;
+  username: string;
+  last_name: string;
+  email: string;
+  date_joined: string;
+  last_login: string;
+}
+function Profile() {
+  const { dispatch } = useAuth();
+  const userInfo = JSON.parse(localStorage.getItem("user") || "");
+  const { response, error, loading } = useAxios({
     url:
       urls.model_objects_get?.url +
       userInfo?._id +
       `?app_name=fastpanel.core.accounts&model_name=fastpaneluser`,
     method: urls?.model_objects_get?.method,
   });
-  const [profileData, setProfileData] = useState({});
+  const [profileData, setProfileData] = useState({
+    first_name: "",
+    last_name: "",
+    username: "",
+    email: "",
+    date_joined: "",
+    last_login: "",
+  });
 
   useEffect(() => {
     if (response && response.status === 200) {
@@ -37,12 +52,17 @@ function Profile({ ...props }) {
     }
   }, [response]);
 
-  const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
+  const { mutationResponse, mutationLoading, axiosFetch } = useAxiosFunction();
   const handleUpdateProfile = async ({
     first_name,
     username,
     last_name,
     email,
+  }: {
+    first_name: string;
+    username: string;
+    last_name: string;
+    email: string;
   }) => {
     axiosFetch({
       axiosInstance: axiosInstance,
@@ -60,14 +80,14 @@ function Profile({ ...props }) {
       },
     });
   };
-  //will be triggered when apiresponse comes
+  //will be triggered when mutationResponse comes
   useEffect(() => {
-    if (apiResponse && apiResponse.status === 200) {
-      setProfileData(apiResponse?.data);
+    if (mutationResponse && mutationResponse.status === 200) {
+      setProfileData(mutationResponse?.data);
       dispatch({
         type: "update_user",
         payload: {
-          user: apiResponse?.data,
+          user: mutationResponse?.data,
         },
       });
       notificationHandler({
@@ -75,7 +95,7 @@ function Profile({ ...props }) {
         title: "Profile Updated Successfully",
       });
     }
-  }, [apiResponse]);
+  }, [mutationResponse]);
 
   return (
     <Paper elevation={0} sx={{ height: "100%" }}>
@@ -92,7 +112,7 @@ function Profile({ ...props }) {
                 lastName={profileData?.last_name}
                 username={profileData?.username}
                 email={profileData?.email}
-                loading={loading}
+                loading={loading || mutationLoading}
                 updateProfile={handleUpdateProfile}
                 createdOn={profileData?.date_joined}
                 lastLogin={profileData?.last_login}

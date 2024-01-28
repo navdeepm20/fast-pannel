@@ -3,24 +3,31 @@ import { useEffect, useState } from "preact/hooks";
 import { axiosInstance } from "../axios";
 //utility
 import { httpErrorHandler } from "../utils/utility";
+//axios types
+import { AxiosError, AxiosResponse, AxiosRequestConfig, Axios } from "axios";
 
+interface AxiosFetchType extends AxiosRequestConfig {
+  axiosInstance: Axios;
+}
 function useAxiosFunction() {
-  const [response, setResponse] = useState(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [controller, setController] = useState(null);
+  const [mutationResponse, setMutationResponse] =
+    useState<null | AxiosResponse>(null);
+  const [error, setError] = useState<AxiosError | null>(null);
+  const [mutationLoading, setMutationLoading] = useState(false);
+  const [controller, setController] = useState<AbortController | null>(null);
 
-  const axiosFetch = async (configObj) => {
+  const axiosFetch = async (configObj: AxiosFetchType) => {
+    console.log(configObj);
     try {
-      setLoading(true);
+      setMutationLoading(true);
       const ctrl = new AbortController();
       setController(ctrl);
       const res = await axiosInstance({ ...configObj, signal: ctrl?.signal });
-      setResponse(res);
-    } catch (err) {
+      setMutationResponse(res);
+    } catch (err: any) {
       setError(err);
     } finally {
-      setLoading(false);
+      setMutationLoading(false);
     }
   };
 
@@ -35,7 +42,7 @@ function useAxiosFunction() {
     }
   }, [error]);
 
-  return [response, error, loading, axiosFetch];
+  return { mutationResponse, error, mutationLoading, axiosFetch };
 }
 
 export default useAxiosFunction;

@@ -25,7 +25,7 @@ const Sidebar = ({
   handleDrawerOpen,
   ...props
 }) => {
-  const [user] = useAuth();
+  const { user } = useAuth();
   const theme = useTheme();
   const { setIsLogoutDialogOpen } = useGlobalContext();
   const sidebarConfig = getSidebarConfig({

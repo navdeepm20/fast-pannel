@@ -4,7 +4,18 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
-export default function BlockingLoader({ message, show, ...props }) {
+//types
+interface BlockingLoaderTypes {
+  message: string;
+  show: boolean;
+  [props: string]: any;
+}
+
+export default function BlockingLoader({
+  message,
+  show,
+  ...props
+}: BlockingLoaderTypes) {
   return (
     <Backdrop
       sx={{

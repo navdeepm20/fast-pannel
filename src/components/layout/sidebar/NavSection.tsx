@@ -23,7 +23,7 @@ export default function NavSection({ data = [], open, ...other }) {
 function NavItem({ item, open }) {
   const { title, path, icon, onClickHandler, tooltipText } = item;
 
-  const [, dispatch] = useAuth();
+  const { dispatch } = useAuth();
   return (
     <>
       {path ? (

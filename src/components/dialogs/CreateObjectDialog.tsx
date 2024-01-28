@@ -1,35 +1,22 @@
-import DialogWrapper from "./DialogWrapper";
 //mui
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import DialogWrapper from "./DialogWrapper";
+
 //internal
 import CreateObjectForm from "../../forms/CreateObjectForm";
 
 //Create dialog inner content
-function CreateObjectDialogContent({
-  handleClose,
-}: {
-  handleClose: () => void;
-}) {
-  return (
-    <Stack>
-      <CreateObjectForm />
-    </Stack>
-  );
+function CreateObjectDialogContent() {
+  return <CreateObjectForm />;
 }
 
 //Create Dialog Types
 type CreateObjectDialogTypes = {
   open: boolean;
   handleClose: () => void;
-  isLoading: boolean;
+  isLoading?: boolean;
 };
 
-function CreateObjectDialog({
-  open,
-  handleClose,
-  isLoading,
-}: CreateObjectDialogTypes) {
+function CreateObjectDialog({ open, handleClose }: CreateObjectDialogTypes) {
   return (
     <DialogWrapper
       dialogProps={{
@@ -38,16 +25,7 @@ function CreateObjectDialog({
         fullWidth: true,
         maxWidth: "xs",
       }}
-      dialogContentChild={
-        <CreateObjectDialogContent handleClose={handleClose} />
-      }
-      // dialogActionChild={
-      //   <DeleteConfirmationDialogActions
-      //     handleDelete={handleDelete}
-      //     isLoading={isLoading}
-      //     handleClose={handleClose}
-      //   />
-      // }
+      dialogContentChild={<CreateObjectDialogContent />}
       dialogContentProps={{ sx: { mb: 0 } }}
     />
   );

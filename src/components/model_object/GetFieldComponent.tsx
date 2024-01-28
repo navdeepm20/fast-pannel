@@ -7,12 +7,11 @@ import { getFieldComponentByType } from "../../page/ModelObject/utility";
 function GetFieldComponent({ fieldInfo, mode, ...props }) {
   const ComponentByType = getFieldComponentByType(fieldInfo, mode);
   return (
-    <Stack direction="row" id="GetFieldComponent-container" mb="1rem">
+    <Stack id="GetFieldComponent-container" mb="1rem" width="100%">
       <Typography
-        fontSize="16px"
-        fontWeight="400"
+        fontWeight={400}
         color="text.grey"
-        sx={{ width: "160px", wordWrap: "break-word", mr: ".8rem" }}
+        sx={{ width: "160px", wordWrap: "break-word", mr: ".8rem", mb: 1 }}
       >
         {fieldInfo?.fieldName?.charAt(0)?.toUpperCase() +
           fieldInfo?.fieldName?.substr(1)}

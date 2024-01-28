@@ -1,10 +1,14 @@
 //preact
 import { createContext } from "preact";
-import { useEffect, useReducer, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 
 export const globalContext = createContext({});
 
-export default function GlobalContextProvider({ children, ...props }) {
+export default function GlobalContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   return (
     <globalContext.Provider

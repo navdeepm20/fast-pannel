@@ -29,7 +29,7 @@ export default function Layout() {
     setOpen(false);
   };
 
-  const [_, dispatch] = useAuth();
+  const { dispatch } = useAuth();
 
   return (
     <Box sx={{ display: "flex", position: "relative" }}>

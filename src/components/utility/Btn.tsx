@@ -1,20 +1,17 @@
 //mui
-import Button from "@mui/material/Button";
-import { SxProps } from "@mui/material";
+import Button, { ButtonProps } from "@mui/material/Button";
+import { SxProps } from "@mui/system";
 
-function Btn({
-  sx,
-  disabled,
-  onClick,
-  children,
-  ...props
-}: {
+//tyeps
+interface ButtonTypes extends ButtonProps {
   sx?: SxProps;
-  disabled: boolean;
-  onClick: (e: React.MouseEvent<HTMLElement>) => void;
+  disabled?: boolean;
+  onClick?: (e: MouseEvent) => void;
   children: React.ReactNode;
-}) {
-  const buttonConfig = {
+}
+
+function Btn({ sx, disabled, onClick, children, ...props }: ButtonTypes) {
+  const buttonConfig: ButtonProps = {
     variant: "contained",
     // disableElevation: true,
     sx: {
@@ -31,6 +28,8 @@ function Btn({
       },
       ...sx,
     },
+    disabled,
+    onClick,
     ...props,
   };
 

@@ -4,14 +4,36 @@ import { useEffect, useReducer } from "preact/hooks";
 //utility
 import { HandleAuthToken } from "../utils/utility";
 
-const initialState = {
-  user: null,
+//initial user state for reducer
+const UserState: UserStateType = {
+  user: { token: null },
   isAuthenticated: false,
 };
 
-export const AuthContext = createContext({});
+//types
+type UserReducerType = {
+  user: UserStateType;
+  dispatch: React.Dispatch<any>;
+};
+type UserStateType = {
+  user: { [index: string]: any };
+  isAuthenticated: boolean;
+};
+type AuthActionType = {
+  type: "signin" | "update_user";
+  payload: UserStateType & { token: string | null };
+};
+type LogoutActionType = {
+  type: "signout";
+};
+type ActionType = AuthActionType | LogoutActionType;
 
-const signIn = (payload) => {
+export const AuthContext = createContext<UserReducerType>({
+  user: UserState,
+  dispatch: () => {},
+});
+
+const signIn = (payload: UserStateType & { token?: string | null }) => {
   const handleAuth = new HandleAuthToken();
   handleAuth.addData(payload?.user, payload?.token);
 };
@@ -19,10 +41,10 @@ const signOut = () => {
   const handleAuth = new HandleAuthToken();
   handleAuth.clearData();
 };
-const update = (payload) => {
+const update = (payload: UserStateType & { token?: string | null }) => {
   new HandleAuthToken().addData(payload?.user, payload?.token);
 };
-const reducer = (state, action) => {
+const reducer = (state: UserStateType, action: ActionType) => {
   switch (action?.type) {
     case "signin": {
       signIn(action?.payload);
@@ -44,8 +66,12 @@ const reducer = (state, action) => {
     }
   }
 };
-export default function AuthContextProvider({ children, ...props }) {
-  const [user, dispatch] = useReducer(reducer, initialState);
+export default function AuthContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [user, dispatch] = useReducer(reducer, UserState);
   useEffect(() => {
     const handleAuth = new HandleAuthToken();
 
@@ -64,8 +90,9 @@ export default function AuthContextProvider({ children, ...props }) {
       });
     }
   }, []);
+
   return (
-    <AuthContext.Provider value={[user, dispatch]}>
+    <AuthContext.Provider value={{ user, dispatch }}>
       {children}
     </AuthContext.Provider>
   );

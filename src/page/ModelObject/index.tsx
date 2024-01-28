@@ -23,11 +23,11 @@ import { useParams } from "react-router-dom";
 function ModelObject({ objectData, ...props }) {
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
-  const [response, error, loading, refetch] = useAxios({
+  const { response, error, loading, refetch } = useAxios({
     url: `${urls?.model_objects_attribute?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_get?.method,
   });
-  const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
+  const { apiResponse, apiError, loading, axiosFetch } = useAxiosFunction();
   const formRef = useRef();
   useEffect(() => {
     if (response) {

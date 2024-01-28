@@ -27,11 +27,11 @@ import ErrorOccured from "../../components/error";
 function ModelObjectCreate({ objectData, ...props }) {
   const { modelName, appName } = useParams();
   const [fields, setFields] = useState([]);
-  const [response, error, loading, refetch] = useAxios({
+  const { response, error, loading, refetch } = useAxios({
     url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_objects_attribute_get?.method,
   });
-  const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
+  const { apiResponse, mutationLoading, axiosFetch } = useAxiosFunction();
   const formRef = useRef();
 
   useEffect(() => {
@@ -102,7 +102,7 @@ function ModelObjectCreate({ objectData, ...props }) {
                 })}
               </Box>
               <Stack direction="row" gap={2}>
-                <CustomButton disabled={apiLoading} onClick={handleSubmit}>
+                <CustomButton disabled={mutationLoading} onClick={handleSubmit}>
                   Create
                 </CustomButton>
               </Stack>

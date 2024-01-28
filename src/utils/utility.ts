@@ -1,13 +1,14 @@
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 
 export class HandleLocalStorage {
-  getValue(key) {
+  getValue(key: string) {
     return localStorage.getItem(key);
   }
-  setValue(key, value) {
+  setValue(key: string, value: any) {
     localStorage.setItem(key, value);
   }
-  remove(key) {
+  remove(key: string) {
     localStorage.removeItem(key);
   }
 }
@@ -15,15 +16,16 @@ export class HandleAuthToken extends HandleLocalStorage {
   #USER = "user";
   #TOKEN = "fast-pannel-access-token";
 
-  addUser = (user) => this.setValue(this.#USER, JSON.stringify(user));
+  addUser = (user: { [index: string]: any }) =>
+    this.setValue(this.#USER, JSON.stringify(user));
   clearUser = () => this.remove(this.#USER);
-  retrieveUser = () => JSON.parse(this.getValue(this.#USER));
+  retrieveUser = () => JSON.parse(this.getValue(this.#USER) as string);
 
-  addToken = (token) => this.setValue(this.#TOKEN, token);
+  addToken = (token: string) => this.setValue(this.#TOKEN, token);
   clearToken = () => this.remove(this.#TOKEN);
   retrieveToken = () => this.getValue(this.#TOKEN);
 
-  addData = (user, accessToken = null) => {
+  addData = (user: { [index: string]: any }, accessToken: string) => {
     this.addUser(user);
     this.addToken(accessToken);
   };
@@ -33,7 +35,7 @@ export class HandleAuthToken extends HandleLocalStorage {
   };
 }
 
-export const logout = (dispatch) => {
+export const logout = (dispatch: React.Dispatch<any>) => {
   new HandleAuthToken().clearData();
   dispatch({
     type: "signout",
@@ -43,13 +45,21 @@ export const getAuthToken = () => {
   return `Bearer ${new HandleAuthToken().retrieveToken()}`;
 };
 
-export const httpErrorHandler = (error) => {
+export const httpErrorHandler = (error: AxiosError) => {
   if (error.message !== "canceled") {
     notificationHandler({ severity: "error", title: error?.message });
   }
 };
 
-export const notificationHandler = ({ severity, title, msg }) => {
+export const notificationHandler = ({
+  severity,
+  title,
+  msg,
+}: {
+  severity: string;
+  title: string;
+  msg?: string;
+}) => {
   switch (severity) {
     case "success":
       toast.success(title);

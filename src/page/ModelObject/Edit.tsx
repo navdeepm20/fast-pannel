@@ -32,7 +32,7 @@ function ModelObjectEdit({ objectData, ...props }) {
   const { modelName, appName, objectId } = useParams();
   const [fields, setFields] = useState([]);
   //for fetching model field types
-  const [response, error, loading, refetch] = useAxios({
+  const { response, error, loading, refetch } = useAxios({
     url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_objects_attribute_get?.method,
   });
@@ -44,13 +44,13 @@ function ModelObjectEdit({ objectData, ...props }) {
     setIsDeleteDialogOpen(false);
   };
   //axios for fetching the model obj data
-  const [modelObjResponse, modelObjError, modelObjLoading, modelObjRefetch] =
+  const { modelObjResponse, modelObjError, modelObjLoading, modelObjRefetch } =
     useAxios({
       url: `${urls?.model_objects_get?.url}${objectId}?app_name=${appName}&model_name=${modelName}`,
       method: urls?.model_objects_get?.method,
     });
   //for submit & delete data
-  const [apiResponse, apiError, apiLoading, axiosFetch] = useAxiosFunction();
+  const { apiResponse, mutationLoading, axiosFetch } = useAxiosFunction();
 
   const formRef = useRef();
   //for catching the fields types response
@@ -169,11 +169,11 @@ function ModelObjectEdit({ objectData, ...props }) {
                 })}
               </Box>
               <Stack direction="row" gap={2}>
-                <CustomButton disabled={apiLoading} onClick={handleSubmit}>
+                <CustomButton disabled={mutationLoading} onClick={handleSubmit}>
                   Save
                 </CustomButton>
                 <CustomButton
-                  disabled={apiLoading}
+                  disabled={mutationLoading}
                   onClick={() => setIsDeleteDialogOpen(true)}
                   sx={{
                     backgroundColor: "#D92D20",

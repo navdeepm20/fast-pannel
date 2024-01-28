@@ -11,8 +11,13 @@ import useAxios from "../../hooks/useAxios";
 import urls from "../../utils/urls.json";
 import { getAuthToken } from "../../utils/utility";
 
+export interface AppDataType {
+  app_name: string;
+  models: [];
+}
+
 function Apps({ ...props }) {
-  const [response, error, loading, refetch] = useAxios({
+  const { response, loading } = useAxios({
     url: urls?.apps_get?.url,
     method: urls?.apps_get?.method,
     headers: {
@@ -20,7 +25,7 @@ function Apps({ ...props }) {
     },
   });
 
-  const [appsData, setAppsData] = useState([]);
+  const [appsData, setAppsData] = useState<AppDataType[]>([]);
 
   useEffect(() => {
     if (response) {
@@ -43,11 +48,11 @@ function Apps({ ...props }) {
           <Stack direction="row" gap="24px" flexWrap="wrap">
             {appsData
               ?.filter((app) => app?.models?.length > 0)
-              .map((app, index) => {
+              .map((app) => {
                 return (
                   <AppCard
                     appName={app?.app_name}
-                    displayName={app?.app_name?.split(".")?.pop()}
+                    displayName={app.app_name?.split(".")?.pop()}
                     models={app?.models}
                   ></AppCard>
                 );
