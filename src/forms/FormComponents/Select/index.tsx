@@ -1,9 +1,15 @@
-import Select from "@mui/material/Select";
+import Select, { SelectProps } from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import { useField } from "formik";
 
-export default function SelectWrapper({ name, children, ...props }) {
+//types
+interface PropTypes extends SelectProps {
+  name: string;
+  children: React.ReactNode;
+}
+
+export default function SelectWrapper({ name, children, ...props }: PropTypes) {
   const [field, meta] = useField(name); //field name
 
   let error;

@@ -16,7 +16,7 @@ export interface AppDataType {
   models: [];
 }
 
-function Apps({ ...props }) {
+function Apps() {
   const { response, loading } = useAxios({
     url: urls?.apps_get?.url,
     method: urls?.apps_get?.method,

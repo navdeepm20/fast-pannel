@@ -25,7 +25,7 @@ const CustomCellEdit = ({ linkTo }: { linkTo: string }) => {
     <CustomCellWithButton
       icon={<DriveFileRenameOutlineIcon />}
       title="Edit"
-      clickHandler={(e) => {
+      clickHandler={() => {
         navigate(linkTo);
       }}
     />

@@ -1,7 +1,15 @@
 import Button from "@mui/material/Button";
 import { useFormikContext } from "formik";
+//types
+import { ButtonProps } from "@mui/material/Button";
 
-const ButtonWrapper = ({ children, variant, ...props }) => {
+//types
+interface PropTypes extends ButtonProps {
+  variant: "outlined" | "contained" | "text";
+  children: React.ReactNode;
+  [props: string]: any;
+}
+const ButtonWrapper = ({ children, variant, ...props }: PropTypes) => {
   const { submitForm } = useFormikContext();
   const handleSubmit = () => {
     submitForm();

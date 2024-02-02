@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 //types
 interface AppCardTypes {
   appName: string;
-  models: string;
+  models: { name: string }[];
   displayName: string;
   [props: string]: any;
 }
@@ -66,7 +66,7 @@ function AppCard({ appName, models, displayName }: AppCardTypes) {
             textTransform: "capitalize",
             cursor: "pointer",
           }}
-          onClick={(e) => {
+          onClick={(e: MouseEvent) => {
             handleShowMore(e, appName);
           }}
         >
@@ -91,17 +91,23 @@ function AppCard({ appName, models, displayName }: AppCardTypes) {
                           "0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)",
                       },
                     }}
-                    onClick={(e) => handleModelClick(e, appName, model?.name)}
+                    onClick={(e: MouseEvent) =>
+                      handleModelClick(e, appName, model?.name)
+                    }
                   >
                     <Typography variant="body2">{model?.name}</Typography>
                     <Box>
                       <IconButton
-                        onClick={(e) => handleAdd(e, appName, model?.name)}
+                        onClick={(e: MouseEvent) =>
+                          handleAdd(e, appName, model?.name)
+                        }
                       >
                         <LibraryAddIcon fontSize="small" />
                       </IconButton>
                       <IconButton
-                        onClick={(e) => handleEdit(e, appName, model?.name)}
+                        onClick={(e: MouseEvent) =>
+                          handleEdit(e, appName, model?.name)
+                        }
                       >
                         <DriveFileRenameOutlineIcon fontSize="small" />
                       </IconButton>
@@ -121,17 +127,23 @@ function AppCard({ appName, models, displayName }: AppCardTypes) {
                       borderRadius: "8px",
                       ":hover": { backgroundColor: "sky_blue.main" },
                     }}
-                    onClick={(e) => handleModelClick(e, appName, model?.name)}
+                    onClick={(e: MouseEvent) =>
+                      handleModelClick(e, appName, model?.name)
+                    }
                   >
                     <Typography variant="body2">{model?.name}</Typography>
                     <Box>
                       <IconButton
-                        onClick={(e) => handleAdd(e, appName, model?.name)}
+                        onClick={(e: MouseEvent) =>
+                          handleAdd(e, appName, model?.name)
+                        }
                       >
                         <LibraryAddIcon fontSize="small" />
                       </IconButton>
                       <IconButton
-                        onClick={(e) => handleEdit(e, appName, model?.name)}
+                        onClick={(e: MouseEvent) =>
+                          handleEdit(e, appName, model?.name)
+                        }
                       >
                         <DriveFileRenameOutlineIcon fontSize="small" />
                       </IconButton>

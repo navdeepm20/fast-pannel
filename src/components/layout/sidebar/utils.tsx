@@ -9,12 +9,22 @@ import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { appRoutes } from "../../../utils/appRoutes";
 
+export interface SidebarConfigTypes {
+  title: string;
+  path: string;
+  icon: React.ReactNode;
+  onClickHandler: (props: any) => void;
+  tooltipText: string;
+}
 export const getSidebarConfig = ({
   handleLogoutClick,
   handleProfileClick,
   handleAppsClick,
-  ...props
-}) => [
+}: {
+  handleLogoutClick?: (prop: any) => void;
+  handleProfileClick?: (prop: any) => void;
+  handleAppsClick?: (prop: any) => void;
+}): SidebarConfigTypes[] => [
   {
     title: "apps",
     path: appRoutes.apps,

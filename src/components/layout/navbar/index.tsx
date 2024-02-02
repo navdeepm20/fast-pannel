@@ -1,5 +1,3 @@
-//preact
-import { useState } from "preact/hooks";
 //mui
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
@@ -10,7 +8,6 @@ import Box from "@mui/material/Box";
 
 import { DRAWER_WIDTH, CLOSED_DRAWER_WIDTH } from "../utils";
 //internal
-import OptionsMenu from "./OptionsMenu";
 import Breadcrumbs from "../../breadcrumbs";
 //utils
 import { useLocation } from "react-router-dom";
@@ -36,7 +33,11 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
+const Navbar: React.FC<{ open: boolean; height: number }> = ({
+  open,
+  // handleDrawerOpen,
+  height,
+}) => {
   // const [anchorEl, setAnchorEl] = useState(null);
   // const [, dispatch] = useAuth();
   // const menuOpen = Boolean(anchorEl);
@@ -51,7 +52,7 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
 
   const location = useLocation();
 
-  const getPageTitle = (location) => {
+  const getPageTitle = (location: string) => {
     return location === "/profile" ? "Profile" : "Apps";
   };
 
@@ -102,6 +103,5 @@ const Navbar = ({ open, handleDrawerOpen, height, ...props }) => {
 
 Navbar.defaultProps = {
   open: true,
-  handleDrawerOpen: () => {},
 };
 export default Navbar;

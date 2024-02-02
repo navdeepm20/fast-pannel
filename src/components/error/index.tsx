@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 //assets
 import ErrorSvg from "../../assets/server-down.svg";
 
-function ErrorOccured({ ...props }) {
+function ErrorOccured() {
   return (
     <Stack
       sx={{

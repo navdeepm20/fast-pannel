@@ -4,47 +4,51 @@ import { useEffect, useReducer } from "preact/hooks";
 //utility
 import { HandleAuthToken } from "../utils/utility";
 
-//initial user state for reducer
-const UserState: UserStateType = {
-  user: { token: null },
-  isAuthenticated: false,
-};
-
 //types
+type UserStateType = {
+  user: { [index: string]: any };
+  token: string;
+  // refreshToken?: string | null;
+  isAuthenticated: boolean;
+};
 type UserReducerType = {
   user: UserStateType;
   dispatch: React.Dispatch<any>;
 };
-type UserStateType = {
-  user: { [index: string]: any };
-  isAuthenticated: boolean;
-};
+
 type AuthActionType = {
   type: "signin" | "update_user";
-  payload: UserStateType & { token: string | null };
+  payload: UserStateType;
 };
 type LogoutActionType = {
   type: "signout";
 };
 type ActionType = AuthActionType | LogoutActionType;
 
+//initial user state for reducer
+const UserState: UserStateType = {
+  user: {},
+  token: "",
+  isAuthenticated: false,
+};
+
 export const AuthContext = createContext<UserReducerType>({
   user: UserState,
   dispatch: () => {},
 });
 
-const signIn = (payload: UserStateType & { token?: string | null }) => {
+const signIn = (payload: UserStateType) => {
   const handleAuth = new HandleAuthToken();
-  handleAuth.addData(payload?.user, payload?.token);
+  handleAuth.addData(payload?.user, payload.token);
 };
 const signOut = () => {
   const handleAuth = new HandleAuthToken();
   handleAuth.clearData();
 };
-const update = (payload: UserStateType & { token?: string | null }) => {
-  new HandleAuthToken().addData(payload?.user, payload?.token);
+const update = (payload: UserStateType) => {
+  new HandleAuthToken().addData(payload.user, payload.token);
 };
-const reducer = (state: UserStateType, action: ActionType) => {
+const reducer = (state: UserStateType, action: ActionType): UserStateType => {
   switch (action?.type) {
     case "signin": {
       signIn(action?.payload);
@@ -54,14 +58,21 @@ const reducer = (state: UserStateType, action: ActionType) => {
     case "signout":
       signOut();
       return {
-        user: null,
+        user: {},
         isAuthenticated: false,
+        token: "",
       };
+
     case "update_user": {
-      update({ ...state, user: action?.payload?.user });
+      update({
+        isAuthenticated: state.isAuthenticated,
+        token: state.token,
+        user: action?.payload?.user,
+      });
       return {
         ...state,
         user: action?.payload?.user,
+        token: state?.token,
       };
     }
   }
@@ -72,6 +83,7 @@ export default function AuthContextProvider({
   children: React.ReactNode;
 }) {
   const [user, dispatch] = useReducer(reducer, UserState);
+
   useEffect(() => {
     const handleAuth = new HandleAuthToken();
 
@@ -85,7 +97,7 @@ export default function AuthContextProvider({
         payload: {
           isAuthenticated: true,
           user: handleAuth.retrieveUser(),
-          token: handleAuth.retrieveToken(),
+          token: handleAuth.retrieveToken() || "",
         },
       });
     }

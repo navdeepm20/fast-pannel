@@ -9,15 +9,18 @@ import { AxiosError, AxiosResponse, AxiosRequestConfig, Axios } from "axios";
 interface AxiosFetchType extends AxiosRequestConfig {
   axiosInstance: Axios;
 }
-function useAxiosFunction() {
+interface UseAxiosTypes {
+  disableErrorNotification?: boolean;
+}
+
+function useAxiosFunction({ disableErrorNotification }: UseAxiosTypes = {}) {
   const [mutationResponse, setMutationResponse] =
     useState<null | AxiosResponse>(null);
-  const [error, setError] = useState<AxiosError | null>(null);
+  const [mutationError, setMutationError] = useState<AxiosError | null>(null);
   const [mutationLoading, setMutationLoading] = useState(false);
   const [controller, setController] = useState<AbortController | null>(null);
 
   const axiosFetch = async (configObj: AxiosFetchType) => {
-    console.log(configObj);
     try {
       setMutationLoading(true);
       const ctrl = new AbortController();
@@ -25,7 +28,7 @@ function useAxiosFunction() {
       const res = await axiosInstance({ ...configObj, signal: ctrl?.signal });
       setMutationResponse(res);
     } catch (err: any) {
-      setError(err);
+      setMutationError(err);
     } finally {
       setMutationLoading(false);
     }
@@ -37,12 +40,17 @@ function useAxiosFunction() {
   }, [controller]);
 
   useEffect(() => {
-    if (error) {
-      httpErrorHandler(error);
+    if (mutationError && !disableErrorNotification) {
+      httpErrorHandler(mutationError);
     }
-  }, [error]);
+  }, [mutationError]);
 
-  return { mutationResponse, error, mutationLoading, axiosFetch };
+  return {
+    mutationResponse,
+    mutationError: mutationError as AxiosError,
+    mutationLoading,
+    axiosFetch,
+  };
 }
 
 export default useAxiosFunction;

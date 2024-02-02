@@ -5,8 +5,19 @@ import { Box, List, ListItemText } from "@mui/material";
 import { StyledNavItem, StyledNavItemIcon } from "./utils";
 //hooks
 import useAuth from "../../../hooks/useAuth";
+//types
+import { SidebarConfigTypes } from "./utils";
+import { BoxProps } from "@mui/material";
 
-export default function NavSection({ data = [], open, ...other }) {
+export default function NavSection({
+  data,
+  open,
+  ...other
+}: {
+  data: SidebarConfigTypes[];
+  open: boolean;
+  boxProps?: BoxProps;
+}) {
   return (
     <Box {...other}>
       <List disablePadding sx={{ p: open ? 1 : 0 }}>
@@ -20,7 +31,7 @@ export default function NavSection({ data = [], open, ...other }) {
 
 // ----------------------------------------------------------------------
 
-function NavItem({ item, open }) {
+function NavItem({ item, open }: { item: SidebarConfigTypes; open: boolean }) {
   const { title, path, icon, onClickHandler, tooltipText } = item;
 
   const { dispatch } = useAuth();
@@ -50,8 +61,8 @@ function NavItem({ item, open }) {
         <StyledNavItem
           className="styled__navitem"
           sx={{ justifyContent: open ? "flex-start" : "center" }}
-          onClick={(e) => {
-            onClickHandler(e, dispatch);
+          onClick={() => {
+            onClickHandler(dispatch);
           }}
         >
           <StyledNavItemIcon title={tooltipText && tooltipText}>

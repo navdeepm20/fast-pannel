@@ -1,7 +1,7 @@
 //preact
 import { useEffect, useState } from "preact/hooks";
 //mui
-import Avatar from "@mui/material/Avatar";
+
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -18,17 +18,18 @@ import urls from "../../utils/urls.json";
 
 //assets
 import fastpanel_logo from "../../assets/logo/fast-panel-logo-2.png";
+import { ChangeEvent } from "preact/compat";
 
 export default function SignIn({ ...props }) {
   const { user, dispatch } = useAuth();
-  const { response, error, loading, axiosFetch } = useAxiosFunction();
+  const { mutationResponse, mutationLoading, axiosFetch } = useAxiosFunction();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
   });
 
   const navigate = useNavigate();
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: MouseEvent) => {
     event.preventDefault();
     const data = new FormData();
     data.append("username", credentials?.username);
@@ -42,18 +43,18 @@ export default function SignIn({ ...props }) {
   };
 
   useEffect(() => {
-    if (response?.status === 200) {
+    if (mutationResponse?.status === 200) {
       dispatch({
         type: "signin",
         payload: {
           isAuthenticated: true,
-          user: response?.data?.user,
-          token: response.data?.access_token,
+          user: mutationResponse?.data?.user,
+          token: mutationResponse.data?.access_token,
         },
       });
       navigate("/");
     }
-  }, [response]);
+  }, [mutationResponse]);
 
   return (
     <>
@@ -86,7 +87,6 @@ export default function SignIn({ ...props }) {
             </Typography>
             <Typography
               component="span"
-              variant="span"
               sx={{ fontStyle: "italic", color: "text.grey" }}
             >
               Sign In
@@ -107,11 +107,11 @@ export default function SignIn({ ...props }) {
                 autoComplete="username"
                 autoFocus
                 value={credentials?.username}
-                onChange={(e) =>
+                onChange={(e: Event) =>
                   setCredentials((prev) => {
                     return {
                       ...prev,
-                      username: e.target.value,
+                      username: (e?.target as HTMLInputElement)?.value,
                     };
                   })
                 }
@@ -127,9 +127,12 @@ export default function SignIn({ ...props }) {
                 id="password"
                 autoComplete="current-password"
                 value={credentials?.password}
-                onChange={(e) =>
+                onChange={(e: Event) =>
                   setCredentials((prev) => {
-                    return { ...prev, password: e.target.value };
+                    return {
+                      ...prev,
+                      password: (e?.target as HTMLInputElement)?.value,
+                    };
                   })
                 }
               />
@@ -139,7 +142,7 @@ export default function SignIn({ ...props }) {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                disabled={loading}
+                disabled={mutationLoading}
               >
                 Sign In
               </Button>

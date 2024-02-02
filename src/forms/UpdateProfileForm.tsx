@@ -16,10 +16,17 @@ export default function UpdateProfileForm({
   lastName,
   username,
   email,
-  loading,
   lastLogin,
   createdOn,
   updateProfile,
+}: {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  lastLogin: string;
+  createdOn: string;
+  updateProfile: () => void;
 }) {
   return (
     <>

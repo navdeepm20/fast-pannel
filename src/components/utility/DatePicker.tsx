@@ -7,11 +7,14 @@ import TextField from "@mui/material/TextField";
 //libs
 import dayjs from "dayjs";
 
-function CustomDatePicker({ datestring, ...props }) {
-  const [value, setValue] = useState(dayjs(datestring) || "");
-  const handleChange = (newValue) => {
+function CustomDatePicker({ datestring }: { datestring: string }) {
+  const [value, setValue] = useState<dayjs.Dayjs | "" | null>(
+    dayjs(datestring) || ""
+  );
+  const handleChange = (newValue: dayjs.Dayjs | "" | null) => {
     setValue(newValue);
   };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DesktopDatePicker
@@ -19,7 +22,6 @@ function CustomDatePicker({ datestring, ...props }) {
         inputFormat="MM/DD/YYYY"
         value={value}
         onChange={handleChange}
-        ampm={false}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>

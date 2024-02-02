@@ -1,13 +1,12 @@
 //internal
 import DialogWrapper from "./DialogWrapper";
 import CustomButton from "../utility/Btn";
-import SvgWrapper from "../svg";
 //mui
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const LogoutConfirmationDialogContent = ({ handleClose, ...props }) => {
+const LogoutConfirmationDialogContent = () => {
   return (
     <Stack justifyContent="center" alignItems="center" width="100%">
       <Box>
@@ -43,7 +42,10 @@ const LogoutConfirmationDialogActions = ({
   handleClose,
   handleLogout,
   isLoading,
-  ...props
+}: {
+  handleClose: () => void;
+  handleLogout: () => void;
+  isLoading?: boolean;
 }) => {
   return (
     <Stack direction="row" justifyContent="center" width="100%">
@@ -88,8 +90,11 @@ function LogoutConfirmationDialog({
   handleClose,
   handleLogout,
   isLoading,
-
-  ...props
+}: {
+  open: boolean;
+  handleLogout: () => void;
+  handleClose: () => void;
+  isLoading?: boolean;
 }) {
   return (
     <DialogWrapper
@@ -99,9 +104,7 @@ function LogoutConfirmationDialog({
         fullWidth: true,
         maxWidth: "xs",
       }}
-      dialogContentChild={
-        <LogoutConfirmationDialogContent handleClose={handleClose} />
-      }
+      dialogContentChild={<LogoutConfirmationDialogContent />}
       dialogActionChild={
         <LogoutConfirmationDialogActions
           handleLogout={handleLogout}

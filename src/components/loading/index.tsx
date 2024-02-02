@@ -1,8 +1,9 @@
 //mui
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-
-function Loader({ ...props }) {
+//types
+import { SxProps } from "@mui/material";
+function Loader({ sx }: { sx?: SxProps }) {
   return (
     <Box
       sx={{
@@ -11,7 +12,7 @@ function Loader({ ...props }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        ...props?.sx,
+        ...sx,
       }}
     >
       <CircularProgress />

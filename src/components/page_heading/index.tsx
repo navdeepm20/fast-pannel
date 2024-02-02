@@ -2,18 +2,14 @@
 import { useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
-function PageHeading({ title, ...props }) {
-  const theme = useTheme();
-  delete props?.sx;
+//types
+import { SxProps } from "@mui/material";
+function PageHeading({ title, sx }: { title: string; sx: SxProps }) {
   return (
     <Box
       sx={{
         py: 2,
         mb: 4,
-
-        // backgroundColor: "#f5f6fa",
-        // borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
         borderRadius: "4px",
       }}
     >
@@ -23,7 +19,7 @@ function PageHeading({ title, ...props }) {
           fontSize: "20px",
           color: "text.black",
           textTransform: "capitalize",
-          ...props.sx,
+          ...sx,
         }}
       >
         {title}

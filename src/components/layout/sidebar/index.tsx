@@ -3,7 +3,6 @@ import { useTheme } from "@mui/material/styles";
 // import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -19,11 +18,13 @@ import useAuth from "../../../hooks/useAuth";
 import useGlobalContext from "../../../hooks/useGlobalContext";
 
 const Sidebar = ({
-  DRAWER_WIDTH,
   open,
   handleDrawerClose,
   handleDrawerOpen,
-  ...props
+}: {
+  open: boolean;
+  handleDrawerClose: () => void;
+  handleDrawerOpen: () => void;
 }) => {
   const { user } = useAuth();
   const theme = useTheme();

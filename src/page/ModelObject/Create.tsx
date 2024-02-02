@@ -24,22 +24,22 @@ import { useParams } from "react-router-dom";
 import { notificationHandler } from "../../utils/utility";
 import ErrorOccured from "../../components/error";
 
-function ModelObjectCreate({ objectData, ...props }) {
+function ModelObjectCreate() {
   const { modelName, appName } = useParams();
-  const [fields, setFields] = useState([]);
-  const { response, error, loading, refetch } = useAxios({
+  const [fields, setFields] = useState<{}[]>([]);
+  const { response, error, loading } = useAxios({
     url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_objects_attribute_get?.method,
   });
-  const { apiResponse, mutationLoading, axiosFetch } = useAxiosFunction();
-  const formRef = useRef();
+  const { mutationResponse, mutationLoading, axiosFetch } = useAxiosFunction();
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (response && Object.keys(response?.data?.properties).length > 0) {
       setFields(
         Object.entries(response.data?.properties)
           .map(([key, value]) => {
-            return { fieldName: key, ...value };
+            return { fieldName: key, ...(value as {}) };
           })
           .filter(
             (value) => value?.fieldName !== "id" && value?.fieldName !== "_id"
@@ -49,15 +49,15 @@ function ModelObjectCreate({ objectData, ...props }) {
   }, [response]);
 
   useEffect(() => {
-    if (apiResponse && apiResponse.status === 200) {
+    if (mutationResponse && mutationResponse.status === 200) {
       notificationHandler({
         severity: "success",
         title: "Record Successfully Added",
       });
     }
-  }, [apiResponse]);
+  }, [mutationResponse]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: MouseEvent) => {
     e.preventDefault();
     const data = validateFormData(formRef, fields);
 
@@ -98,7 +98,9 @@ function ModelObjectCreate({ objectData, ...props }) {
                 }}
               >
                 {fields.map((field, index) => {
-                  return <SingleObject fieldInfo={field} mode="create" />;
+                  return (
+                    <SingleObject fieldInfo={field} mode="create" key={index} />
+                  );
                 })}
               </Box>
               <Stack direction="row" gap={2}>

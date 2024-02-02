@@ -9,16 +9,21 @@ import Paper from "@mui/material/Paper";
 import AddToPhotosIcon from "@mui/icons-material/AddToPhotos";
 //internal
 import CustomButton from "../../components/utility/Btn";
-//libs
-import { useNavigate } from "react-router-dom";
 
-function TableAction({ selected, handleDelete, handleAddClick, ...props }) {
-  const navigate = useNavigate();
+function TableAction({
+  selected,
+  handleDelete,
+  handleAddClick,
+}: {
+  selected: [];
+  handleDelete: () => void;
+  handleAddClick: () => void;
+}) {
   //action
   const [action, setAction] = useState("");
 
-  const handleActionChange = (event) => {
-    setAction(event.target.value);
+  const handleActionChange = (event: Event) => {
+    setAction((event.target as HTMLInputElement).value);
   };
 
   return (
@@ -45,8 +50,8 @@ function TableAction({ selected, handleDelete, handleAddClick, ...props }) {
                 px: "4px",
               },
             }}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
+            labelId="delete-records"
+            id="delete-records"
             value={action}
             onChange={handleActionChange}
           >

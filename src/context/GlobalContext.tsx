@@ -2,7 +2,14 @@
 import { createContext } from "preact";
 import { useState } from "preact/hooks";
 
-export const globalContext = createContext({});
+interface GlobalContextType {
+  isLogoutDialogOpen: boolean;
+  setIsLogoutDialogOpen: React.Dispatch<boolean>;
+}
+export const globalContext = createContext<GlobalContextType>({
+  isLogoutDialogOpen: false,
+  setIsLogoutDialogOpen: () => {},
+});
 
 export default function GlobalContextProvider({
   children,

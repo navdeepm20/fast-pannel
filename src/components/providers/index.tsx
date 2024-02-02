@@ -6,9 +6,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 //theme
 import { ThemeProvider } from "@mui/material";
-import { lightTheme, darkTheme } from "../../theme/theme";
+import { lightTheme } from "../../theme/theme";
 
-function Provider({ children }) {
+function Provider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={lightTheme}>
       <GlobalContextProvider>

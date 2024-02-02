@@ -1,13 +1,12 @@
 //internal
 import DialogWrapper from "./DialogWrapper";
 import CustomButton from "../utility/Btn";
-import SvgWrapper from "../svg";
 //mui
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const DeleteConfirmationDialogContent = ({ handleClose, ...props }) => {
+const DeleteConfirmationDialogContent = () => {
   return (
     <Stack justifyContent="center" alignItems="center" width="100%">
       <Box>
@@ -44,7 +43,10 @@ const DeleteConfirmationDialogActions = ({
   handleClose,
   handleDelete,
   isLoading,
-  ...props
+}: {
+  handleClose: () => void;
+  handleDelete: () => void;
+  isLoading: boolean;
 }) => {
   return (
     <Stack direction="row" justifyContent="center" width="100%">
@@ -90,8 +92,11 @@ function DeleteConfirmationDialog({
   handleClose,
   handleDelete,
   isLoading,
-
-  ...props
+}: {
+  handleClose: () => void;
+  handleDelete: () => void;
+  isLoading: boolean;
+  open: boolean;
 }) {
   return (
     <DialogWrapper
@@ -101,9 +106,7 @@ function DeleteConfirmationDialog({
         fullWidth: true,
         maxWidth: "xs",
       }}
-      dialogContentChild={
-        <DeleteConfirmationDialogContent handleClose={handleClose} />
-      }
+      dialogContentChild={<DeleteConfirmationDialogContent />}
       dialogActionChild={
         <DeleteConfirmationDialogActions
           handleDelete={handleDelete}

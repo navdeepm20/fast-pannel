@@ -1,8 +1,25 @@
 import Box from "@mui/material/Box";
-import { DataGrid, GridRow } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 //libs
 import { useNavigate } from "react-router-dom";
+import { SxProps } from "@mui/material";
 
+interface CustomDataGridProps {
+  rows: [];
+  columns: [];
+  tableProps: {};
+  handleRowClick: ({
+    tableProps,
+    navigate,
+  }: {
+    tableProps: { [index: string]: any };
+    navigate: (path: string) => void;
+  }) => void;
+  tableContainerProps: {
+    sx?: SxProps;
+  };
+  [props: string]: any;
+}
 export default function CustomDataGrid({
   rows,
   columns,
@@ -10,7 +27,7 @@ export default function CustomDataGrid({
   handleRowClick,
   tableContainerProps,
   ...props
-}) {
+}: CustomDataGridProps) {
   const navigate = useNavigate();
   const tableContainerSx = tableContainerProps?.sx;
   delete tableContainerProps?.sx;

@@ -4,7 +4,13 @@ import Typography from "@mui/material/Typography";
 //utility
 import { getFieldComponentByType } from "../../page/ModelObject/utility";
 
-function GetFieldComponent({ fieldInfo, mode, ...props }) {
+function GetFieldComponent({
+  fieldInfo,
+  mode,
+}: {
+  fieldInfo: { [index: string]: any };
+  mode: string;
+}) {
   const ComponentByType = getFieldComponentByType(fieldInfo, mode);
   return (
     <Stack id="GetFieldComponent-container" mb="1rem" width="100%">

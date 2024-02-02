@@ -26,7 +26,7 @@ import { Typography } from "@mui/material";
 
 function CreateObjectForm() {
   const { modelName, appName } = useParams();
-  const [fields, setFields] = useState([]);
+  const [fields, setFields] = useState<{}[]>([]);
   const { response, error, loading } = useAxios({
     url: `${urls?.model_objects_attribute_get?.url}?app_name=${appName}&model_name=${modelName}`,
     method: urls?.model_objects_attribute_get?.method,
@@ -39,7 +39,7 @@ function CreateObjectForm() {
       setFields(
         Object.entries(response.data?.properties)
           .map(([key, value]) => {
-            return { fieldName: key, ...value };
+            return { fieldName: key, ...(value as {}) };
           })
           .filter(
             (value) => value?.fieldName !== "id" && value?.fieldName !== "_id"

@@ -20,7 +20,23 @@ const LOCAL_FORM_VALIDATION = yup.object().shape({
   username: FORM_VALIDATION["username"],
 });
 
-export default function UpdateNameForm(props) {
+export default function UpdateNameForm(props: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  username: string;
+  updateProfileHandler: ({
+    first_name,
+    last_name,
+    email,
+    username,
+  }: {
+    first_name: string | null;
+    last_name: string | null;
+    email: string | null;
+    username: string | null;
+  }) => void;
+}) {
   const [open, setOpen] = useState(false);
 
   const FORM_INITIAL_VALUES = {

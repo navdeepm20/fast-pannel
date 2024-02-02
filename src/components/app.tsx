@@ -2,7 +2,7 @@ import { h } from "preact";
 import AppRoutes from "../routes";
 //provider
 import Provider from "./providers";
-function App({ ...props }) {
+function App() {
   return (
     <Provider>
       <AppRoutes />

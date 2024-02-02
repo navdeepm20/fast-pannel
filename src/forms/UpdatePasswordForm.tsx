@@ -23,7 +23,13 @@ const FORM_INITIAL_VALUES = {
   password2: "",
 };
 
-export default function UpdatePasswordForm(props) {
+export default function UpdatePasswordForm(props: {
+  updatePassword: (
+    password: string,
+    password1: string,
+    oldpassword: string
+  ) => void;
+}) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -183,7 +189,6 @@ export default function UpdatePasswordForm(props) {
                               padding: "10px",
                               fontSize: "16px",
                               color: "#0F0F0F",
-                            
                             },
                           }}
                           id="password2"

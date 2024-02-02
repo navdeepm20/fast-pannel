@@ -8,11 +8,17 @@ import TextField from "@mui/material/TextField";
 //libs
 import dayjs from "dayjs";
 
-function CustomDateTimePicker({ datestring, ...props }) {
+function CustomDateTimePicker({
+  datestring,
+  ...props
+}: {
+  datestring: string;
+  [props: string]: any;
+}) {
   const [value, setValue] = useState(
     dayjs(datestring).format("YYYY-MM-DDTHH:mm:ss.SSS") || ""
   );
-  const handleChange = (newValue) => {
+  const handleChange = (newValue: dayjs.Dayjs | "" | null) => {
     setValue(dayjs(newValue).format("YYYY-MM-DDTHH:mm:ss.SSS"));
   };
 

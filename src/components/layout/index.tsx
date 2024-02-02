@@ -41,7 +41,6 @@ export default function Layout() {
       />
       <Sidebar
         open={open}
-        DRAWER_WIDTH={DRAWER_WIDTH}
         handleDrawerClose={handleDrawerClose}
         handleDrawerOpen={handleDrawerOpen}
       />
@@ -53,8 +52,8 @@ export default function Layout() {
       {/* dialogs */}
       <LogoutConfirmationDialog
         open={isLogoutDialogOpen}
-        handleClose={(e) => setIsLogoutDialogOpen(false)}
-        handleLogout={(e) => {
+        handleClose={() => setIsLogoutDialogOpen(false)}
+        handleLogout={() => {
           setIsLogoutDialogOpen(false);
           logout(dispatch);
         }}
